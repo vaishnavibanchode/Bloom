@@ -975,6 +975,62 @@
         "padding_bottom": 0,
         "reset_spacing": true
       }
+    },
+    "plant_story_grid_KRziDb": {
+      "type": "plant-story-grid",
+      "blocks": {
+        "feature_6PCeVg": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Air Purifying",
+            "subtext": "Filters toxins naturally to boost indoor air freshness."
+          }
+        },
+        "feature_DEAaJb": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Low Maintenance",
+            "subtext": "Resilient varieties that thrive even with minimal care."
+          }
+        },
+        "feature_WE98rn": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Pet Safe Varieties",
+            "subtext": "Nontoxic plant species safe for furry companions."
+          }
+        },
+        "feature_Fcfjfr": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Sustainable Clay Pots",
+            "subtext": "Handcrafted terracotta containers built from natural earth."
+          }
+        }
+      },
+      "block_order": [
+        "feature_6PCeVg",
+        "feature_DEAaJb",
+        "feature_WE98rn",
+        "feature_Fcfjfr"
+      ],
+      "name": "Plant Storytelling Grid",
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "",
+        "badge_text": "100% Sustainably Grown",
+        "subheading": "OUR PHILOSOPHY",
+        "heading": "Cultivating Living Art for Modern Spaces",
+        "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
+        "button_label": "Explore Our Collection",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
@@ -993,6 +1049,7 @@
     "product_testimonials_KNN6XE",
     "rich_text_EcBgbR",
     "instagram_shop_nrVWcV",
-    "icon_box_TRwJBD"
+    "icon_box_TRwJBD",
+    "plant_story_grid_KRziDb"
   ]
 }
