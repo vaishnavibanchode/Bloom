@@ -1,0 +1,421 @@
+{{ 'athora-planti-sections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign section_st = section.settings
+  assign section_width = section_st.section_width
+  assign color_scheme = section_st.color_scheme
+  assign scroll_animation = settings.scroll_animation
+-%}
+
+{%- capture style -%}
+  --section-pt: {{ section_st.padding_top }}px; --section-pb: {{ section_st.padding_bottom }}px;
+  {% if section_st.custom_gradient != blank %}
+    background: {{ section_st.custom_gradient }};
+  {% endif %}
+{%- endcapture -%}
+
+<div
+  class="section planti-float-banner color-{{ color_scheme }} gradient"
+  style="{{ style | strip | strip_newlines }}"
+  data-planti-parallax-container
+>
+  <!-- Floating Elements Layer -->
+  {%- for block in section.blocks -%}
+    {%- assign b_st = block.settings -%}
+    <div
+      class="planti-float-element"
+      style="
+        left: {{ b_st.pos_x }}%;
+        top: {{ b_st.pos_y }}%;
+        width: {{ b_st.element_width }}px;
+        --parallax-factor: {{ b_st.parallax_factor }};
+      "
+      data-parallax-depth="{{ b_st.parallax_factor }}"
+      {{ block.shopify_attributes }}
+    >
+      <div
+        class="planti-float-element__inner"
+        style="
+          --float-duration: {{ b_st.float_speed }}s;
+          --float-delay: {{ b_st.float_delay }}s;
+          --float-deg: {{ b_st.rotation_angle }}deg;
+          transform: rotate({{ b_st.rotation_angle }}deg);
+        "
+      >
+        {%- if b_st.image != blank -%}
+          {{
+            b_st.image
+            | image_url: width: 600
+            | image_tag:
+              loading: 'lazy',
+              class: 'planti-float-element__img',
+              widths: '150, 300, 450, 600',
+              alt: b_st.title | default: section_st.heading
+          }}
+        {%- else -%}
+          {%- comment -%} Built-in Fallback SVGs matching the reference screenshot {%- endcomment -%}
+          {%- case b_st.preset_type -%}
+            {%- when 'flower' -%}
+              <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none">
+                <circle cx="100" cy="100" r="45" fill="#f4a4a4" opacity="0.9"/>
+                <circle cx="100" cy="65" r="30" fill="#f8b4b4" opacity="0.85"/>
+                <circle cx="135" cy="100" r="30" fill="#f8b4b4" opacity="0.85"/>
+                <circle cx="100" cy="135" r="30" fill="#f8b4b4" opacity="0.85"/>
+                <circle cx="65" cy="100" r="30" fill="#f8b4b4" opacity="0.85"/>
+                <circle cx="125" cy="75" r="28" fill="#f39c9c" opacity="0.85"/>
+                <circle cx="125" cy="125" r="28" fill="#f39c9c" opacity="0.85"/>
+                <circle cx="75" cy="125" r="28" fill="#f39c9c" opacity="0.85"/>
+                <circle cx="75" cy="75" r="28" fill="#f39c9c" opacity="0.85"/>
+                <circle cx="100" cy="100" r="22" fill="#e67e7e"/>
+              </svg>
+            {%- when 'watering_can' -%}
+              <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none">
+                <path d="M50 90h80v60C130 165 115 175 90 175S50 165 50 150V90z" fill="#f39c12"/>
+                <path d="M130 110l50-30m0 0l-10-15m10 15l-15 10" stroke="#d35400" stroke-width="8" stroke-linecap="round"/>
+                <path d="M50 100C25 100 25 150 50 150" stroke="#d35400" stroke-width="8" fill="none"/>
+              </svg>
+            {%- when 'monstera_leaf' -%}
+              <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none">
+                <path d="M100 20C50 20 20 70 20 120c0 45 35 70 80 70s80-25 80-70C180 70 150 20 100 20z" fill="#27ae60"/>
+                <path d="M100 20v170" stroke="#1e8449" stroke-width="6"/>
+                <path d="M100 70c-25 10-45 0-55-10M100 110c-30 10-50 0-65-15M100 150c-25 10-40 0-50-10M100 70c25 10 45 0 55-10M100 110c30 10 50 0 65-15M100 150c25 10 40 0 50-10" stroke="#f7f9f2" stroke-width="6" stroke-linecap="round"/>
+              </svg>
+            {%- when 'trowel' -%}
+              <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none">
+                <path d="M60 140l-30 30c-5 5-15 5-20 0s-5-15 0-20l30-30" stroke="#d35400" stroke-width="14" stroke-linecap="round"/>
+                <path d="M70 130c20-40 50-90 100-110 10 30-10 80-50 100-20 10-40 15-50 10z" fill="#3498db"/>
+              </svg>
+            {%- else -%}
+              <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none">
+                <circle cx="100" cy="65" r="30" fill="#2c3e50"/>
+                <path d="M40 180c0-35 25-60 60-60s60 25 60 60H40z" fill="#2c3e50"/>
+                <path d="M120 140c15 0 25-10 25-25s-10-25-25-25" stroke="#27ae60" stroke-width="6" fill="none"/>
+              </svg>
+          {%- endcase -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+
+  <!-- Centered Hero Content -->
+  <div class="planti-float-content {{ section_width }}">
+    {%- if section_st.subheading != blank -%}
+      <motion-element
+        data-motion="fade-up-lg"
+        data-motion-delay="50"
+        class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+      >
+        <span class="planti-float-subheading block">
+          {{ section_st.subheading }}
+        </span>
+      </motion-element>
+    {%- endif -%}
+
+    {%- if section_st.heading != blank -%}
+      <motion-element
+        data-motion="fade-up-lg"
+        data-motion-delay="150"
+        class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+      >
+        <h2 class="planti-float-title">
+          {{ section_st.heading }}
+        </h2>
+      </motion-element>
+    {%- endif -%}
+
+    {%- if section_st.button_label != blank -%}
+      <motion-element
+        data-motion="fade-up-lg"
+        data-motion-delay="250"
+        class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+      >
+        <a
+          href="{{ section_st.button_link | default: '#' }}"
+          class="btn btn-primary rounded-full px-35 py-14 font-semibold fs-16 inline-flex align-center gap-10"
+        >
+          <span>{{ section_st.button_label }}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </motion-element>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const containers = document.querySelectorAll('[data-planti-parallax-container]');
+    containers.forEach((container) => {
+      const elements = container.querySelectorAll('[data-parallax-depth]');
+
+      function handleMouseMove(e) {
+        const rect = container.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const mouseX = e.clientX - centerX;
+        const mouseY = e.clientY - centerY;
+
+        elements.forEach((el) => {
+          const depth = parseFloat(el.getAttribute('data-parallax-depth')) || 0.04;
+          const moveX = mouseX * depth;
+          const moveY = mouseY * depth;
+          el.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        });
+      }
+
+      function handleMouseLeave() {
+        elements.forEach((el) => {
+          el.style.transform = 'translate3d(0, 0, 0)';
+        });
+      }
+
+      container.addEventListener('mousemove', handleMouseMove);
+      container.addEventListener('mouseleave', handleMouseLeave);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Floating Parallax Banner",
+  "tag": "section",
+  "class": "section-floating-parallax-banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "fluid_container", "label": "Fluid Container" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_background",
+      "id": "custom_gradient",
+      "label": "Background Gradient",
+      "default": "linear-gradient(180deg, #f7f9f2 0%, #d8e5d0 100%)"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "SALE UP TO 30% OFF"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Spring Savings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Seasonal Deals"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "floating_element",
+      "name": "Floating Object",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Object Image Cutout (PNG)"
+        },
+        {
+          "type": "select",
+          "id": "preset_type",
+          "label": "Built-in Fallback Preset (if no image chosen)",
+          "default": "flower",
+          "options": [
+            { "value": "flower", "label": "Pink Flower" },
+            { "value": "watering_can", "label": "Watering Can" },
+            { "value": "monstera_leaf", "label": "Monstera Leaf" },
+            { "value": "trowel", "label": "Garden Trowel Shovel" },
+            { "value": "person", "label": "Person with Plant" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "pos_x",
+          "min": 0,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position (X)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y",
+          "min": 0,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position (Y)",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "element_width",
+          "min": 40,
+          "max": 350,
+          "step": 5,
+          "unit": "px",
+          "label": "Element Width",
+          "default": 140
+        },
+        {
+          "type": "range",
+          "id": "rotation_angle",
+          "min": -45,
+          "max": 45,
+          "step": 1,
+          "unit": "deg",
+          "label": "Rotation Angle",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "float_speed",
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "unit": "s",
+          "label": "Float Animation Speed",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "float_delay",
+          "min": 0,
+          "max": 5,
+          "step": 0.2,
+          "unit": "s",
+          "label": "Float Start Delay",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "parallax_factor",
+          "label": "Mouse Parallax Speed Factor",
+          "default": "0.04",
+          "options": [
+            { "value": "0.02", "label": "Slow (Background Layer)" },
+            { "value": "0.04", "label": "Medium (Midground Layer)" },
+            { "value": "0.07", "label": "Fast (Foreground Layer)" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Floating Parallax Banner",
+      "blocks": [
+        {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "flower",
+            "pos_x": 48,
+            "pos_y": 10,
+            "element_width": 120,
+            "rotation_angle": 0,
+            "float_speed": 4.5,
+            "parallax_factor": "0.03"
+          }
+        },
+        {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "watering_can",
+            "pos_x": 58,
+            "pos_y": 38,
+            "element_width": 130,
+            "rotation_angle": 15,
+            "float_speed": 5.5,
+            "float_delay": 0.8,
+            "parallax_factor": "0.05"
+          }
+        },
+        {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "person",
+            "pos_x": 6,
+            "pos_y": 52,
+            "element_width": 240,
+            "rotation_angle": -5,
+            "float_speed": 6,
+            "float_delay": 1.2,
+            "parallax_factor": "0.04"
+          }
+        },
+        {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "monstera_leaf",
+            "pos_x": 45,
+            "pos_y": 68,
+            "element_width": 160,
+            "rotation_angle": 8,
+            "float_speed": 5,
+            "float_delay": 0.4,
+            "parallax_factor": "0.06"
+          }
+        },
+        {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "trowel",
+            "pos_x": 64,
+            "pos_y": 72,
+            "element_width": 140,
+            "rotation_angle": 30,
+            "float_speed": 4.8,
+            "float_delay": 1.5,
+            "parallax_factor": "0.07"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

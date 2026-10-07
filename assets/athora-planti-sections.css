@@ -350,3 +350,88 @@
   line-height: 1.1;
   margin-bottom: 8px;
 }
+
+/* --------------------------------------------------------------------------
+   5. Interactive Floating Parallax Banner (Spring Savings Banner)
+   -------------------------------------------------------------------------- */
+.planti-float-banner {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--rounded-lg, 24px);
+  background: linear-gradient(180deg, #f7f9f2 0%, #d8e5d0 100%);
+  padding: 80px 20px;
+}
+
+@media (min-width: 990px) {
+  .planti-float-banner {
+    min-height: 650px;
+    padding: 120px 20px;
+  }
+}
+
+.planti-float-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.planti-float-title {
+  font-family: var(--planti-serif-font);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--planti-forest-green);
+  line-height: 1.05;
+  margin: 10px 0 24px;
+}
+
+.planti-float-subheading {
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(27, 59, 43, 0.75);
+}
+
+.planti-float-element {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.1, 0.9, 0.2, 1);
+  filter: drop-shadow(0 15px 25px rgba(27, 59, 43, 0.12));
+}
+
+.planti-float-element__inner {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: plantiBobbing var(--float-duration, 5s) ease-in-out infinite alternate;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.planti-float-element__img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes plantiBobbing {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(calc(var(--float-deg, 4deg) * 0.5));
+  }
+  100% {
+    transform: translateY(12px) rotate(calc(var(--float-deg, 4deg) * -1));
+  }
+}
+

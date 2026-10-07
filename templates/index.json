@@ -980,6 +980,94 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "floating_banner_promotion_athora": {
+      "type": "floating-banner-promotion",
+      "blocks": {
+        "flower_block": {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "flower",
+            "pos_x": 48,
+            "pos_y": 8,
+            "element_width": 125,
+            "rotation_angle": 0,
+            "float_speed": 4.5,
+            "float_delay": 0,
+            "parallax_factor": "0.03"
+          }
+        },
+        "watering_can_block": {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "watering_can",
+            "pos_x": 56,
+            "pos_y": 38,
+            "element_width": 130,
+            "rotation_angle": 15,
+            "float_speed": 5.5,
+            "float_delay": 0.8,
+            "parallax_factor": "0.05"
+          }
+        },
+        "person_block": {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "person",
+            "pos_x": 6,
+            "pos_y": 52,
+            "element_width": 240,
+            "rotation_angle": -5,
+            "float_speed": 6,
+            "float_delay": 1.2,
+            "parallax_factor": "0.04"
+          }
+        },
+        "leaf_block": {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "monstera_leaf",
+            "pos_x": 44,
+            "pos_y": 66,
+            "element_width": 160,
+            "rotation_angle": 8,
+            "float_speed": 5,
+            "float_delay": 0.4,
+            "parallax_factor": "0.06"
+          }
+        },
+        "trowel_block": {
+          "type": "floating_element",
+          "settings": {
+            "preset_type": "trowel",
+            "pos_x": 62,
+            "pos_y": 72,
+            "element_width": 140,
+            "rotation_angle": 30,
+            "float_speed": 4.8,
+            "float_delay": 1.5,
+            "parallax_factor": "0.07"
+          }
+        }
+      },
+      "block_order": [
+        "flower_block",
+        "watering_can_block",
+        "person_block",
+        "leaf_block",
+        "trowel_block"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "custom_gradient": "linear-gradient(180deg, #f7f9f2 0%, #d8e5d0 100%)",
+        "subheading": "SALE UP TO 30% OFF",
+        "heading": "Spring Savings",
+        "button_label": "Shop Season Deals",
+        "button_link": "shopify://collections",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
@@ -988,6 +1076,7 @@
     "plant_story_grid_athora",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
+    "floating_banner_promotion_athora",
     "eco_stats_marquee_athora",
     "products_carousel_AdKeFt",
     "outfit_idea_wGzkBi",
