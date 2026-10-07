@@ -15,8 +15,6 @@
         "slider_item_YipJd4": {
           "type": "slider_item",
           "settings": {
-            "image": "shopify://shop_images/fs1_s1.jpg",
-            "image_mobile": "shopify://shop_images/main_demo_mb1_bb77ad31-0df0-4c7b-ad2f-b95964e57f6e.jpg",
             "overlay_opacity": 0,
             "slider_effect": "effect_fadeinup",
             "subheading": "Sweater Collection",
@@ -43,8 +41,6 @@
         "slider_item_jiLA39": {
           "type": "slider_item",
           "settings": {
-            "image": "shopify://shop_images/fs1_s3.jpg",
-            "image_mobile": "shopify://shop_images/main_demo_mb3_0aa45fce-d652-465e-9e38-11034114270f.jpg",
             "overlay_opacity": 0,
             "slider_effect": "effect_fadeinup",
             "subheading": "Season Collection",
@@ -71,8 +67,6 @@
         "slider_item_iAiXpe": {
           "type": "slider_item",
           "settings": {
-            "image": "shopify://shop_images/fs1_s2.jpg",
-            "image_mobile": "shopify://shop_images/main_demo_mb2_592f163a-e42f-4089-85db-d3e1ee71a6eb.jpg",
             "overlay_opacity": 0,
             "slider_effect": "effect_fadeinup",
             "subheading": "Look Exclusive",
@@ -140,7 +134,6 @@
           "type": "collection",
           "settings": {
             "collection": "crop-top",
-            "collection_image": "shopify://shop_images/collection_img_1.jpg",
             "collection_title": "Crop—Top"
           }
         },
@@ -148,7 +141,6 @@
           "type": "collection",
           "settings": {
             "collection": "t-shirts",
-            "collection_image": "shopify://shop_images/collection_img_2.jpg",
             "collection_title": ""
           }
         },
@@ -156,7 +148,6 @@
           "type": "collection",
           "settings": {
             "collection": "blazers",
-            "collection_image": "shopify://shop_images/blazer.jpg",
             "collection_title": ""
           }
         },
@@ -164,7 +155,6 @@
           "type": "collection",
           "settings": {
             "collection": "coats",
-            "collection_image": "shopify://shop_images/img.jpg",
             "collection_title": ""
           }
         },
@@ -172,7 +162,6 @@
           "type": "collection",
           "settings": {
             "collection": "sweaters",
-            "collection_image": "shopify://shop_images/collection_img_5.jpg",
             "collection_title": ""
           }
         },
@@ -180,7 +169,6 @@
           "type": "collection",
           "settings": {
             "collection": "hoodies",
-            "collection_image": "shopify://shop_images/collection_img_6.jpg",
             "collection_title": ""
           }
         }
@@ -206,8 +194,15 @@
         "custom_ratio": "",
         "items_per_row": 6,
         "column_gap": 30,
-        "collection_information_position": "below_image",
+        "show_arrow": false,
+        "carousel_pagination": "show_dots",
+        "infinite": false,
+        "autoplay": false,
+        "autorotate_speed": 5,
+        "reveal": false,
+        "items_per_row_mobile": 3,
         "design": "default",
+        "collection_information_position": "below_image",
         "text_alignment": "center",
         "show_product_count": false,
         "show_icon": false,
@@ -218,16 +213,213 @@
         "rounded_image": true,
         "image_custom_width": true,
         "image_width": 185,
-        "show_arrow": false,
-        "carousel_pagination": "show_dots",
-        "infinite": false,
-        "autoplay": false,
-        "autorotate_speed": 5,
-        "reveal": false,
-        "items_per_row_mobile": 3,
         "padding_top": 0,
         "padding_bottom": 0,
         "reset_spacing": false
+      }
+    },
+    "plant_story_grid_athora": {
+      "type": "plant-story-grid",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Air Purifying",
+            "subtext": "Filters toxins naturally to boost indoor air freshness."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Low Maintenance",
+            "subtext": "Resilient varieties that thrive even with minimal care."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Pet Safe Varieties",
+            "subtext": "Nontoxic plant species safe for furry companions."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Sustainable Terracotta",
+            "subtext": "Handcrafted terracotta containers built from natural earth."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "image": "shopify://shop_images/415f56c52c2f90062f00b536f01f7284.jpg",
+        "badge_text": "100% Sustainably Grown",
+        "subheading": "OUR PHILOSOPHY",
+        "heading": "Cultivating Living Art for Modern Spaces",
+        "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
+        "button_label": "Explore Our Collection",
+        "button_link": "shopify://collections",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "interactive_hotspots_athora": {
+      "type": "interactive-image-hotspots",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 32,
+            "pos_y": 45,
+            "product": "",
+            "title": "Monstera Deliciosa",
+            "subtitle": "Large Split Leaf",
+            "price": "$78.00"
+          }
+        },
+        "hotspot_2": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 68,
+            "pos_y": 38,
+            "product": "",
+            "title": "Handmade Terracotta Planter",
+            "subtitle": "Natural Clay Finish",
+            "price": "$42.00"
+          }
+        },
+        "hotspot_3": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 80,
+            "pos_y": 72,
+            "product": "",
+            "title": "Calathea Orbifolia",
+            "subtitle": "Vibrant Striped Leaves",
+            "price": "$54.00"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1",
+        "hotspot_2",
+        "hotspot_3"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "heading": "Shop The Botanical Look",
+        "description": "Tap on any marker to discover featured plants and luxury handcrafted planters.",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "before_after_slider_athora": {
+      "type": "before-after-comparison",
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "heading": "Witness The Botanical Growth",
+        "description": "Drag the slider to see how our organic plant care transforms growth over 90 days.",
+        "label_before": "DAY 1 - ARRIVAL",
+        "label_after": "MONTH 3 - FULL BLOOM",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "eco_stats_marquee_athora": {
+      "type": "eco-stats-marquee",
+      "blocks": {
+        "marquee_1": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "100% Organic Soil & Fertilizers"
+          }
+        },
+        "marquee_2": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "Carbon-Neutral Eco Shipping"
+          }
+        },
+        "marquee_3": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "30-Day Plant Guarantee"
+          }
+        },
+        "marquee_4": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "Handcrafted Terracotta Pots"
+          }
+        },
+        "stat_1": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 35000,
+            "suffix": "+",
+            "title": "Healthy Plants Shipped",
+            "subtitle": "Arrived safely nationwide"
+          }
+        },
+        "stat_2": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 99,
+            "suffix": "%",
+            "title": "Growth Survival Rate",
+            "subtitle": "Backed by plant experts"
+          }
+        },
+        "stat_3": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 12000,
+            "suffix": "+",
+            "title": "Trees Planted",
+            "subtitle": "In partnership with Eden Projects"
+          }
+        },
+        "stat_4": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 100,
+            "suffix": "%",
+            "title": "Plastic-Free Packaging",
+            "subtitle": "Biodegradable materials"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_1",
+        "marquee_2",
+        "marquee_3",
+        "marquee_4",
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "enable_marquee": true,
+        "heading": "Our Growing Impact",
+        "description": "Cultivating sustainability and wellness across thousands of homes nationwide.",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "products_carousel_AdKeFt": {
@@ -270,7 +462,6 @@
         "idea_R96TUC": {
           "type": "idea",
           "settings": {
-            "image": "shopify://shop_images/main-images-outfit-1-min.jpg",
             "product_1": "crossover-long-sleeve-crop-top-copy",
             "product_2": "basic-sleeveless-tank-top-copy",
             "product_3": "",
@@ -281,7 +472,6 @@
         "image_with_text_overlay_mnrWaL": {
           "type": "image_with_text_overlay",
           "settings": {
-            "image": "shopify://shop_images/banner-xmani.jpg",
             "image_link": "",
             "image_overlay_opacity": 0,
             "custom_svg": "",
@@ -319,7 +509,6 @@
         "idea_4Haa8A": {
           "type": "idea",
           "settings": {
-            "image": "shopify://shop_images/main-images-outfit-4-min.jpg",
             "product_1": "back-printed-t-shirt-copy",
             "product_2": "leather-straps-sandals",
             "product_3": "",
@@ -345,6 +534,7 @@
         "custom_ratio": "45:65",
         "items_per_row": 3,
         "column_gap": 30,
+        "carousel_on_mobile": false,
         "padding_top": 0,
         "padding_bottom": 0,
         "reset_spacing": false
@@ -365,21 +555,18 @@
         "scrolling_text_Bmp7bG": {
           "type": "scrolling_text",
           "settings": {
-            "image": "shopify://shop_images/scrolling-img-13.jpg",
             "content": "Express Your True Self"
           }
         },
         "scrolling_text_7defWk": {
           "type": "scrolling_text",
           "settings": {
-            "image": "shopify://shop_images/scrolling-img-1.jpg",
             "content": "Exclusive Seasonal Picks"
           }
         },
         "scrolling_text_PtA9FE": {
           "type": "scrolling_text",
           "settings": {
-            "image": "shopify://shop_images/scrolling-img-12.jpg",
             "content": "Exclusive Seasonal Picks"
           }
         }
@@ -454,7 +641,6 @@
         "testimonials_items_FQz4eH": {
           "type": "testimonials_items",
           "settings": {
-            "author_image": "shopify://shop_images/tes_home2_1.jpg",
             "author_rating": 5,
             "author_text": "<p>These are sooo pretty and very comfy. Perfect color as well. I love wearing these with a neutral top and Chelsea boots. Wicked cute...😍</p>",
             "select_product": "basic-bright-green-rib-extreme-crop",
@@ -464,7 +650,6 @@
         "testimonials_items_taknUR": {
           "type": "testimonials_items",
           "settings": {
-            "author_image": "shopify://shop_images/tes_home2_2.jpg",
             "author_rating": 5,
             "author_text": "<p>A perfect product, it keeps you very warm without over heating. True to size, I couldn't be happier with the purchase... Thank you! 🤗</p>",
             "select_product": "balloon-sleeve-blouse-square-neck",
@@ -474,7 +659,6 @@
         "testimonials_items_RV8Jjg": {
           "type": "testimonials_items",
           "settings": {
-            "author_image": "shopify://shop_images/h1-test-3.jpg",
             "author_rating": 5,
             "author_text": "<p>A fantastic purchase! The product provides just the right amount of warmth without causing overheating. Highly recommend! 😊</p>",
             "select_product": "slim-fit-basic-unpatterned-t-shirt",
@@ -563,7 +747,6 @@
         "instagram_manual_upload_WnPgR7": {
           "type": "instagram_manual_upload",
           "settings": {
-            "image": "shopify://shop_images/h1-in-1.jpg",
             "more_info": "<p>We're totally smitten over this look! will you be creating a red or pink makeup look for valentine's day?</p><p>#cotton #Bloom #trending #sale</p>",
             "instagram_post_name": "Bloom_store",
             "link": "https://www.instagram.com/p/C8MFsIuv8G6/?next=%2F&img_index=6",
@@ -610,7 +793,6 @@
         "instagram_manual_upload_XHACUJ": {
           "type": "instagram_manual_upload",
           "settings": {
-            "image": "shopify://shop_images/h1-in-2.jpg",
             "more_info": "<p>We're totally smitten over this look! will you be creating a red or pink makeup look for valentine's day?</p><p>#cotton #Bloom #trending #sale</p>",
             "instagram_post_name": "Bloom_store",
             "link": "https://www.instagram.com/p/C8MFsIuv8G6/?next=%2F&img_index=5",
@@ -634,7 +816,6 @@
         "instagram_manual_upload_iHBcAC": {
           "type": "instagram_manual_upload",
           "settings": {
-            "image": "shopify://shop_images/h1-in-3.jpg",
             "more_info": "<p>We're totally smitten over this look! will you be creating a red or pink makeup look for valentine's day?</p><p>#cotton #Bloom #trending #sale</p>",
             "instagram_post_name": "Bloom_store",
             "link": "https://www.instagram.com/p/C8MFsIuv8G6/?next=%2F&img_index=4",
@@ -681,7 +862,6 @@
         "instagram_manual_upload_iWGFPW": {
           "type": "instagram_manual_upload",
           "settings": {
-            "image": "shopify://shop_images/h1-in-4.jpg",
             "more_info": "<p>We're totally smitten over this look! will you be creating a red or pink makeup look for valentine's day?</p><p>#cotton #Bloom #trending #sale</p>",
             "instagram_post_name": "Bloom_store",
             "link": "https://www.instagram.com/p/C8MFsIuv8G6/?next=%2F&img_index=3",
@@ -779,6 +959,9 @@
         "icon_position": "top",
         "icon_size": 32,
         "spacing": 11,
+        "show_border": false,
+        "enable_background": false,
+        "background": "",
         "content_alignment": "center",
         "heading_font_size": 16,
         "heading_font_weight": "heading_weight",
@@ -792,282 +975,6 @@
         "padding_bottom": 0,
         "reset_spacing": true
       }
-    },
-    "plant_story_grid_athora": {
-      "type": "plant-story-grid",
-      "blocks": {
-        "feature_1": {
-          "type": "feature",
-          "settings": {
-            "title": "Air Purifying",
-            "subtext": "Filters toxins naturally to boost indoor air freshness."
-          }
-        },
-        "feature_2": {
-          "type": "feature",
-          "settings": {
-            "title": "Low Maintenance",
-            "subtext": "Resilient varieties that thrive even with minimal care."
-          }
-        },
-        "feature_3": {
-          "type": "feature",
-          "settings": {
-            "title": "Pet Safe Varieties",
-            "subtext": "Nontoxic plant species safe for furry companions."
-          }
-        },
-        "feature_4": {
-          "type": "feature",
-          "settings": {
-            "title": "Sustainable Terracotta",
-            "subtext": "Handcrafted terracotta containers built from natural earth."
-          }
-        }
-      },
-      "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3",
-        "feature_4"
-      ],
-      "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "badge_text": "100% Sustainably Grown",
-        "subheading": "OUR PHILOSOPHY",
-        "heading": "Cultivating Living Art for Modern Spaces",
-        "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
-        "button_label": "Explore Our Collection",
-        "button_link": "shopify://collections",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "interactive_hotspots_athora": {
-      "type": "interactive-image-hotspots",
-      "blocks": {
-        "hotspot_1": {
-          "type": "hotspot",
-          "settings": {
-            "pos_x": 32,
-            "pos_y": 45,
-            "title": "Monstera Deliciosa",
-            "subtitle": "Large Split Leaf",
-            "price": "$78.00"
-          }
-        },
-        "hotspot_2": {
-          "type": "hotspot",
-          "settings": {
-            "pos_x": 68,
-            "pos_y": 38,
-            "title": "Handmade Terracotta Planter",
-            "subtitle": "Natural Clay Finish",
-            "price": "$42.00"
-          }
-        },
-        "hotspot_3": {
-          "type": "hotspot",
-          "settings": {
-            "pos_x": 80,
-            "pos_y": 72,
-            "title": "Calathea Orbifolia",
-            "subtitle": "Vibrant Striped Leaves",
-            "price": "$54.00"
-          }
-        }
-      },
-      "block_order": [
-        "hotspot_1",
-        "hotspot_2",
-        "hotspot_3"
-      ],
-      "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "heading": "Shop The Botanical Look",
-        "description": "Tap on any marker to discover featured plants and luxury handcrafted planters.",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "before_after_slider_athora": {
-      "type": "before-after-comparison",
-      "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "heading": "Witness The Botanical Growth",
-        "description": "Drag the slider to see how our organic plant care transforms growth over 90 days.",
-        "label_before": "DAY 1 - ARRIVAL",
-        "label_after": "MONTH 3 - FULL BLOOM",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "eco_stats_marquee_athora": {
-      "type": "eco-stats-marquee",
-      "blocks": {
-        "marquee_1": {
-          "type": "marquee_item",
-          "settings": { "text": "100% Organic Soil & Fertilizers" }
-        },
-        "marquee_2": {
-          "type": "marquee_item",
-          "settings": { "text": "Carbon-Neutral Eco Shipping" }
-        },
-        "marquee_3": {
-          "type": "marquee_item",
-          "settings": { "text": "30-Day Plant Guarantee" }
-        },
-        "marquee_4": {
-          "type": "marquee_item",
-          "settings": { "text": "Handcrafted Terracotta Pots" }
-        },
-        "stat_1": {
-          "type": "stat_counter",
-          "settings": {
-            "target_number": 35000,
-            "suffix": "+",
-            "title": "Healthy Plants Shipped",
-            "subtitle": "Arrived safely nationwide"
-          }
-        },
-        "stat_2": {
-          "type": "stat_counter",
-          "settings": {
-            "target_number": 99,
-            "suffix": "%",
-            "title": "Growth Survival Rate",
-            "subtitle": "Backed by plant experts"
-          }
-        },
-        "stat_3": {
-          "type": "stat_counter",
-          "settings": {
-            "target_number": 12000,
-            "suffix": "+",
-            "title": "Trees Planted",
-            "subtitle": "In partnership with Eden Projects"
-          }
-        },
-        "stat_4": {
-          "type": "stat_counter",
-          "settings": {
-            "target_number": 100,
-            "suffix": "%",
-            "title": "Plastic-Free Packaging",
-            "subtitle": "Biodegradable materials"
-          }
-        }
-      },
-      "block_order": [
-        "marquee_1",
-        "marquee_2",
-        "marquee_3",
-        "marquee_4",
-        "stat_1",
-        "stat_2",
-        "stat_3",
-        "stat_4"
-      ],
-      "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "enable_marquee": true,
-        "heading": "Our Growing Impact",
-        "description": "Cultivating sustainability and wellness across thousands of homes nationwide.",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "floating_banner_promotion_athora": {
-      "type": "floating-banner-promotion",
-      "blocks": {
-        "flower_block": {
-          "type": "floating_element",
-          "settings": {
-            "preset_type": "flower",
-            "pos_x": 48,
-            "pos_y": 8,
-            "element_width": 125,
-            "rotation_angle": 0,
-            "float_speed": 4.5,
-            "float_delay": 0,
-            "parallax_factor": "0.03"
-          }
-        },
-        "watering_can_block": {
-          "type": "floating_element",
-          "settings": {
-            "preset_type": "watering_can",
-            "pos_x": 56,
-            "pos_y": 38,
-            "element_width": 130,
-            "rotation_angle": 15,
-            "float_speed": 5.5,
-            "float_delay": 0.8,
-            "parallax_factor": "0.05"
-          }
-        },
-        "person_block": {
-          "type": "floating_element",
-          "settings": {
-            "preset_type": "person",
-            "pos_x": 6,
-            "pos_y": 52,
-            "element_width": 240,
-            "rotation_angle": -5,
-            "float_speed": 6,
-            "float_delay": 1.2,
-            "parallax_factor": "0.04"
-          }
-        },
-        "leaf_block": {
-          "type": "floating_element",
-          "settings": {
-            "preset_type": "monstera_leaf",
-            "pos_x": 44,
-            "pos_y": 66,
-            "element_width": 160,
-            "rotation_angle": 8,
-            "float_speed": 5,
-            "float_delay": 0.4,
-            "parallax_factor": "0.06"
-          }
-        },
-        "trowel_block": {
-          "type": "floating_element",
-          "settings": {
-            "preset_type": "trowel",
-            "pos_x": 62,
-            "pos_y": 72,
-            "element_width": 140,
-            "rotation_angle": 30,
-            "float_speed": 4.8,
-            "float_delay": 1.5,
-            "parallax_factor": "0.07"
-          }
-        }
-      },
-      "block_order": [
-        "flower_block",
-        "watering_can_block",
-        "person_block",
-        "leaf_block",
-        "trowel_block"
-      ],
-      "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "custom_gradient": "linear-gradient(180deg, #f7f9f2 0%, #d8e5d0 100%)",
-        "subheading": "SALE UP TO 30% OFF",
-        "heading": "Spring Savings",
-        "button_label": "Shop Season Deals",
-        "button_link": "shopify://collections",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
     }
   },
   "order": [
@@ -1076,7 +983,6 @@
     "plant_story_grid_athora",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
-    "floating_banner_promotion_athora",
     "eco_stats_marquee_athora",
     "products_carousel_AdKeFt",
     "outfit_idea_wGzkBi",
