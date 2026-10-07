@@ -1031,6 +1031,58 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "interactive_image_hotspots_9YW3Ap": {
+      "type": "interactive-image-hotspots",
+      "blocks": {
+        "hotspot_zwpC8D": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 30,
+            "pos_y": 45,
+            "product": "",
+            "title": "Monstera Deliciosa",
+            "subtitle": "Includes Terracotta Pot",
+            "price": "$78.00"
+          }
+        },
+        "hotspot_RzxetJ": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 65,
+            "pos_y": 35,
+            "product": "",
+            "title": "Handmade Terracotta Planter",
+            "subtitle": "Includes Terracotta Pot",
+            "price": "$42.00"
+          }
+        },
+        "hotspot_C9mFMH": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 80,
+            "pos_y": 70,
+            "product": "",
+            "title": "Calathea Orbifolia",
+            "subtitle": "Includes Terracotta Pot",
+            "price": "$54.00"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_zwpC8D",
+        "hotspot_RzxetJ",
+        "hotspot_C9mFMH"
+      ],
+      "name": "Interactive Hotspots",
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "",
+        "heading": "Shop The Botanical Look",
+        "description": "Tap on any marker to discover featured plants and luxury handcrafted planters.",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
@@ -1050,6 +1102,7 @@
     "rich_text_EcBgbR",
     "instagram_shop_nrVWcV",
     "icon_box_TRwJBD",
-    "plant_story_grid_KRziDb"
+    "plant_story_grid_KRziDb",
+    "interactive_image_hotspots_9YW3Ap"
   ]
 }
