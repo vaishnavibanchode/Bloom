@@ -42,7 +42,7 @@
           "type": "button",
           "settings": {
             "first_button_label": "Back to Homepage",
-            "first_button_link": "https:\/\/shopz-demo.myshopify.com\/",
+            "first_button_link": "https:\/\/Bloom-demo.myshopify.com\/",
             "open_link": false,
             "first_button_type": "primary",
             "spacing_bottom": 0

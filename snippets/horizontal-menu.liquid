@@ -168,10 +168,10 @@
                           {%- endif -%}
                         {% endfor %}
                         {%- liquid             
-                          assign domain_access = "shopz-demo.myshopify.com,shopz-demo-v2.myshopify.com" | split: "," 
-                          assign only_for_shopz = false
+                          assign domain_access = "Bloom-demo.myshopify.com,Bloom-demo-v2.myshopify.com" | split: "," 
+                          assign only_for_Bloom = false
                           if domain_access contains shop.domain and link.title == 'Home'
-                            assign only_for_shopz = true
+                            assign only_for_Bloom = true
                           endif
                         -%}                 
                         <div
@@ -185,11 +185,11 @@
                               class="menu-list"
                               style="--row-gap: 40px; --col-desktop:{{ block_st.promotion_menu_column }};"
                             >
-                              {%- render 'submenu-list' , link: link , only_for_domain: only_for_shopz -%}
+                              {%- render 'submenu-list' , link: link , only_for_domain: only_for_Bloom -%}
                             </div>
                           {% endif %}
                           {%- if block_st.promotion_image_1 != blank or block_st.promotion_image_2 != blank -%}
-                            <div class="col-mega {% if only_for_shopz == true %} hidden block-1025 {% endif %}">
+                            <div class="col-mega {% if only_for_Bloom == true %} hidden block-1025 {% endif %}">
                               <div  
                                 class="grid grid-cols gap-20 px-30 px-1025-0 {{ settings.hover_effect }}"
                                 style="--col-number: {{ banner_count }}"
@@ -719,10 +719,10 @@
                           {%- endif -%}
                         {% endfor %}
                         {%- liquid             
-                          assign domain_access = "shopz-demo.myshopify.com,shopz-demo-v2.myshopify.com" | split: "," 
-                          assign only_for_shopz = false
+                          assign domain_access = "Bloom-demo.myshopify.com,Bloom-demo-v2.myshopify.com" | split: "," 
+                          assign only_for_Bloom = false
                           if domain_access contains shop.domain and link.title == 'Home'
-                            assign only_for_shopz = true
+                            assign only_for_Bloom = true
                           endif
                         -%}                 
                         <div
@@ -736,11 +736,11 @@
                               class="menu-list"
                               style="--row-gap: 40px; --col-desktop:{{ block_st.promotion_menu_column }};"
                             >
-                              {%- render 'submenu-list' , link: link , only_for_domain: only_for_shopz -%}
+                              {%- render 'submenu-list' , link: link , only_for_domain: only_for_Bloom -%}
                             </div>
                           {% endif %}
                           {%- if block_st.promotion_image_1 != blank or block_st.promotion_image_2 != blank -%}
-                            <div class="col-mega {% if only_for_shopz == true %} hidden block-1025 {% endif %}">
+                            <div class="col-mega {% if only_for_Bloom == true %} hidden block-1025 {% endif %}">
                               <div  
                                 class="grid grid-cols gap-20 px-30 px-1025-0 {{ settings.hover_effect }}"
                                 style="--col-number: {{ banner_count }}"
