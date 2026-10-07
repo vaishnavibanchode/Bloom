@@ -1,0 +1,352 @@
+/* ==========================================================================
+   Athora - Planti Preset Signature Section Animations & Styles for Bloom Theme
+   ========================================================================== */
+
+:root {
+  --planti-forest-green: #1b3b2b;
+  --planti-sage-green: #8a9a86;
+  --planti-linen-bg: #fcfbf7;
+  --planti-sand-accent: #e6dfd3;
+  --planti-terracotta: #c87a58;
+  --planti-serif-font: "Instrument Serif", "Georgia", serif;
+  --planti-transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --------------------------------------------------------------------------
+   1. Plant Story Grid Section (Editorial Botanical Storytelling)
+   -------------------------------------------------------------------------- */
+.planti-story-grid {
+  position: relative;
+  background-color: var(--planti-linen-bg);
+  border-radius: var(--rounded-lg, 24px);
+  overflow: hidden;
+}
+
+.planti-story-media__wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--rounded, 16px);
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 990px) {
+  .planti-story-media__wrap {
+    aspect-ratio: 16 / 11;
+  }
+}
+
+.planti-story-media__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--planti-transition-smooth);
+}
+
+.planti-story-media__wrap:hover .planti-story-media__img {
+  transform: scale(1.04);
+}
+
+.planti-badge-floating {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--planti-forest-green);
+  z-index: 2;
+  transition: transform 0.4s var(--planti-transition-smooth);
+}
+
+.planti-badge-floating:hover {
+  transform: translateY(-4px);
+}
+
+.planti-feature-card {
+  padding: 24px;
+  border-radius: var(--rounded, 16px);
+  background: #ffffff;
+  border: 1px solid rgba(27, 59, 43, 0.08);
+  transition: all 0.4s var(--planti-transition-smooth);
+}
+
+.planti-feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(27, 59, 43, 0.08);
+  border-color: var(--planti-sage-green);
+}
+
+.planti-feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(138, 154, 134, 0.15);
+  color: var(--planti-forest-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.planti-feature-card:hover .planti-feature-icon {
+  background: var(--planti-forest-green);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+/* --------------------------------------------------------------------------
+   2. Interactive Image Hotspots (Lookbook Section)
+   -------------------------------------------------------------------------- */
+.planti-hotspot-container {
+  position: relative;
+  width: 100%;
+  border-radius: var(--rounded-lg, 24px);
+  overflow: hidden;
+}
+
+.planti-hotspot-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  min-height: 450px;
+}
+
+.planti-hotspot-pin {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  margin-top: -18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--planti-forest-green);
+  color: var(--planti-forest-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.3s var(--planti-transition-smooth), background 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.planti-hotspot-pin::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  animation: plantiPulse 2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes plantiPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.planti-hotspot-pin:hover,
+.planti-hotspot-pin.is-active {
+  transform: scale(1.2);
+  background: var(--planti-forest-green);
+  color: #ffffff;
+}
+
+.planti-hotspot-card {
+  position: absolute;
+  width: 260px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.95);
+  transition: all 0.35s var(--planti-transition-smooth);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.planti-hotspot-pin:hover + .planti-hotspot-card,
+.planti-hotspot-pin:focus + .planti-hotspot-card,
+.planti-hotspot-card:hover,
+.planti-hotspot-card.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.planti-hotspot-card__img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Before / After Comparison Drag Slider
+   -------------------------------------------------------------------------- */
+.planti-ba-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--rounded-lg, 24px);
+  user-select: none;
+  touch-action: pan-y;
+  background: #000;
+  min-height: 400px;
+}
+
+.planti-ba-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.planti-ba-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.planti-ba-layer--before {
+  z-index: 2;
+  width: 50%;
+  overflow: hidden;
+}
+
+.planti-ba-layer--before .planti-ba-image {
+  width: var(--container-width, 100vw);
+  max-width: none;
+}
+
+.planti-ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: #ffffff;
+  z-index: 3;
+  cursor: ew-resize;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.planti-ba-handle__btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--planti-forest-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  font-weight: bold;
+}
+
+.planti-ba-label {
+  position: absolute;
+  bottom: 20px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  z-index: 4;
+}
+
+.planti-ba-label--before {
+  left: 20px;
+}
+
+.planti-ba-label--after {
+  right: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Eco-Stats Counter & Marquee Ticker Section
+   -------------------------------------------------------------------------- */
+.planti-marquee-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--planti-forest-green);
+  color: #ffffff;
+  padding: 16px 0;
+}
+
+.planti-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: plantiMarquee 25s linear infinite;
+}
+
+.planti-marquee-wrap:hover .planti-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes plantiMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.planti-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 32px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.planti-stat-card {
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: var(--rounded, 16px);
+  background: #ffffff;
+  border: 1px solid rgba(27, 59, 43, 0.08);
+  transition: transform 0.4s var(--planti-transition-smooth), box-shadow 0.4s var(--planti-transition-smooth);
+}
+
+.planti-stat-card:hover {
+  transform: translateY(-50px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+.planti-stat-number {
+  font-family: var(--planti-serif-font);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  color: var(--planti-forest-green);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}

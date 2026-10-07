@@ -1,0 +1,287 @@
+{{ 'athora-planti-sections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign section_st = section.settings
+  assign section_width = section_st.section_width
+  assign color_scheme = section_st.color_scheme
+  assign scroll_animation = settings.scroll_animation
+-%}
+
+{%- capture style -%}
+  --section-pt: {{ section_st.padding_top }}px; --section-pb: {{ section_st.padding_bottom }}px;
+{%- endcapture -%}
+
+<div
+  class="section planti-story-grid color-{{ color_scheme }} gradient"
+  style="{{ style | strip | strip_newlines }}"
+>
+  <div class="{{ section_width }} py-40 py-md-60">
+    <div class="row align-center">
+      <!-- Media Column -->
+      <div class="col-12 col-lg-6 mb-30 mb-lg-0">
+        <motion-element
+          data-motion="fade-up-lg"
+          data-motion-delay="50"
+          class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+        >
+          <div class="planti-story-media__wrap">
+            {%- if section_st.image != blank -%}
+              {{
+                section_st.image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'planti-story-media__img',
+                  widths: '375, 550, 750, 1100, 1500',
+                  alt: section_st.heading
+              }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'planti-story-media__img placeholder-svg' }}
+            {%- endif -%}
+
+            {%- if section_st.badge_text != blank -%}
+              <div class="planti-badge-floating">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>{{ section_st.badge_text }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+        </motion-element>
+      </div>
+
+      <!-- Text & Content Column -->
+      <div class="col-12 col-lg-6">
+        <div class="planti-story-content pl-lg-30">
+          {%- if section_st.subheading != blank -%}
+            <motion-element
+              data-motion="fade-up-lg"
+              data-motion-delay="100"
+              class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            >
+              <span class="eyebrow-text uppercase text-accent tracking-widest font-semibold mb-10 block">
+                {{ section_st.subheading }}
+              </span>
+            </motion-element>
+          {%- endif -%}
+
+          {%- if section_st.heading != blank -%}
+            <motion-element
+              data-motion="fade-up-lg"
+              data-motion-delay="150"
+              class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            >
+              <h2 class="h1 section__header-heading mb-20">
+                {{ section_st.heading }}
+              </h2>
+            </motion-element>
+          {%- endif -%}
+
+          {%- if section_st.description != blank -%}
+            <motion-element
+              data-motion="fade-up-lg"
+              data-motion-delay="200"
+              class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            >
+              <div class="rich-text__text body-text color-secondary mb-30 fs-16">
+                {{ section_st.description }}
+              </div>
+            </motion-element>
+          {%- endif -%}
+
+          <!-- Blocks Feature Grid -->
+          <div class="row g-15 mb-30">
+            {%- for block in section.blocks -%}
+              <div class="col-12 col-sm-6" {{ block.shopify_attributes }}>
+                <motion-element
+                  data-motion="fade-up-lg"
+                  data-motion-delay="{{ forloop.index | times: 100 | plus: 200 }}"
+                  class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+                >
+                  <div class="planti-feature-card">
+                    <div class="planti-feature-icon">
+                      {%- if block.settings.icon_svg != blank -%}
+                        {{ block.settings.icon_svg }}
+                      {%- else -%}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                      {%- endif -%}
+                    </div>
+                    <h3 class="h4 mb-8 font-semibold fs-18">{{ block.settings.title }}</h3>
+                    <p class="fs-14 color-secondary m-0">{{ block.settings.subtext }}</p>
+                  </div>
+                </motion-element>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if section_st.button_label != blank -%}
+            <motion-element
+              data-motion="fade-up-lg"
+              data-motion-delay="500"
+              class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            >
+              <a
+                href="{{ section_st.button_link | default: '#' }}"
+                class="btn btn-primary rounded-full px-35 py-14 font-semibold inline-flex align-center gap-10"
+              >
+                <span>{{ section_st.button_label }}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </motion-element>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Plant Storytelling Grid",
+  "tag": "section",
+  "class": "section-plant-story-grid",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "fluid_container", "label": "Fluid Container" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Story Image"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Floating Badge Text",
+      "default": "100% Sustainably Grown"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "OUR PHILOSOPHY"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Cultivating Living Art for Modern Spaces"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Explore Our Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Card",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Custom SVG Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Title",
+          "default": "Air Purifying"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Feature Description",
+          "default": "Filters toxins naturally to boost indoor air freshness."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Plant Storytelling Grid",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Air Purifying",
+            "subtext": "Filters toxins naturally to boost indoor air freshness."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Low Maintenance",
+            "subtext": "Resilient varieties that thrive even with minimal care."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Pet Safe Varieties",
+            "subtext": "Nontoxic plant species safe for furry companions."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Sustainable Clay Pots",
+            "subtext": "Handcrafted terracotta containers built from natural earth."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

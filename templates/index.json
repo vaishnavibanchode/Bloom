@@ -792,11 +792,203 @@
         "padding_bottom": 0,
         "reset_spacing": true
       }
+    },
+    "plant_story_grid_athora": {
+      "type": "plant-story-grid",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Air Purifying",
+            "subtext": "Filters toxins naturally to boost indoor air freshness."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Low Maintenance",
+            "subtext": "Resilient varieties that thrive even with minimal care."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Pet Safe Varieties",
+            "subtext": "Nontoxic plant species safe for furry companions."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Sustainable Terracotta",
+            "subtext": "Handcrafted terracotta containers built from natural earth."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "badge_text": "100% Sustainably Grown",
+        "subheading": "OUR PHILOSOPHY",
+        "heading": "Cultivating Living Art for Modern Spaces",
+        "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
+        "button_label": "Explore Our Collection",
+        "button_link": "shopify://collections",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "interactive_hotspots_athora": {
+      "type": "interactive-image-hotspots",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 32,
+            "pos_y": 45,
+            "title": "Monstera Deliciosa",
+            "subtitle": "Large Split Leaf",
+            "price": "$78.00"
+          }
+        },
+        "hotspot_2": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 68,
+            "pos_y": 38,
+            "title": "Handmade Terracotta Planter",
+            "subtitle": "Natural Clay Finish",
+            "price": "$42.00"
+          }
+        },
+        "hotspot_3": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 80,
+            "pos_y": 72,
+            "title": "Calathea Orbifolia",
+            "subtitle": "Vibrant Striped Leaves",
+            "price": "$54.00"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1",
+        "hotspot_2",
+        "hotspot_3"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "heading": "Shop The Botanical Look",
+        "description": "Tap on any marker to discover featured plants and luxury handcrafted planters.",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "before_after_slider_athora": {
+      "type": "before-after-comparison",
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "heading": "Witness The Botanical Growth",
+        "description": "Drag the slider to see how our organic plant care transforms growth over 90 days.",
+        "label_before": "DAY 1 - ARRIVAL",
+        "label_after": "MONTH 3 - FULL BLOOM",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "eco_stats_marquee_athora": {
+      "type": "eco-stats-marquee",
+      "blocks": {
+        "marquee_1": {
+          "type": "marquee_item",
+          "settings": { "text": "100% Organic Soil & Fertilizers" }
+        },
+        "marquee_2": {
+          "type": "marquee_item",
+          "settings": { "text": "Carbon-Neutral Eco Shipping" }
+        },
+        "marquee_3": {
+          "type": "marquee_item",
+          "settings": { "text": "30-Day Plant Guarantee" }
+        },
+        "marquee_4": {
+          "type": "marquee_item",
+          "settings": { "text": "Handcrafted Terracotta Pots" }
+        },
+        "stat_1": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 35000,
+            "suffix": "+",
+            "title": "Healthy Plants Shipped",
+            "subtitle": "Arrived safely nationwide"
+          }
+        },
+        "stat_2": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 99,
+            "suffix": "%",
+            "title": "Growth Survival Rate",
+            "subtitle": "Backed by plant experts"
+          }
+        },
+        "stat_3": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 12000,
+            "suffix": "+",
+            "title": "Trees Planted",
+            "subtitle": "In partnership with Eden Projects"
+          }
+        },
+        "stat_4": {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 100,
+            "suffix": "%",
+            "title": "Plastic-Free Packaging",
+            "subtitle": "Biodegradable materials"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_1",
+        "marquee_2",
+        "marquee_3",
+        "marquee_4",
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4"
+      ],
+      "settings": {
+        "section_width": "container",
+        "color_scheme": "scheme-1",
+        "enable_marquee": true,
+        "heading": "Our Growing Impact",
+        "description": "Cultivating sustainability and wellness across thousands of homes nationwide.",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
     "slideshow_8KKtNU",
     "collection_list_VmEYkJ",
+    "plant_story_grid_athora",
+    "interactive_hotspots_athora",
+    "before_after_slider_athora",
+    "eco_stats_marquee_athora",
     "products_carousel_AdKeFt",
     "outfit_idea_wGzkBi",
     "divider_FcGgzn",

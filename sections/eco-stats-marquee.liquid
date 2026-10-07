@@ -1,0 +1,292 @@
+{{ 'athora-planti-sections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign section_st = section.settings
+  assign section_width = section_st.section_width
+  assign color_scheme = section_st.color_scheme
+  assign scroll_animation = settings.scroll_animation
+-%}
+
+{%- capture style -%}
+  --section-pt: {{ section_st.padding_top }}px; --section-pb: {{ section_st.padding_bottom }}px;
+{%- endcapture -%}
+
+<div
+  class="section planti-stats-marquee-section color-{{ color_scheme }} gradient"
+  style="{{ style | strip | strip_newlines }}"
+>
+  <!-- Part 1: Infinite Marquee Ribbon -->
+  {%- if section_st.enable_marquee -%}
+    <div class="planti-marquee-wrap">
+      <div class="planti-marquee-track">
+        {%- for i in (1..4) -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'marquee_item' -%}
+              <div class="planti-marquee-item">
+                <span class="planti-marquee-text">{{ block.settings.text }}</span>
+                <span class="planti-marquee-divider">✦</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <!-- Part 2: Animated Stat Counters -->
+  <div class="{{ section_width }} py-40 py-md-60">
+    {%- if section_st.heading != blank or section_st.description != blank -%}
+      <div class="section__header text-center mb-40">
+        {%- if section_st.heading != blank -%}
+          <motion-element
+            data-motion="fade-up-lg"
+            data-motion-delay="50"
+            class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+          >
+            <h2 class="section__header-heading h1 mb-10">
+              {{ section_st.heading }}
+            </h2>
+          </motion-element>
+        {%- endif -%}
+        {%- if section_st.description != blank -%}
+          <motion-element
+            data-motion="fade-up-lg"
+            data-motion-delay="150"
+            class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+          >
+            <p class="section__header-des body-text color-secondary fs-16 m-0">
+              {{ section_st.description }}
+            </p>
+          </motion-element>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="row g-20 justify-center">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'stat_counter' -%}
+          <div class="col-12 col-sm-6 col-lg-3" {{ block.shopify_attributes }}>
+            <motion-element
+              data-motion="fade-up-lg"
+              data-motion-delay="{{ forloop.index | times: 100 }}"
+              class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            >
+              <div class="planti-stat-card">
+                <div class="planti-stat-number" data-count-target="{{ block.settings.target_number }}">
+                  0{{ block.settings.suffix }}
+                </div>
+                <h3 class="h4 font-semibold mb-6 fs-18">{{ block.settings.title }}</h3>
+                <p class="fs-14 color-secondary m-0">{{ block.settings.subtitle }}</p>
+              </div>
+            </motion-element>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const statNumbers = document.querySelectorAll('[data-count-target]');
+    if (!statNumbers.length) return;
+
+    const observerOptions = {
+      root: null,
+      threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-count-target'), 10) || 0;
+          const suffix = el.textContent.replace(/[0-9]/g, '').trim();
+          let count = 0;
+          const duration = 2000;
+          const stepTime = Math.max(Math.floor(duration / target), 16);
+
+          const timer = setInterval(() => {
+            count += Math.ceil(target / 40);
+            if (count >= target) {
+              count = target;
+              clearInterval(timer);
+            }
+            el.textContent = count.toLocaleString() + suffix;
+          }, stepTime);
+
+          obs.unobserve(el);
+        }
+      });
+    }, observerOptions);
+
+    statNumbers.forEach((num) => observer.observe(num));
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Eco Stats & Marquee",
+  "tag": "section",
+  "class": "section-eco-stats-marquee",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "fluid_container", "label": "Fluid Container" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "label": "Enable Top Marquee Ticker",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Growing Impact"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Cultivating sustainability and wellness across thousands of homes nationwide."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee_item",
+      "name": "Marquee Ticker Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100% Recyclable Packaging"
+        }
+      ]
+    },
+    {
+      "type": "stat_counter",
+      "name": "Stat Counter",
+      "settings": [
+        {
+          "type": "number",
+          "id": "target_number",
+          "label": "Target Count Number",
+          "default": 25000
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Number Suffix",
+          "default": "+"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Stat Title",
+          "default": "Plants Delivered"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Stat Subtitle",
+          "default": "Safely shipped to homes"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eco Stats & Marquee",
+      "blocks": [
+        {
+          "type": "marquee_item",
+          "settings": { "text": "100% Organic Soil & Fertilizers" }
+        },
+        {
+          "type": "marquee_item",
+          "settings": { "text": "Carbon-Neutral Eco Shipping" }
+        },
+        {
+          "type": "marquee_item",
+          "settings": { "text": "30-Day Plant Guarantee" }
+        },
+        {
+          "type": "marquee_item",
+          "settings": { "text": "Handcrafted Terracotta Pots" }
+        },
+        {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 35000,
+            "suffix": "+",
+            "title": "Healthy Plants Shipped",
+            "subtitle": "Arrived safely nationwide"
+          }
+        },
+        {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 99,
+            "suffix": "%",
+            "title": "Growth Survival Rate",
+            "subtitle": "Backed by plant experts"
+          }
+        },
+        {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 12000,
+            "suffix": "+",
+            "title": "Trees Planted",
+            "subtitle": "In partnership with Eden Projects"
+          }
+        },
+        {
+          "type": "stat_counter",
+          "settings": {
+            "target_number": 100,
+            "suffix": "%",
+            "title": "Plastic-Free Packaging",
+            "subtitle": "Biodegradable materials"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

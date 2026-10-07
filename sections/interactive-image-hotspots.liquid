@@ -1,0 +1,283 @@
+{{ 'athora-planti-sections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign section_st = section.settings
+  assign section_width = section_st.section_width
+  assign color_scheme = section_st.color_scheme
+  assign scroll_animation = settings.scroll_animation
+-%}
+
+{%- capture style -%}
+  --section-pt: {{ section_st.padding_top }}px; --section-pb: {{ section_st.padding_bottom }}px;
+{%- endcapture -%}
+
+<div
+  class="section planti-hotspot-section color-{{ color_scheme }} gradient"
+  style="{{ style | strip | strip_newlines }}"
+>
+  <div class="{{ section_width }} py-40 py-md-60">
+    {%- if section_st.heading != blank or section_st.description != blank -%}
+      <div class="section__header text-center mb-35">
+        {%- if section_st.heading != blank -%}
+          <motion-element
+            data-motion="fade-up-lg"
+            data-motion-delay="50"
+            class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+          >
+            <h2 class="section__header-heading h1 mb-10">
+              {{ section_st.heading }}
+            </h2>
+          </motion-element>
+        {%- endif -%}
+        {%- if section_st.description != blank -%}
+          <motion-element
+            data-motion="fade-up-lg"
+            data-motion-delay="150"
+            class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+          >
+            <p class="section__header-des body-text color-secondary fs-16 m-0">
+              {{ section_st.description }}
+            </p>
+          </motion-element>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <motion-element
+      data-motion="fade-up-lg"
+      data-motion-delay="250"
+      class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+    >
+      <div class="planti-hotspot-container">
+        {%- if section_st.image != blank -%}
+          {{
+            section_st.image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              class: 'planti-hotspot-bg',
+              widths: '550, 750, 1100, 1500, 2000',
+              alt: section_st.heading
+          }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'planti-hotspot-bg placeholder-svg' }}
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- assign hotspot_product = block.settings.product -%}
+          <div
+            class="planti-hotspot-item"
+            style="left: {{ block.settings.pos_x }}%; top: {{ block.settings.pos_y }}%;"
+            {{ block.shopify_attributes }}
+          >
+            <button
+              type="button"
+              class="planti-hotspot-pin"
+              aria-label="View product {{ hotspot_product.title | default: block.settings.title }}"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+
+            <!-- Floating Product Preview Card -->
+            <div class="planti-hotspot-card">
+              {%- if hotspot_product != blank -%}
+                {%- if hotspot_product.featured_image != blank -%}
+                  {{
+                    hotspot_product.featured_image
+                    | image_url: width: 400
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'planti-hotspot-card__img',
+                      alt: hotspot_product.title
+                  }}
+                {%- endif -%}
+                <h4 class="fs-15 font-semibold mb-4 text-ellipsis">
+                  <a href="{{ hotspot_product.url }}" class="color-primary">{{ hotspot_product.title }}</a>
+                </h4>
+                <div class="flex align-center justify-between mt-8">
+                  <span class="font-bold color-accent fs-15">{{ hotspot_product.price | money }}</span>
+                  <a
+                    href="{{ hotspot_product.url }}"
+                    class="btn btn-outline btn-xs rounded-full px-12 py-4 fs-12 font-medium"
+                  >
+                    View
+                  </a>
+                </div>
+              {%- else -%}
+                {%- if block.settings.custom_image != blank -%}
+                  {{
+                    block.settings.custom_image
+                    | image_url: width: 400
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'planti-hotspot-card__img',
+                      alt: block.settings.title
+                  }}
+                {%- endif -%}
+                <h4 class="fs-15 font-semibold mb-4">{{ block.settings.title }}</h4>
+                <p class="fs-13 color-secondary mb-8">{{ block.settings.subtitle }}</p>
+                <span class="font-bold color-accent fs-15">{{ block.settings.price }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </motion-element>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Interactive Hotspots",
+  "tag": "section",
+  "class": "section-interactive-hotspots",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "fluid_container", "label": "Fluid Container" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Lifestyle Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop The Botanical Look"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Tap on any marker to discover featured plants and luxury handcrafted planters."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot Marker",
+      "settings": [
+        {
+          "type": "range",
+          "id": "pos_x",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position (X)",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "pos_y",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position (Y)",
+          "default": 50
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (Fallback if no product)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title",
+          "default": "Ficus Elastica Rubber Plant"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Custom Subtitle",
+          "default": "Includes Terracotta Pot"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Custom Price",
+          "default": "$65.00"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Interactive Hotspots",
+      "blocks": [
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 30,
+            "pos_y": 45,
+            "title": "Monstera Deliciosa",
+            "price": "$78.00"
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 65,
+            "pos_y": 35,
+            "title": "Handmade Terracotta Planter",
+            "price": "$42.00"
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 80,
+            "pos_y": 70,
+            "title": "Calathea Orbifolia",
+            "price": "$54.00"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
