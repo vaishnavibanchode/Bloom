@@ -9,122 +9,83 @@
  */
 {
   "sections": {
-    "slideshow_8KKtNU": {
-      "type": "slideshow",
+    "bloom_hero_4qNHAy": {
+      "type": "bloom-hero",
       "blocks": {
-        "slider_item_YipJd4": {
-          "type": "slider_item",
+        "slide_NYtxEE": {
+          "type": "slide",
           "settings": {
-            "overlay_opacity": 0,
-            "slider_effect": "effect_fadeinup",
-            "subheading": "Sweater Collection",
-            "heading": "Online Exclusive",
-            "description": "",
-            "first_button_label": "Shop Collection",
-            "first_button_link": "shopify://collections/sweaters",
-            "first_button_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_style": false,
-            "content_alignment": "left",
-            "content_position": "bottom-left",
-            "content_width": "full_width",
-            "content_max_width": 100,
-            "content_padding_block": 60,
-            "content_padding_inline": 60,
-            "show_content_background": false,
-            "content_background": "#ffffff",
-            "content_box_opacity": 100,
-            "content_alignment_mobile": "center"
+            "focal_point": "default",
+            "subheading": "HANDCRAFTED BOTANICALS",
+            "heading": "Grow Your Own",
+            "highlighted_phrase": "Little Paradise",
+            "description": "Discover beautiful plants to bring nature into your home.",
+            "button_label": "SHOP COLLECTION",
+            "button_link": "",
+            "button_label_2": "OUR STORY",
+            "button_link_2": "",
+            "overlay_opacity_override": 0
           }
         },
-        "slider_item_jiLA39": {
-          "type": "slider_item",
+        "slide_w4ihc3": {
+          "type": "slide",
           "settings": {
-            "overlay_opacity": 0,
-            "slider_effect": "effect_fadeinup",
-            "subheading": "Season Collection",
-            "heading": "Super Comfort",
-            "description": "",
-            "first_button_label": "Shop Collection",
-            "first_button_link": "shopify://collections/best-seller",
-            "first_button_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_style": false,
-            "content_alignment": "left",
-            "content_position": "bottom-left",
-            "content_width": "full_width",
-            "content_max_width": 100,
-            "content_padding_block": 60,
-            "content_padding_inline": 60,
-            "show_content_background": false,
-            "content_background": "#ffffff",
-            "content_box_opacity": 100,
-            "content_alignment_mobile": "center"
-          }
-        },
-        "slider_item_iAiXpe": {
-          "type": "slider_item",
-          "settings": {
-            "overlay_opacity": 0,
-            "slider_effect": "effect_fadeinup",
-            "subheading": "Look Exclusive",
-            "heading": "High-Top Design",
-            "description": "",
-            "first_button_label": "Shop Collection",
-            "first_button_link": "shopify://collections/crop-top",
-            "first_button_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_style": false,
-            "content_alignment": "left",
-            "content_position": "bottom-left",
-            "content_width": "full_width",
-            "content_max_width": 100,
-            "content_padding_block": 60,
-            "content_padding_inline": 60,
-            "show_content_background": false,
-            "content_background": "#ffffff",
-            "content_box_opacity": 100,
-            "content_alignment_mobile": "center"
+            "focal_point": "default",
+            "subheading": "SUSTAINABLY NURTURED",
+            "heading": "Create Your Dream",
+            "highlighted_phrase": "Green Space",
+            "description": "Shop elegant plants and handcrafted planters for a thriving botanical home.",
+            "button_label": "EXPLORE PLANTS",
+            "button_link": "",
+            "button_label_2": "CARE GUIDES",
+            "button_link_2": "",
+            "overlay_opacity_override": 0
           }
         }
       },
       "block_order": [
-        "slider_item_YipJd4",
-        "slider_item_jiLA39",
-        "slider_item_iAiXpe"
+        "slide_NYtxEE",
+        "slide_w4ihc3"
       ],
-      "custom_css": [
-        ".h-full_screen {--height-topbar: 41px;}"
-      ],
+      "name": "Bloom Hero",
       "settings": {
-        "section_width": "full_width",
-        "slide_height": "full_screen",
-        "desktop_height": 800,
-        "mobile_height": 300,
-        "color_scheme": "scheme-c4fa9b2e-e94e-477a-a1f0-ab1da4f2a676",
-        "subheading_font_size": 15,
-        "subheading_font_weight": "subheading_weight",
-        "subheading_spacing_bottom": 0,
-        "heading_font_size": 70,
-        "heading_font_weight": "heading_weight",
-        "heading_uppercase": false,
-        "heading_spacing_bottom": 12,
-        "des_font_size": 19,
-        "des_font_weight": "heading_weight",
-        "des_spacing_bottom": 60,
-        "slide_effect": "fade",
-        "show_arrow": true,
-        "carousel_pagination": "show_dots",
-        "pagination_position": "center",
-        "autoplay": false,
-        "autorotate_speed": 5,
-        "content_below_image": false,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "reset_spacing": false
+        "enable_section": true,
+        "hero_height": "100vh",
+        "desktop_custom_height": 760,
+        "mobile_custom_height": 540,
+        "section_width": "full_bleed",
+        "color_scheme": "",
+        "content_max_width": 820,
+        "content_alignment": "center",
+        "content_vertical_position": "center",
+        "desktop_focal_point": "center center",
+        "enable_overlay": true,
+        "overlay_color": "#122119",
+        "overlay_opacity": 28,
+        "enable_gradient": true,
+        "gradient_direction": "vertical",
+        "heading_font_size_desktop": 68,
+        "heading_font_size_mobile": 36,
+        "heading_line_height": "1.1",
+        "heading_color": "#ffffff",
+        "italic_heading_color": "#ffffff",
+        "description_font_size_desktop": 18,
+        "description_font_size_mobile": 15,
+        "description_color": "#f5f5f0",
+        "space_between_elements": 20,
+        "show_button": true,
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#183325",
+        "btn_border_color": "transparent",
+        "btn_hover_bg_color": "#f0f7f0",
+        "btn_hover_text_color": "#112319",
+        "btn_radius": 50,
+        "btn_font_size": 13,
+        "enable_autoplay": true,
+        "autoplay_interval": 5,
+        "transition_duration": 800,
+        "show_pagination": true,
+        "show_arrows": true
       }
     },
     "collection_list_VmEYkJ": {
@@ -1104,89 +1065,10 @@
         "padding_bottom": 60,
         "reset_spacing": false
       }
-    },
-    "bloom_hero_4qNHAy": {
-      "type": "bloom-hero",
-      "blocks": {
-        "slide_NYtxEE": {
-          "type": "slide",
-          "settings": {
-            "focal_point": "default",
-            "subheading": "HANDCRAFTED BOTANICALS",
-            "heading": "Grow Your Own",
-            "highlighted_phrase": "Little Paradise",
-            "description": "Discover beautiful plants to bring nature into your home.",
-            "button_label": "SHOP COLLECTION",
-            "button_link": "",
-            "button_label_2": "OUR STORY",
-            "button_link_2": "",
-            "overlay_opacity_override": 0
-          }
-        },
-        "slide_w4ihc3": {
-          "type": "slide",
-          "settings": {
-            "focal_point": "default",
-            "subheading": "SUSTAINABLY NURTURED",
-            "heading": "Create Your Dream",
-            "highlighted_phrase": "Green Space",
-            "description": "Shop elegant plants and handcrafted planters for a thriving botanical home.",
-            "button_label": "EXPLORE PLANTS",
-            "button_link": "",
-            "button_label_2": "CARE GUIDES",
-            "button_link_2": "",
-            "overlay_opacity_override": 0
-          }
-        }
-      },
-      "block_order": [
-        "slide_NYtxEE",
-        "slide_w4ihc3"
-      ],
-      "name": "Bloom Hero",
-      "settings": {
-        "enable_section": true,
-        "hero_height": "100vh",
-        "desktop_custom_height": 760,
-        "mobile_custom_height": 540,
-        "section_width": "full_bleed",
-        "color_scheme": "",
-        "content_max_width": 820,
-        "content_alignment": "center",
-        "content_vertical_position": "center",
-        "desktop_focal_point": "center center",
-        "enable_overlay": true,
-        "overlay_color": "#122119",
-        "overlay_opacity": 28,
-        "enable_gradient": true,
-        "gradient_direction": "vertical",
-        "heading_font_size_desktop": 68,
-        "heading_font_size_mobile": 36,
-        "heading_line_height": "1.1",
-        "heading_color": "#ffffff",
-        "italic_heading_color": "#ffffff",
-        "description_font_size_desktop": 18,
-        "description_font_size_mobile": 15,
-        "description_color": "#f5f5f0",
-        "space_between_elements": 20,
-        "show_button": true,
-        "btn_bg_color": "#ffffff",
-        "btn_text_color": "#183325",
-        "btn_border_color": "transparent",
-        "btn_hover_bg_color": "#f0f7f0",
-        "btn_hover_text_color": "#112319",
-        "btn_radius": 50,
-        "btn_font_size": 13,
-        "enable_autoplay": true,
-        "autoplay_interval": 5,
-        "transition_duration": 800,
-        "show_pagination": true,
-        "show_arrows": true
-      }
     }
   },
   "order": [
-    "slideshow_8KKtNU",
+    "bloom_hero_4qNHAy",
     "collection_list_VmEYkJ",
     "plant_story_grid_athora",
     "interactive_hotspots_athora",
@@ -1203,7 +1085,6 @@
     "instagram_shop_nrVWcV",
     "icon_box_TRwJBD",
     "plant_story_grid_KRziDb",
-    "interactive_image_hotspots_9YW3Ap",
-    "bloom_hero_4qNHAy"
+    "interactive_image_hotspots_9YW3Ap"
   ]
 }
