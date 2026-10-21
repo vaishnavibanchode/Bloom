@@ -1,10 +1,22 @@
 {{ 'athora-planti-sections.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'athora-planti-sections.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign section_st = section.settings
   assign section_width = section_st.section_width
   assign color_scheme = section_st.color_scheme
+  if section_st.reset_spacing
+    assign reset_spacing = ' remove_spacing'
+  endif
   assign scroll_animation = settings.scroll_animation
+  assign heading = section_st.heading
+  assign description = section_st.description
+  assign header_size = ''
+  if section_st.header_size == 'small'
+    assign header_size = 'h3'
+  elsif section_st.header_size == 'large'
+    assign header_size = 'h1-size'
+  endif
 -%}
 
 {%- capture style -%}
@@ -12,32 +24,41 @@
 {%- endcapture -%}
 
 <div
-  class="section planti-hotspot-section color-{{ color_scheme }} gradient"
+  class="section{% if section_st.padding_top < 30 %} pt-min{% endif %}{% if section_st.padding_bottom < 30 %} pb-min{% endif %} sec__interactive-hotspots color-{{ color_scheme }} gradient{{ reset_spacing }}"
   style="{{ style | strip | strip_newlines }}"
+  data-section-id="{{ section.id }}"
 >
-  <div class="{{ section_width }} py-40 py-md-60">
-    {%- if section_st.heading != blank or section_st.description != blank -%}
-      <div class="section__header text-center mb-35">
-        {%- if section_st.heading != blank -%}
+  <div class="{{ section_width }} planti-section-inner">
+    {%- if heading != blank or description != blank -%}
+      <div class="section__header mb-35 text-{{ section_st.header_alignment }}">
+        {%- if heading != blank -%}
           <motion-element
             data-motion="fade-up-lg"
             data-motion-delay="50"
+            {% if scroll_animation != 'slide_in' %}
+              hold
+            {% endif %}
             class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            style="{%- if scroll_animation != 'none' -%}--animation-order: 0;{%- endif -%}"
           >
-            <h2 class="section__header-heading h1 mb-10">
-              {{ section_st.heading }}
+            <h2 class="section__header-heading heading-letter-spacing {{ header_size }} planti-editorial-heading mt-0{% if description != blank %} mb-10{% else %} mb-0{% endif %}">
+              {{ heading }}
             </h2>
           </motion-element>
         {%- endif -%}
-        {%- if section_st.description != blank -%}
+        {%- if description != blank -%}
           <motion-element
             data-motion="fade-up-lg"
             data-motion-delay="150"
+            {% if scroll_animation != 'slide_in' %}
+              hold
+            {% endif %}
             class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+            style="{%- if scroll_animation != 'none' -%}--animation-order: 1;{%- endif -%}"
           >
-            <p class="section__header-des body-text color-secondary fs-16 m-0">
-              {{ section_st.description }}
-            </p>
+            <div class="section__header-des rich__text-m0 body-text color-secondary fs-16 line-height-relaxed">
+              {{ description }}
+            </div>
           </motion-element>
         {%- endif -%}
       </div>
@@ -45,19 +66,23 @@
 
     <motion-element
       data-motion="fade-up-lg"
-      data-motion-delay="250"
+      data-motion-delay="200"
+      {% if scroll_animation != 'slide_in' %}
+        hold
+      {% endif %}
       class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+      style="{%- if scroll_animation != 'none' -%}--animation-order: 2;{%- endif -%}"
     >
-      <div class="planti-hotspot-container">
+      <div class="planti-hotspot-container" data-planti-hotspots>
         {%- if section_st.image != blank -%}
           {{
             section_st.image
-            | image_url: width: 1600
+            | image_url: width: 1800
             | image_tag:
               loading: 'lazy',
               class: 'planti-hotspot-bg',
-              widths: '550, 750, 1100, 1500, 2000',
-              alt: section_st.heading
+              widths: '550, 750, 1100, 1500, 1800',
+              alt: heading | default: 'Shop the Botanical Look'
           }}
         {%- else -%}
           {{ 'lifestyle-2' | placeholder_svg_tag: 'planti-hotspot-bg placeholder-svg' }}
@@ -68,58 +93,85 @@
           <div
             class="planti-hotspot-item"
             style="left: {{ block.settings.pos_x }}%; top: {{ block.settings.pos_y }}%;"
+            data-hotspot-item
             {{ block.shopify_attributes }}
           >
+            <!-- Pulsing Pin Button -->
             <button
               type="button"
               class="planti-hotspot-pin"
               aria-label="View product {{ hotspot_product.title | default: block.settings.title }}"
+              aria-expanded="false"
+              data-hotspot-trigger
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
+              <span class="planti-hotspot-pin__icon" aria-hidden="true">+</span>
             </button>
 
-            <!-- Floating Product Preview Card -->
-            <div class="planti-hotspot-card">
+            <!-- Floating Glassmorphic Product Card -->
+            <div class="planti-hotspot-card" data-hotspot-card>
               {%- if hotspot_product != blank -%}
-                {%- if hotspot_product.featured_image != blank -%}
-                  {{
-                    hotspot_product.featured_image
-                    | image_url: width: 400
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'planti-hotspot-card__img',
-                      alt: hotspot_product.title
-                  }}
-                {%- endif -%}
-                <h4 class="fs-15 font-semibold mb-4 text-ellipsis">
-                  <a href="{{ hotspot_product.url }}" class="color-primary">{{ hotspot_product.title }}</a>
-                </h4>
-                <div class="flex align-center justify-between mt-8">
-                  <span class="font-bold color-accent fs-15">{{ hotspot_product.price | money }}</span>
+                <div class="planti-hotspot-card__media">
+                  {%- if hotspot_product.featured_image != blank -%}
+                    {{
+                      hotspot_product.featured_image
+                      | image_url: width: 400
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'planti-hotspot-card__img',
+                        alt: hotspot_product.title
+                    }}
+                  {%- endif -%}
+                </div>
+                <div class="planti-hotspot-card__info">
+                  <h4 class="planti-hotspot-card__title fs-15 font-semibold mb-4 text-ellipsis">
+                    <a href="{{ hotspot_product.url }}" class="planti-link-dark">
+                      {{ hotspot_product.title }}
+                    </a>
+                  </h4>
+                  <div class="planti-hotspot-card__price mb-12">
+                    <span class="planti-price font-semibold color-primary">
+                      {{ hotspot_product.price | money }}
+                    </span>
+                    {%- if hotspot_product.compare_at_price > hotspot_product.price -%}
+                      <span class="planti-price--compare color-secondary fs-13 line-through ml-6">
+                        {{ hotspot_product.compare_at_price | money }}
+                      </span>
+                    {%- endif -%}
+                  </div>
                   <a
                     href="{{ hotspot_product.url }}"
-                    class="btn btn-outline btn-xs rounded-full px-12 py-4 fs-12 font-medium"
+                    class="planti-btn planti-btn--pill planti-btn--full planti-btn--sm planti-btn--cursor-fill"
+                    data-cursor-fill
                   >
-                    View
+                    <span>View Product</span>
+                    <span class="planti-circle-bg" aria-hidden="true"></span>
                   </a>
                 </div>
               {%- else -%}
-                {%- if block.settings.custom_image != blank -%}
-                  {{
-                    block.settings.custom_image
-                    | image_url: width: 400
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'planti-hotspot-card__img',
-                      alt: block.settings.title
-                  }}
-                {%- endif -%}
-                <h4 class="fs-15 font-semibold mb-4">{{ block.settings.title }}</h4>
-                <p class="fs-13 color-secondary mb-8">{{ block.settings.subtitle }}</p>
-                <span class="font-bold color-accent fs-15">{{ block.settings.price }}</span>
+                <div class="planti-hotspot-card__media">
+                  <div class="planti-hotspot-placeholder-img">
+                    {{ 'product-1' | placeholder_svg_tag: 'planti-hotspot-card__img placeholder-svg' }}
+                  </div>
+                </div>
+                <div class="planti-hotspot-card__info">
+                  <h4 class="planti-hotspot-card__title fs-15 font-semibold mb-4 text-ellipsis">
+                    {{ block.settings.title | default: 'Featured Botanical' }}
+                  </h4>
+                  <p class="fs-13 color-secondary mb-6">{{ block.settings.subtitle | default: 'Includes Planter' }}</p>
+                  <div class="planti-hotspot-card__price mb-12">
+                    <span class="planti-price font-semibold color-primary">
+                      {{ block.settings.price | default: '$48.00' }}
+                    </span>
+                  </div>
+                  <a
+                    href="#"
+                    class="planti-btn planti-btn--pill planti-btn--full planti-btn--sm planti-btn--cursor-fill"
+                    data-cursor-fill
+                  >
+                    <span>Quick Shop</span>
+                    <span class="planti-circle-bg" aria-hidden="true"></span>
+                  </a>
+                </div>
               {%- endif -%}
             </div>
           </div>
@@ -133,66 +185,107 @@
 {
   "name": "Interactive Hotspots",
   "tag": "section",
-  "class": "section-interactive-hotspots",
+  "class": "section-interactive-image-hotspots",
   "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.section_header.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.all.section_header.heading.label",
+      "default": "Shop The Botanical Look"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.all.section_header.description.label",
+      "default": "<p>Tap on any marker to discover featured plants and luxury handcrafted planters.</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_size",
+      "label": "t:sections.all.section_header.header_size.label",
+      "default": "large",
+      "options": [
+        { "value": "small", "label": "t:sections.all.section_header.header_size.small.label" },
+        { "value": "medium", "label": "t:sections.all.section_header.header_size.medium.label" },
+        { "value": "large", "label": "t:sections.all.section_header.header_size.large.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "t:sections.all.section_header.alignment.label",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "t:sections.all.section_header.alignment.left.label" },
+        { "value": "center", "label": "t:sections.all.section_header.alignment.center.label" },
+        { "value": "right", "label": "t:sections.all.section_header.alignment.right.label" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Scene Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main Lookbook Scene Image"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
     {
       "type": "select",
       "id": "section_width",
-      "label": "Section Width",
+      "label": "t:sections.all.section_width.label",
       "default": "container",
       "options": [
-        { "value": "container", "label": "Container" },
-        { "value": "fluid_container", "label": "Fluid Container" }
+        { "value": "container", "label": "t:sections.all.section_width.container.label" },
+        { "value": "fluid_container", "label": "t:sections.all.section_width.fluid_container.label" },
+        { "value": "full_width", "label": "t:sections.all.section_width.full_width.label" }
       ]
     },
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "Color Scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Background Lifestyle Image"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Shop The Botanical Look"
-    },
-    {
-      "type": "text",
-      "id": "description",
-      "label": "Description",
-      "default": "Tap on any marker to discover featured plants and luxury handcrafted planters."
+      "label": "t:sections.all.color_scheme.label",
+      "default": "default"
     },
     {
       "type": "range",
       "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60,
       "min": 0,
       "max": 100,
       "step": 5,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 60
+      "unit": "px"
     },
     {
       "type": "range",
       "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60,
       "min": 0,
       "max": 100,
       "step": 5,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 60
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "reset_spacing",
+      "label": "t:sections.all.reset_spacing.label",
+      "default": false
     }
   ],
   "blocks": [
     {
       "type": "hotspot",
-      "name": "Hotspot Marker",
+      "name": "Hotspot Pin",
       "settings": [
         {
           "type": "range",
@@ -202,7 +295,7 @@
           "step": 1,
           "unit": "%",
           "label": "Horizontal Position (X)",
-          "default": 40
+          "default": 30
         },
         {
           "type": "range",
@@ -212,7 +305,7 @@
           "step": 1,
           "unit": "%",
           "label": "Vertical Position (Y)",
-          "default": 50
+          "default": 45
         },
         {
           "type": "product",
@@ -220,27 +313,26 @@
           "label": "Select Product"
         },
         {
-          "type": "image_picker",
-          "id": "custom_image",
-          "label": "Custom Image (Fallback if no product)"
+          "type": "header",
+          "content": "Custom Fallback Details"
         },
         {
           "type": "text",
           "id": "title",
-          "label": "Custom Title",
-          "default": "Ficus Elastica Rubber Plant"
+          "label": "Title",
+          "default": "Monstera Deliciosa"
         },
         {
           "type": "text",
           "id": "subtitle",
-          "label": "Custom Subtitle",
+          "label": "Subtitle",
           "default": "Includes Terracotta Pot"
         },
         {
           "type": "text",
           "id": "price",
-          "label": "Custom Price",
-          "default": "$65.00"
+          "label": "Price",
+          "default": "$78.00"
         }
       ]
     }
@@ -255,6 +347,7 @@
             "pos_x": 30,
             "pos_y": 45,
             "title": "Monstera Deliciosa",
+            "subtitle": "Includes Terracotta Pot",
             "price": "$78.00"
           }
         },
@@ -264,6 +357,7 @@
             "pos_x": 65,
             "pos_y": 35,
             "title": "Handmade Terracotta Planter",
+            "subtitle": "Natural Clay Finish",
             "price": "$42.00"
           }
         },
@@ -273,6 +367,7 @@
             "pos_x": 80,
             "pos_y": 70,
             "title": "Calathea Orbifolia",
+            "subtitle": "Air Purifying Specimen",
             "price": "$54.00"
           }
         }

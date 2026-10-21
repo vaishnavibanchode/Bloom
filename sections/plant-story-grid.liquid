@@ -1,10 +1,23 @@
 {{ 'athora-planti-sections.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'athora-planti-sections.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign section_st = section.settings
   assign section_width = section_st.section_width
   assign color_scheme = section_st.color_scheme
+  if section_st.reset_spacing
+    assign reset_spacing = ' remove_spacing'
+  endif
   assign scroll_animation = settings.scroll_animation
+  assign heading = section_st.heading
+  assign subheading = section_st.subheading
+  assign description = section_st.description
+  assign header_size = ''
+  if section_st.header_size == 'small'
+    assign header_size = 'h3'
+  elsif section_st.header_size == 'large'
+    assign header_size = 'h1-size'
+  endif
 -%}
 
 {%- capture style -%}
@@ -12,28 +25,33 @@
 {%- endcapture -%}
 
 <div
-  class="section planti-story-grid color-{{ color_scheme }} gradient"
+  class="section{% if section_st.padding_top < 30 %} pt-min{% endif %}{% if section_st.padding_bottom < 30 %} pb-min{% endif %} sec__plant-story-grid color-{{ color_scheme }} gradient{{ reset_spacing }}"
   style="{{ style | strip | strip_newlines }}"
+  data-section-id="{{ section.id }}"
 >
-  <div class="{{ section_width }} py-40 py-md-60">
-    <div class="row align-center">
+  <div class="{{ section_width }} planti-section-inner">
+    <div class="row align-center planti-story-row">
       <!-- Media Column -->
-      <div class="col-12 col-lg-6 mb-30 mb-lg-0">
+      <div class="col-12 col-lg-6 mb-35 mb-lg-0">
         <motion-element
           data-motion="fade-up-lg"
           data-motion-delay="50"
+          {% if scroll_animation != 'slide_in' %}
+            hold
+          {% endif %}
           class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+          style="{%- if scroll_animation != 'none' -%}--animation-order: 0;{%- endif -%}"
         >
           <div class="planti-story-media__wrap">
             {%- if section_st.image != blank -%}
               {{
                 section_st.image
-                | image_url: width: 1200
+                | image_url: width: 1400
                 | image_tag:
                   loading: 'lazy',
                   class: 'planti-story-media__img',
-                  widths: '375, 550, 750, 1100, 1500',
-                  alt: section_st.heading
+                  widths: '375, 550, 750, 1100, 1400',
+                  alt: section_st.heading | default: 'Botanical storytelling'
               }}
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag: 'planti-story-media__img placeholder-svg' }}
@@ -41,96 +59,157 @@
 
             {%- if section_st.badge_text != blank -%}
               <div class="planti-badge-floating">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-                <span>{{ section_st.badge_text }}</span>
+                <span class="planti-badge-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="m9 12 2 2 4-4"/>
+                  </svg>
+                </span>
+                <span class="planti-badge-label">{{ section_st.badge_text }}</span>
               </div>
             {%- endif -%}
           </div>
         </motion-element>
       </div>
 
-      <!-- Text & Content Column -->
+      <!-- Text & Features Column -->
       <div class="col-12 col-lg-6">
-        <div class="planti-story-content pl-lg-30">
-          {%- if section_st.subheading != blank -%}
+        <div class="planti-story-content pl-lg-35">
+          {%- if subheading != blank -%}
             <motion-element
               data-motion="fade-up-lg"
               data-motion-delay="100"
+              {% if scroll_animation != 'slide_in' %}
+                hold
+              {% endif %}
               class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+              style="{%- if scroll_animation != 'none' -%}--animation-order: 1;{%- endif -%}"
             >
-              <span class="eyebrow-text uppercase text-accent tracking-widest font-semibold mb-10 block">
-                {{ section_st.subheading }}
+              <span class="planti-eyebrow uppercase font-semibold mb-12 block">
+                {{ subheading }}
               </span>
             </motion-element>
           {%- endif -%}
 
-          {%- if section_st.heading != blank -%}
+          {%- if heading != blank -%}
             <motion-element
               data-motion="fade-up-lg"
               data-motion-delay="150"
+              {% if scroll_animation != 'slide_in' %}
+                hold
+              {% endif %}
               class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+              style="{%- if scroll_animation != 'none' -%}--animation-order: 2;{%- endif -%}"
             >
-              <h2 class="h1 section__header-heading mb-20">
-                {{ section_st.heading }}
+              <h2 class="section__header-heading heading-letter-spacing {{ header_size }} planti-editorial-heading mt-0 mb-16">
+                {{ heading }}
               </h2>
             </motion-element>
           {%- endif -%}
 
-          {%- if section_st.description != blank -%}
+          {%- if description != blank -%}
             <motion-element
               data-motion="fade-up-lg"
               data-motion-delay="200"
+              {% if scroll_animation != 'slide_in' %}
+                hold
+              {% endif %}
               class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+              style="{%- if scroll_animation != 'none' -%}--animation-order: 3;{%- endif -%}"
             >
-              <div class="rich-text__text body-text color-secondary mb-30 fs-16">
-                {{ section_st.description }}
+              <div class="section__header-des rich__text-m0 body-text color-secondary mb-30 fs-16 line-height-relaxed">
+                {{ description }}
               </div>
             </motion-element>
           {%- endif -%}
 
-          <!-- Blocks Feature Grid -->
-          <div class="row g-15 mb-30">
+          <!-- Feature Cards Grid -->
+          <div class="row g-15 planti-feature-grid mb-30">
             {%- for block in section.blocks -%}
               <div class="col-12 col-sm-6" {{ block.shopify_attributes }}>
                 <motion-element
                   data-motion="fade-up-lg"
-                  data-motion-delay="{{ forloop.index | times: 100 | plus: 200 }}"
+                  data-motion-delay="{{ forloop.index | times: 75 | plus: 200 }}"
+                  {% if scroll_animation != 'slide_in' %}
+                    hold
+                  {% endif %}
                   class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+                  style="{%- if scroll_animation != 'none' -%}--animation-order: {{ forloop.index | plus: 3 }};{%- endif -%}"
                 >
                   <div class="planti-feature-card">
                     <div class="planti-feature-icon">
                       {%- if block.settings.icon_svg != blank -%}
                         {{ block.settings.icon_svg }}
                       {%- else -%}
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
+                        {%- case forloop.index -%}
+                          {%- when 1 -%}
+                            <!-- Leaf / Air Purifying Icon -->
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                            </svg>
+                          {%- when 2 -%}
+                            <!-- Shield / Low Maintenance Icon -->
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                              <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                          {%- when 3 -%}
+                            <!-- Heart / Pet-Safe Icon -->
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                            </svg>
+                          {%- else -%}
+                            <!-- Flower / Sustainable Pot Icon -->
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="3"/>
+                              <path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/>
+                              <path d="M12 7.5V9"/>
+                              <path d="M7.5 12H9"/>
+                              <path d="M16.5 12H15"/>
+                              <path d="M12 16.5V15"/>
+                            </svg>
+                        {%- endcase -%}
                       {%- endif -%}
                     </div>
-                    <h3 class="h4 mb-8 font-semibold fs-18">{{ block.settings.title }}</h3>
-                    <p class="fs-14 color-secondary m-0">{{ block.settings.subtext }}</p>
+                    <div class="planti-feature-body">
+                      <h4 class="planti-feature-title fs-16 font-semibold mb-6">
+                        {{ block.settings.title }}
+                      </h4>
+                      <p class="planti-feature-text fs-14 color-secondary m-0 line-height-relaxed">
+                        {{ block.settings.subtext }}
+                      </p>
+                    </div>
                   </div>
                 </motion-element>
               </div>
             {%- endfor -%}
           </div>
 
+          <!-- Athora Cursor-Fill CTA Button -->
           {%- if section_st.button_label != blank -%}
             <motion-element
               data-motion="fade-up-lg"
-              data-motion-delay="500"
+              data-motion-delay="400"
+              {% if scroll_animation != 'slide_in' %}
+                hold
+              {% endif %}
               class="block {% if scroll_animation != 'none' %} scroll-trigger {{ scroll_animation }}{% endif %}"
+              style="{%- if scroll_animation != 'none' -%}--animation-order: 8;{%- endif -%}"
             >
               <a
                 href="{{ section_st.button_link | default: '#' }}"
-                class="btn btn-primary rounded-full px-35 py-14 font-semibold inline-flex align-center gap-10"
+                class="planti-btn planti-btn--cursor-fill planti-btn--pill"
+                data-cursor-fill
               >
-                <span>{{ section_st.button_label }}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
+                <span class="planti-btn__text">{{ section_st.button_label }}</span>
+                <span class="planti-btn__icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </span>
+                <span class="planti-circle-bg" aria-hidden="true"></span>
               </a>
             </motion-element>
           {%- endif -%}
@@ -147,20 +226,41 @@
   "class": "section-plant-story-grid",
   "settings": [
     {
+      "type": "header",
+      "content": "t:sections.all.section_header.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading / Eyebrow",
+      "default": "OUR PHILOSOPHY"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.all.section_header.heading.label",
+      "default": "Cultivating Living Art for Modern Spaces"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.all.section_header.description.label",
+      "default": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>"
+    },
+    {
       "type": "select",
-      "id": "section_width",
-      "label": "Section Width",
-      "default": "container",
+      "id": "header_size",
+      "label": "t:sections.all.section_header.header_size.label",
+      "default": "large",
       "options": [
-        { "value": "container", "label": "Container" },
-        { "value": "fluid_container", "label": "Fluid Container" }
+        { "value": "small", "label": "t:sections.all.section_header.header_size.small.label" },
+        { "value": "medium", "label": "t:sections.all.section_header.header_size.medium.label" },
+        { "value": "large", "label": "t:sections.all.section_header.header_size.large.label" }
       ]
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color Scheme",
-      "default": "scheme-1"
+      "type": "header",
+      "content": "Story Media"
     },
     {
       "type": "image_picker",
@@ -174,22 +274,8 @@
       "default": "100% Sustainably Grown"
     },
     {
-      "type": "text",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "OUR PHILOSOPHY"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Cultivating Living Art for Modern Spaces"
-    },
-    {
-      "type": "richtext",
-      "id": "description",
-      "label": "Description",
-      "default": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>"
+      "type": "header",
+      "content": "Call To Action"
     },
     {
       "type": "text",
@@ -203,24 +289,51 @@
       "label": "Button Link"
     },
     {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:sections.all.section_width.label",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "t:sections.all.section_width.container.label" },
+        { "value": "fluid_container", "label": "t:sections.all.section_width.fluid_container.label" },
+        { "value": "full_width", "label": "t:sections.all.section_width.full_width.label" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "default"
+    },
+    {
       "type": "range",
       "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60,
       "min": 0,
       "max": 100,
       "step": 5,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 60
+      "unit": "px"
     },
     {
       "type": "range",
       "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60,
       "min": 0,
       "max": 100,
       "step": 5,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 60
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "reset_spacing",
+      "label": "t:sections.all.reset_spacing.label",
+      "default": false
     }
   ],
   "blocks": [
@@ -231,7 +344,7 @@
         {
           "type": "html",
           "id": "icon_svg",
-          "label": "Custom SVG Icon"
+          "label": "Custom SVG Icon (Optional)"
         },
         {
           "type": "text",
