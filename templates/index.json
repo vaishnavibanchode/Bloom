@@ -9,84 +9,6 @@
  */
 {
   "sections": {
-    "bloom_hero": {
-      "type": "bloom-hero",
-      "blocks": {
-        "bloom_hero_slide_1": {
-          "type": "slide",
-          "settings": {
-            "focal_point": "center center",
-            "subheading": "HANDCRAFTED BOTANICALS",
-            "heading": "Grow Your Own",
-            "highlighted_phrase": "Little Paradise",
-            "description": "Discover beautiful indoor plants and handcrafted planters designed to bring nature into your home sanctuary.",
-            "button_label": "SHOP COLLECTION",
-            "button_link": "shopify://collections/all",
-            "button_label_2": "OUR STORY",
-            "button_link_2": "shopify://pages/about-us",
-            "overlay_opacity_override": 0
-          }
-        },
-        "bloom_hero_slide_2": {
-          "type": "slide",
-          "settings": {
-            "focal_point": "center center",
-            "subheading": "SUSTAINABLY NURTURED",
-            "heading": "Cultivate Your",
-            "highlighted_phrase": "Living Oasis",
-            "description": "Hand-picked, resilient greenery paired with artisanal terracotta vessels for calm, mindful living.",
-            "button_label": "EXPLORE PLANTS",
-            "button_link": "shopify://collections/all",
-            "button_label_2": "CARE GUIDES",
-            "button_link_2": "shopify://blogs/news",
-            "overlay_opacity_override": 0
-          }
-        }
-      },
-      "block_order": [
-        "bloom_hero_slide_1",
-        "bloom_hero_slide_2"
-      ],
-      "settings": {
-        "enable_section": true,
-        "hero_height": "100vh",
-        "desktop_custom_height": 760,
-        "mobile_custom_height": 540,
-        "section_width": "full_bleed",
-        "color_scheme": "default",
-        "content_max_width": 860,
-        "content_alignment": "center",
-        "content_vertical_position": "center",
-        "desktop_focal_point": "center center",
-        "enable_overlay": true,
-        "overlay_color": "#122119",
-        "overlay_opacity": 26,
-        "enable_gradient": true,
-        "gradient_direction": "vertical",
-        "heading_font_size_desktop": 68,
-        "heading_font_size_mobile": 36,
-        "heading_line_height": "1.1",
-        "heading_color": "#ffffff",
-        "italic_heading_color": "#ffffff",
-        "description_font_size_desktop": 18,
-        "description_font_size_mobile": 15,
-        "description_color": "#f5f5f0",
-        "space_between_elements": 20,
-        "show_button": true,
-        "btn_bg_color": "#ffffff",
-        "btn_text_color": "#183325",
-        "btn_border_color": "transparent",
-        "btn_hover_bg_color": "#f0f7f0",
-        "btn_hover_text_color": "#112319",
-        "btn_radius": 50,
-        "btn_font_size": 13,
-        "enable_autoplay": true,
-        "autoplay_interval": 5,
-        "transition_duration": 800,
-        "show_pagination": true,
-        "show_arrows": true
-      }
-    },
     "slideshow_8KKtNU": {
       "type": "slideshow",
       "blocks": {
@@ -339,17 +261,19 @@
         "feature_4"
       ],
       "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "image": "shopify://shop_images/415f56c52c2f90062f00b536f01f7284.jpg",
-        "badge_text": "100% Sustainably Grown",
         "subheading": "OUR PHILOSOPHY",
         "heading": "Cultivating Living Art for Modern Spaces",
         "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
+        "header_size": "large",
+        "image": "shopify://shop_images/415f56c52c2f90062f00b536f01f7284.jpg",
+        "badge_text": "100% Sustainably Grown",
         "button_label": "Explore Our Collection",
         "button_link": "shopify://collections",
+        "section_width": "container",
+        "color_scheme": "scheme-1",
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "reset_spacing": false
       }
     },
     "interactive_hotspots_athora": {
@@ -395,25 +319,32 @@
         "hotspot_3"
       ],
       "settings": {
+        "heading": "Shop The Botanical Look",
+        "description": "<p>Tap on any marker to discover featured plants and luxury handcrafted planters.</p>",
+        "header_size": "large",
+        "header_alignment": "center",
         "section_width": "container",
         "color_scheme": "scheme-1",
-        "heading": "Shop The Botanical Look",
-        "description": "Tap on any marker to discover featured plants and luxury handcrafted planters.",
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "reset_spacing": false
       }
     },
     "before_after_slider_athora": {
       "type": "before-after-comparison",
       "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
         "heading": "Witness The Botanical Growth",
-        "description": "Drag the slider to see how our organic plant care transforms growth over 90 days.",
+        "description": "<p>Drag the slider to see how our organic plant care transforms growth over 90 days.</p>",
+        "header_size": "large",
+        "header_alignment": "center",
         "label_before": "DAY 1 - ARRIVAL",
         "label_after": "MONTH 3 - FULL BLOOM",
+        "initial_position": 50,
+        "section_width": "container",
+        "color_scheme": "scheme-1",
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "reset_spacing": false
       }
     },
     "eco_stats_marquee_athora": {
@@ -446,37 +377,41 @@
         "stat_1": {
           "type": "stat_counter",
           "settings": {
-            "target_number": 35000,
+            "prefix": "",
+            "number": "50",
             "suffix": "+",
             "title": "Healthy Plants Shipped",
-            "subtitle": "Arrived safely nationwide"
+            "subtext": "Carefully packaged with temperature monitoring"
           }
         },
         "stat_2": {
           "type": "stat_counter",
           "settings": {
-            "target_number": 99,
+            "prefix": "",
+            "number": "50",
             "suffix": "%",
             "title": "Growth Survival Rate",
-            "subtitle": "Backed by plant experts"
+            "subtext": "Carefully packaged with temperature monitoring"
           }
         },
         "stat_3": {
           "type": "stat_counter",
           "settings": {
-            "target_number": 12000,
+            "prefix": "",
+            "number": "50",
             "suffix": "+",
             "title": "Trees Planted",
-            "subtitle": "In partnership with Eden Projects"
+            "subtext": "Carefully packaged with temperature monitoring"
           }
         },
         "stat_4": {
           "type": "stat_counter",
           "settings": {
-            "target_number": 100,
+            "prefix": "",
+            "number": "50",
             "suffix": "%",
             "title": "Plastic-Free Packaging",
-            "subtitle": "Biodegradable materials"
+            "subtext": "Carefully packaged with temperature monitoring"
           }
         }
       },
@@ -491,13 +426,16 @@
         "stat_4"
       ],
       "settings": {
-        "section_width": "container",
-        "color_scheme": "scheme-1",
         "enable_marquee": true,
         "heading": "Our Growing Impact",
-        "description": "Cultivating sustainability and wellness across thousands of homes nationwide.",
+        "description": "<p>Cultivating sustainability and wellness across thousands of homes nationwide.</p>",
+        "header_size": "large",
+        "header_alignment": "center",
+        "section_width": "container",
+        "color_scheme": "scheme-1",
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "reset_spacing": false
       }
     },
     "products_carousel_AdKeFt": {
@@ -1053,10 +991,202 @@
         "padding_bottom": 0,
         "reset_spacing": true
       }
+    },
+    "plant_story_grid_KRziDb": {
+      "type": "plant-story-grid",
+      "blocks": {
+        "feature_6PCeVg": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Air Purifying",
+            "subtext": "Filters toxins naturally to boost indoor air freshness."
+          }
+        },
+        "feature_DEAaJb": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Low Maintenance",
+            "subtext": "Resilient varieties that thrive even with minimal care."
+          }
+        },
+        "feature_WE98rn": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Pet Safe Varieties",
+            "subtext": "Nontoxic plant species safe for furry companions."
+          }
+        },
+        "feature_Fcfjfr": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "",
+            "title": "Sustainable Clay Pots",
+            "subtext": "Handcrafted terracotta containers built from natural earth."
+          }
+        }
+      },
+      "block_order": [
+        "feature_6PCeVg",
+        "feature_DEAaJb",
+        "feature_WE98rn",
+        "feature_Fcfjfr"
+      ],
+      "name": "Plant Storytelling Grid",
+      "settings": {
+        "subheading": "OUR PHILOSOPHY",
+        "heading": "Cultivating Living Art for Modern Spaces",
+        "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
+        "header_size": "large",
+        "badge_text": "100% Sustainably Grown",
+        "button_label": "Explore Our Collection",
+        "button_link": "",
+        "section_width": "container",
+        "color_scheme": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "reset_spacing": false
+      }
+    },
+    "interactive_image_hotspots_9YW3Ap": {
+      "type": "interactive-image-hotspots",
+      "blocks": {
+        "hotspot_zwpC8D": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 30,
+            "pos_y": 45,
+            "product": "",
+            "title": "Monstera Deliciosa",
+            "subtitle": "Includes Terracotta Pot",
+            "price": "$78.00"
+          }
+        },
+        "hotspot_RzxetJ": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 65,
+            "pos_y": 35,
+            "product": "",
+            "title": "Handmade Terracotta Planter",
+            "subtitle": "Includes Terracotta Pot",
+            "price": "$42.00"
+          }
+        },
+        "hotspot_C9mFMH": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 80,
+            "pos_y": 70,
+            "product": "",
+            "title": "Calathea Orbifolia",
+            "subtitle": "Includes Terracotta Pot",
+            "price": "$54.00"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_zwpC8D",
+        "hotspot_RzxetJ",
+        "hotspot_C9mFMH"
+      ],
+      "name": "Interactive Hotspots",
+      "settings": {
+        "heading": "Shop The Botanical Look",
+        "description": "<p>Tap on any marker to discover featured plants and luxury handcrafted planters.</p>",
+        "header_size": "large",
+        "header_alignment": "center",
+        "section_width": "container",
+        "color_scheme": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "reset_spacing": false
+      }
+    },
+    "bloom_hero_4qNHAy": {
+      "type": "bloom-hero",
+      "blocks": {
+        "slide_NYtxEE": {
+          "type": "slide",
+          "settings": {
+            "focal_point": "default",
+            "subheading": "HANDCRAFTED BOTANICALS",
+            "heading": "Grow Your Own",
+            "highlighted_phrase": "Little Paradise",
+            "description": "Discover beautiful plants to bring nature into your home.",
+            "button_label": "SHOP COLLECTION",
+            "button_link": "",
+            "button_label_2": "OUR STORY",
+            "button_link_2": "",
+            "overlay_opacity_override": 0
+          }
+        },
+        "slide_w4ihc3": {
+          "type": "slide",
+          "settings": {
+            "focal_point": "default",
+            "subheading": "SUSTAINABLY NURTURED",
+            "heading": "Create Your Dream",
+            "highlighted_phrase": "Green Space",
+            "description": "Shop elegant plants and handcrafted planters for a thriving botanical home.",
+            "button_label": "EXPLORE PLANTS",
+            "button_link": "",
+            "button_label_2": "CARE GUIDES",
+            "button_link_2": "",
+            "overlay_opacity_override": 0
+          }
+        }
+      },
+      "block_order": [
+        "slide_NYtxEE",
+        "slide_w4ihc3"
+      ],
+      "name": "Bloom Hero",
+      "settings": {
+        "enable_section": true,
+        "hero_height": "100vh",
+        "desktop_custom_height": 760,
+        "mobile_custom_height": 540,
+        "section_width": "full_bleed",
+        "color_scheme": "",
+        "content_max_width": 820,
+        "content_alignment": "center",
+        "content_vertical_position": "center",
+        "desktop_focal_point": "center center",
+        "enable_overlay": true,
+        "overlay_color": "#122119",
+        "overlay_opacity": 28,
+        "enable_gradient": true,
+        "gradient_direction": "vertical",
+        "heading_font_size_desktop": 68,
+        "heading_font_size_mobile": 36,
+        "heading_line_height": "1.1",
+        "heading_color": "#ffffff",
+        "italic_heading_color": "#ffffff",
+        "description_font_size_desktop": 18,
+        "description_font_size_mobile": 15,
+        "description_color": "#f5f5f0",
+        "space_between_elements": 20,
+        "show_button": true,
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#183325",
+        "btn_border_color": "transparent",
+        "btn_hover_bg_color": "#f0f7f0",
+        "btn_hover_text_color": "#112319",
+        "btn_radius": 50,
+        "btn_font_size": 13,
+        "enable_autoplay": true,
+        "autoplay_interval": 5,
+        "transition_duration": 800,
+        "show_pagination": true,
+        "show_arrows": true
+      }
     }
   },
   "order": [
-    "bloom_hero",
+    "slideshow_8KKtNU",
     "collection_list_VmEYkJ",
     "plant_story_grid_athora",
     "interactive_hotspots_athora",
@@ -1071,6 +1201,9 @@
     "product_testimonials_KNN6XE",
     "rich_text_EcBgbR",
     "instagram_shop_nrVWcV",
-    "icon_box_TRwJBD"
+    "icon_box_TRwJBD",
+    "plant_story_grid_KRziDb",
+    "interactive_image_hotspots_9YW3Ap",
+    "bloom_hero_4qNHAy"
   ]
 }
