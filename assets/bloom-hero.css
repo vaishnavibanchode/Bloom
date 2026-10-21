@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..700;1,300..700&display=swap');
 
 /* ==========================================================================
-   Bloom Hero Section - Athora Planti Editorial Styling
+   Bloom Hero Section - Athora Planti Signature Editorial Styling & Animations
    ========================================================================== */
 
 .bloom-hero {
@@ -15,7 +15,7 @@
   contain: layout paint;
 }
 
-/* Header Integration: Seamless Overlay */
+/* Header Integration: Seamless Transparent Overlay */
 body:has(.header.transparent) .bloom-hero:first-child,
 .transparent + main .bloom-hero:first-child,
 body.has-transparent-header .bloom-hero:first-child {
@@ -88,36 +88,102 @@ body.has-transparent-header .bloom-hero:first-child {
   }
 }
 
-/* Slides Container */
+/* ==========================================================================
+   1. Athora Planti Signature Shrink-On-Scroll Behavior
+   ========================================================================== */
+
+.bloom-hero__shrink-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  --clip-x: 0px;
+  --rounded-lg: 0px;
+}
+
+@media (min-width: 768px) {
+  .bloom-hero--has-shrink .bloom-hero__shrink-wrap {
+    --clip-x: 24px;
+    --rounded-lg: 20px;
+  }
+}
+
+@media (min-width: 1150px) {
+  .bloom-hero--has-shrink .bloom-hero__shrink-wrap {
+    --clip-x: 36px;
+    --rounded-lg: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .bloom-hero--has-shrink .bloom-hero__shrink-wrap {
+    --clip-x: 48px;
+    --rounded-lg: 28px;
+  }
+}
+
+.bloom-hero__shrink-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  clip-path: inset(0 round 0);
+  will-change: clip-path;
+  transition: clip-path 0.1s linear;
+}
+
+@media (max-width: 767px) {
+  .bloom-hero__shrink-inner {
+    clip-path: none !important; /* Disabled on touch/mobile for zero scroll jitter */
+  }
+}
+
+/* ==========================================================================
+   2. Slides Track & Slide Layout
+   ========================================================================== */
+
 .bloom-hero__track {
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  transition: transform var(--bloom-transition-dur, 600ms) cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
 }
 
-/* Individual Slide */
+/* Optional Fade Mode */
+.bloom-hero[data-animation="fade"] .bloom-hero__track {
+  display: block;
+  transform: none !important;
+}
+
 .bloom-hero__slide {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  flex: 0 0 100%;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity var(--bloom-transition-dur, 800ms) cubic-bezier(0.25, 1, 0.5, 1),
-              visibility var(--bloom-transition-dur, 800ms) cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: opacity, visibility;
+  overflow: hidden;
+  user-select: none;
 }
 
-.bloom-hero__slide.is-active {
+.bloom-hero[data-animation="fade"] .bloom-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--bloom-transition-dur, 800ms) cubic-bezier(0.25, 1, 0.5, 1),
+              visibility var(--bloom-transition-dur, 800ms) cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bloom-hero[data-animation="fade"] .bloom-hero__slide.is-active {
   opacity: 1;
   visibility: visible;
   z-index: 2;
-  pointer-events: auto;
 }
 
-/* Media Wrapper & Background Imagery */
+/* ==========================================================================
+   3. Background Media (Video / Image with Ken Burns Zoom)
+   ========================================================================== */
+
 .bloom-hero__media-wrapper {
   position: absolute;
   inset: 0;
@@ -135,7 +201,8 @@ body.has-transparent-header .bloom-hero:first-child {
 }
 
 .bloom-hero__image,
-.bloom-hero__picture img {
+.bloom-hero__picture img,
+.bloom-hero__video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -147,35 +214,20 @@ body.has-transparent-header .bloom-hero:first-child {
 }
 
 .bloom-hero__slide.is-active .bloom-hero__image,
-.bloom-hero__slide.is-active .bloom-hero__picture img {
+.bloom-hero__slide.is-active .bloom-hero__picture img,
+.bloom-hero__slide.is-active .bloom-hero__video {
   transform: scale(1.035);
 }
 
-/* Botanical Fallback Placeholder Artwork */
-.bloom-hero__fallback-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 65% 35%, #2a4736 0%, #172a20 50%, #0d1a13 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* ==========================================================================
+   4. Dark Botanical Overlays & Vignettes
+   ========================================================================== */
 
-.bloom-hero__fallback-art svg {
-  width: 100%;
-  height: 100%;
-  opacity: 0.18;
-  object-fit: cover;
-}
-
-/* Dark Botanical Overlay */
 .bloom-hero__overlay {
   position: absolute;
   inset: 0;
   background-color: var(--bloom-overlay-color, #122119);
-  opacity: var(--bloom-overlay-opacity, 0.3);
+  opacity: var(--bloom-overlay-opacity, 0.26);
   pointer-events: none;
   z-index: 2;
   transition: opacity 0.4s ease;
@@ -185,29 +237,32 @@ body.has-transparent-header .bloom-hero:first-child {
   background: linear-gradient(
     180deg,
     rgba(12, 24, 18, 0.45) 0%,
-    rgba(12, 24, 18, 0.18) 50%,
+    rgba(12, 24, 18, 0.16) 50%,
     rgba(12, 24, 18, 0.55) 100%
   );
 }
 
-.bloom-hero__overlay--bottom-up {
+.bloom-hero__overlay--bottom_up {
   background: linear-gradient(
     0deg,
     rgba(10, 20, 15, 0.65) 0%,
-    rgba(10, 20, 15, 0.25) 60%,
-    rgba(10, 20, 15, 0.4) 100%
+    rgba(10, 20, 15, 0.22) 60%,
+    rgba(10, 20, 15, 0.38) 100%
   );
 }
 
 .bloom-hero__overlay--vignette {
   background: radial-gradient(
     ellipse at center,
-    rgba(18, 33, 25, 0.15) 0%,
-    rgba(10, 20, 15, 0.6) 100%
+    rgba(18, 33, 25, 0.12) 0%,
+    rgba(10, 20, 15, 0.62) 100%
   );
 }
 
-/* Hero Content Area */
+/* ==========================================================================
+   5. Content Area & Planti Staggered Text Reveal Animation ([can-reveal])
+   ========================================================================== */
+
 .bloom-hero__content-box {
   position: relative;
   z-index: 5;
@@ -235,15 +290,58 @@ body.has-transparent-header .bloom-hero:first-child {
   width: 100%;
   margin: 0 auto;
   text-align: var(--bloom-text-align, center);
-  transform: translateY(18px);
-  opacity: 0;
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
-              opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
 }
 
-.bloom-hero__slide.is-active .bloom-hero__inner {
-  transform: translateY(0);
+/* Planti can-reveal Animation Specs:
+   Distance: 16px, Duration: 0.48s, Easing: cubic-bezier(0, 0, 0.2, 1) */
+.bloom-hero [can-reveal] {
+  opacity: 0.01;
+  transform: translateY(16px);
+  transition: opacity 0.48s cubic-bezier(0, 0, 0.2, 1),
+              transform 0.48s cubic-bezier(0, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.bloom-hero__slide.is-active [can-reveal] {
   opacity: 1;
+  transform: translateY(0);
+}
+
+.bloom-hero__slide.is-active .bloom-hero__eyebrow[can-reveal] {
+  transition-delay: 0.06s;
+}
+
+.bloom-hero__slide.is-active .bloom-hero__heading[can-reveal] {
+  transition-delay: 0.14s;
+}
+
+.bloom-hero__slide.is-active .bloom-hero__description[can-reveal] {
+  transition-delay: 0.24s;
+}
+
+.bloom-hero__slide.is-active .bloom-hero__cta-wrapper[can-reveal] {
+  transition-delay: 0.34s;
+}
+
+/* Planti Editorial Eyebrow Badge */
+.bloom-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 16px;
+  padding: 6px 18px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 }
 
 /* Editorial Heading */
@@ -288,33 +386,10 @@ body.has-transparent-header .bloom-hero:first-child {
   margin-right: 0;
 }
 
-/* Planti Editorial Eyebrow Badge */
-.bloom-hero__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, sans-serif);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.92);
-  margin-bottom: 16px;
-  padding: 6px 18px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 9999px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease;
-}
+/* ==========================================================================
+   6. Planti Magnetic Ripple Button (.bloom-hero__circle-bg)
+   ========================================================================== */
 
-.bloom-hero__eyebrow:hover {
-  transform: translateY(-1px);
-}
-
-/* CTA Buttons Wrapper */
 .bloom-hero__cta-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -325,62 +400,88 @@ body.has-transparent-header .bloom-hero:first-child {
 }
 
 .bloom-hero__btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  font-family: var(--planti-font-body, 'Plus Jakarta Sans', var(--body-font), sans-serif);
+  border-radius: var(--bloom-btn-radius, 9999px);
+  padding: 16px 38px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', sans-serif);
   font-size: var(--bloom-btn-font-sz, 13px);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  text-decoration: none;
-  background-color: var(--bloom-btn-bg, #ffffff);
-  color: var(--bloom-btn-text, #183325);
-  border: 1px solid var(--bloom-btn-border, transparent);
-  border-radius: var(--bloom-btn-radius, 9999px);
-  padding: 16px 38px;
-  cursor: pointer;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              background-color 0.35s ease,
-              color 0.35s ease,
-              border-color 0.35s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+  clip-path: inset(0 round var(--bloom-btn-radius, 9999px));
   -webkit-tap-highlight-color: transparent;
 }
 
-.bloom-hero__btn span {
+.bloom-hero__btn-inner {
   position: relative;
   z-index: 2;
-  transition: transform 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-.bloom-hero__btn:hover {
-  background-color: var(--bloom-btn-hover-bg, #f3f7f3);
-  color: var(--bloom-btn-hover-text, #0f2118);
-  transform: translateY(-2px) scale(1.015);
+/* Athora Planti Signature Circle Background Scaling from Cursor */
+.bloom-hero__circle-bg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease;
+}
+
+.bloom-hero__btn--primary {
+  background-color: var(--bloom-btn-bg, #ffffff);
+  color: var(--bloom-btn-text, #183325);
+  border: 1px solid var(--bloom-btn-border, transparent);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+}
+
+.bloom-hero__btn--primary .bloom-hero__circle-bg {
+  background-color: var(--bloom-btn-hover-bg, #f0f7f0);
+}
+
+.bloom-hero__btn--primary:hover {
+  color: var(--bloom-btn-hover-text, #112319);
+  transform: translateY(-2px);
   box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
 }
 
-.bloom-hero__btn:active {
-  transform: translateY(0) scale(0.99);
-}
-
-/* Secondary CTA Style */
 .bloom-hero__btn--secondary {
   background-color: rgba(255, 255, 255, 0.12);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
+.bloom-hero__btn--secondary .bloom-hero__circle-bg {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
 .bloom-hero__btn--secondary:hover {
-  background-color: rgba(255, 255, 255, 0.25);
   color: #ffffff;
   border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.bloom-hero__btn:active {
+  transform: translateY(0) scale(0.99);
 }
 
 .bloom-hero__btn:focus-visible {
@@ -388,30 +489,13 @@ body.has-transparent-header .bloom-hero:first-child {
   outline-offset: 3px;
 }
 
-/* Planti Cursor-Fill Ripple Effect on CTA */
-.bloom-hero__btn .bloom-hero__btn-ripple {
-  position: absolute;
-  top: var(--mouse-y, 50%);
-  left: var(--mouse-x, 50%);
-  width: 0;
-  height: 0;
-  background: var(--bloom-btn-hover-bg, #eaf2ea);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease-out, height 0.5s ease-out;
-  pointer-events: none;
-  z-index: 1;
-}
+/* ==========================================================================
+   7. Planti SVG Progress Ring Pagination
+   ========================================================================== */
 
-.bloom-hero__btn:hover .bloom-hero__btn-ripple {
-  width: 320px;
-  height: 320px;
-}
-
-/* Bottom Center Minimal Circular Pagination */
 .bloom-hero__pagination {
   position: absolute;
-  bottom: 32px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -419,22 +503,19 @@ body.has-transparent-header .bloom-hero:first-child {
   justify-content: center;
   gap: 12px;
   z-index: 10;
-  padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  background: rgba(18, 33, 25, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.bloom-hero__pagination.is-hidden {
-  display: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .bloom-hero__dot {
   position: relative;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: transparent;
   border: none;
   padding: 0;
@@ -448,79 +529,46 @@ body.has-transparent-header .bloom-hero:first-child {
   transition: transform 0.25s ease;
 }
 
+.bloom-hero__dot:hover {
+  transform: scale(1.15);
+}
+
+.bloom-hero__progress-svg {
+  width: 14px;
+  height: 14px;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.bloom-hero__progress-circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 5;
+  transition: stroke 0.3s ease;
+}
+
+.bloom-hero__progress-path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 6;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.bloom-hero__dot.is-active .bloom-hero__progress-circle {
+  stroke: rgba(255, 255, 255, 0.18);
+}
+
 .bloom-hero__dot:focus-visible {
   outline: 2px solid #ffffff;
   outline-offset: 2px;
 }
 
-/* Inner Core Dot */
-.bloom-hero__dot-core {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.55);
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-              background-color 0.3s ease;
-}
+/* ==========================================================================
+   8. Glassmorphic Navigation Chevrons
+   ========================================================================== */
 
-.bloom-hero__dot:hover .bloom-hero__dot-core {
-  background-color: rgba(255, 255, 255, 0.95);
-  transform: scale(1.2);
-}
-
-/* Active Ring */
-.bloom-hero__dot-ring {
-  position: absolute;
-  inset: 0;
-  border: 1.5px solid #ffffff;
-  border-radius: 50%;
-  opacity: 0;
-  transform: scale(0.6);
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              opacity 0.35s ease;
-}
-
-.bloom-hero__dot.is-active .bloom-hero__dot-core {
-  background-color: #ffffff;
-  transform: scale(0.9);
-}
-
-.bloom-hero__dot.is-active .bloom-hero__dot-ring {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Active Progress Circle SVG (Planti Style) */
-.bloom-hero__dot svg.bloom-hero__progress-svg {
-  position: absolute;
-  inset: -1px;
-  width: 16px;
-  height: 16px;
-  transform: rotate(-90deg);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.bloom-hero__dot.is-active svg.bloom-hero__progress-svg {
-  opacity: 1;
-}
-
-.bloom-hero__dot circle.bloom-hero__progress-track {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.25);
-  stroke-width: 1.5;
-}
-
-.bloom-hero__dot circle.bloom-hero__progress-fill {
-  fill: none;
-  stroke: #ffffff;
-  stroke-width: 1.5;
-  stroke-dasharray: 44;
-  stroke-dashoffset: 44;
-  transition: stroke-dashoffset 0.1s linear;
-}
-
-/* Glassmorphic Navigation Chevrons */
 .bloom-hero__arrow {
   position: absolute;
   top: 50%;
@@ -583,7 +631,10 @@ body.has-transparent-header .bloom-hero:first-child {
   }
 }
 
-/* Mobile & Tablet Fine-Tuning */
+/* ==========================================================================
+   9. Mobile & Tablet Fine-Tuning
+   ========================================================================== */
+
 @media (max-width: 1024px) {
   .bloom-hero__content-box {
     padding-left: 20px;
@@ -620,20 +671,26 @@ body.has-transparent-header .bloom-hero:first-child {
     letter-spacing: 0.06em;
   }
   .bloom-hero__pagination {
-    bottom: 22px;
+    bottom: 20px;
     gap: 10px;
-    padding: 5px 10px;
+    padding: 5px 12px;
   }
 }
 
-/* Reduced Motion Support */
+/* ==========================================================================
+   10. Reduced Motion Support
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .bloom-hero__slide,
   .bloom-hero__inner,
   .bloom-hero__image,
-  .bloom-hero__btn {
+  .bloom-hero__video,
+  .bloom-hero__btn,
+  .bloom-hero [can-reveal] {
     transition: none !important;
     animation: none !important;
     transform: none !important;
+    opacity: 1 !important;
   }
 }

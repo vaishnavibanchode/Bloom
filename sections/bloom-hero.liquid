@@ -22,7 +22,7 @@
 {%- if section_st.enable_section and section.blocks.size > 0 -%}
   <bloom-hero
     id="bloom-hero-{{ section.id }}"
-    class="bloom-hero bloom-hero--h-{{ hero_height }}{% if section_width == 'full_bleed' %} bloom-hero--full-bleed{% else %} bloom-hero--container{% endif %} color-{{ color_scheme }}"
+    class="bloom-hero bloom-hero--h-{{ hero_height }}{% if section_width == 'full_bleed' %} bloom-hero--full-bleed{% else %} bloom-hero--container{% endif %} color-{{ color_scheme }}{% if section_st.enable_shrink_on_scroll %} bloom-hero--has-shrink{% endif %}"
     role="region"
     aria-roledescription="carousel"
     aria-label="Featured Botanical Slideshow"
@@ -30,6 +30,8 @@
     data-autoplay="{{ autoplay }}"
     data-interval="{{ autoplay_interval }}"
     data-transition="{{ transition_duration }}"
+    data-animation="{{ section_st.slide_animation | default: 'slide' }}"
+    data-shrink="{{ section_st.enable_shrink_on_scroll }}"
     style="
       --bloom-hero-h-desktop: {{ section_st.desktop_custom_height }}px;
       --bloom-hero-h-mobile: {{ section_st.mobile_custom_height }}px;
@@ -57,212 +59,229 @@
       --bloom-transition-dur: {{ transition_duration }}ms;
     "
   >
-    <div class="bloom-hero__track" aria-live="polite">
-      {%- for block in section.blocks -%}
-        {%- liquid
-          assign block_st = block.settings
-          assign desktop_image = block_st.image
-          assign mobile_image = block_st.image_mobile | default: desktop_image
-          assign focal_point = block_st.focal_point
-          if focal_point == 'default' or focal_point == blank
-            assign focal_point = section_st.desktop_focal_point
-          endif
+    <div class="bloom-hero__shrink-wrap">
+      <div class="bloom-hero__shrink-inner">
+        <div class="bloom-hero__track" aria-live="polite">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_st = block.settings
+              assign desktop_image = block_st.image
+              assign mobile_image = block_st.image_mobile | default: desktop_image
+              assign focal_point = block_st.focal_point
+              if focal_point == 'default' or focal_point == blank
+                assign focal_point = section_st.desktop_focal_point
+              endif
 
-          assign slide_opacity = overlay_opacity
-          if block_st.overlay_opacity_override > 0
-            assign slide_opacity = block_st.overlay_opacity_override | divided_by: 100.0
-          endif
+              assign slide_opacity = overlay_opacity
+              if block_st.overlay_opacity_override > 0
+                assign slide_opacity = block_st.overlay_opacity_override | divided_by: 100.0
+              endif
 
-          assign btn_url = block_st.button_link
-          if btn_url == blank
-            assign btn_url = routes.all_products_collection_url
-          endif
+              assign btn_url = block_st.button_link
+              if btn_url == blank
+                assign btn_url = routes.all_products_collection_url
+              endif
 
-          assign btn_url_2 = block_st.button_link_2
-          if btn_url_2 == blank
-            assign btn_url_2 = routes.all_products_collection_url
-          endif
-        -%}
+              assign btn_url_2 = block_st.button_link_2
+              if btn_url_2 == blank
+                assign btn_url_2 = routes.all_products_collection_url
+              endif
+            -%}
 
-        <div
-          class="bloom-hero__slide{% if forloop.first %} is-active{% endif %}"
-          data-index="{{ forloop.index0 }}"
-          data-block-id="{{ block.id }}"
-          role="group"
-          aria-roledescription="slide"
-          aria-label="Slide {{ forloop.index }} of {{ forloop.length }}"
-          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          <!-- Media Background -->
-          <div class="bloom-hero__media-wrapper">
-            {%- if desktop_image != blank -%}
-              <picture class="bloom-hero__picture">
-                {%- if mobile_image != blank and mobile_image != desktop_image -%}
-                  <source
-                    media="(max-width: 767px)"
-                    srcset="
-                      {{ mobile_image | image_url: width: 480 }} 480w,
-                      {{ mobile_image | image_url: width: 750 }} 750w,
-                      {{ mobile_image | image_url: width: 1000 }} 1000w
-                    "
-                    sizes="100vw"
-                  >
-                {%- endif -%}
-                <img
-                  src="{{ desktop_image | image_url: width: 1920 }}"
-                  srcset="
-                    {{ desktop_image | image_url: width: 600 }} 600w,
-                    {{ desktop_image | image_url: width: 900 }} 900w,
-                    {{ desktop_image | image_url: width: 1200 }} 1200w,
-                    {{ desktop_image | image_url: width: 1600 }} 1600w,
-                    {{ desktop_image | image_url: width: 2000 }} 2000w,
-                    {{ desktop_image | image_url: width: 2560 }} 2560w
-                  "
-                  sizes="100vw"
-                  alt="{{ desktop_image.alt | default: block_st.heading | escape }}"
-                  class="bloom-hero__image"
-                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                  fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
-                  style="--bloom-focal: {{ focal_point }};"
-                >
-              </picture>
-            {%- else -%}
-              <!-- Default Elegant Botanical Imagery Asset -->
-              {%- liquid
-                assign fallback_mod = forloop.index | modulo: 2
-                if fallback_mod == 0
-                  assign fallback_asset_name = 'bloom-hero-slide-2.jpg'
-                else
-                  assign fallback_asset_name = 'bloom-hero-slide-1.jpg'
-                endif
-              -%}
-              <img
-                src="{{ fallback_asset_name | asset_url }}"
-                alt="{{ block_st.heading | default: 'Botanical greenhouse sanctuary' | escape }}"
-                class="bloom-hero__image"
-                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
-                style="--bloom-focal: {{ focal_point }};"
-                width="1920"
-                height="1080"
-              >
-            {%- endif -%}
-          </div>
-
-          <!-- Overlay -->
-          {%- if enable_overlay -%}
             <div
-              class="bloom-hero__overlay{% if enable_gradient %} bloom-hero__overlay--{{ gradient_direction }}{% endif %}"
-              style="--bloom-overlay-opacity: {{ slide_opacity }};"
-            ></div>
-          {%- endif -%}
-
-          <!-- Content Area -->
-          <div class="bloom-hero__content-box bloom-hero__content-box--{{ content_vertical_position }}" data-align="{{ content_alignment }}">
-            <div class="bloom-hero__inner">
-              {%- if block_st.subheading != blank -%}
-                <div class="bloom-hero__eyebrow">
-                  <span class="bloom-hero__eyebrow-text">{{ block_st.subheading }}</span>
-                </div>
-              {%- endif -%}
-
-              {%- if block_st.heading != blank -%}
-                {%- if forloop.first -%}
-                  <h1 class="bloom-hero__heading">
-                    {%- if block_st.highlighted_phrase != blank -%}
-                      {{ block_st.heading }} <em>{{ block_st.highlighted_phrase }}</em>
-                    {%- else -%}
-                      {{ block_st.heading }}
-                    {%- endif -%}
-                  </h1>
-                {%- else -%}
-                  <h2 class="bloom-hero__heading">
-                    {%- if block_st.highlighted_phrase != blank -%}
-                      {{ block_st.heading }} <em>{{ block_st.highlighted_phrase }}</em>
-                    {%- else -%}
-                      {{ block_st.heading }}
-                    {%- endif -%}
-                  </h2>
-                {%- endif -%}
-              {%- endif -%}
-
-              {%- if block_st.description != blank -%}
-                <div class="bloom-hero__description">
-                  {{ block_st.description }}
-                </div>
-              {%- endif -%}
-
-              {%- if section_st.show_button and block_st.button_label != blank -%}
-                <div class="bloom-hero__cta-wrapper">
-                  <a
-                    href="{{ btn_url }}"
-                    class="bloom-hero__btn bloom-hero__btn--primary"
+              class="bloom-hero__slide{% if forloop.first %} is-active{% endif %}"
+              data-index="{{ forloop.index0 }}"
+              data-block-id="{{ block.id }}"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="Slide {{ forloop.index }} of {{ forloop.length }}"
+              aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <!-- Media Background -->
+              <div class="bloom-hero__media-wrapper">
+                {%- if block_st.html5_video != blank -%}
+                  <video
+                    class="bloom-hero__video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    poster="{{ desktop_image | image_url: width: 1920 }}"
                   >
-                    <span class="bloom-hero__btn-ripple"></span>
-                    <span>{{ block_st.button_label }}</span>
-                  </a>
-                  {%- if block_st.button_label_2 != blank -%}
-                    <a
-                      href="{{ btn_url_2 }}"
-                      class="bloom-hero__btn bloom-hero__btn--secondary"
+                    <source src="{{ block_st.html5_video }}" type="video/mp4">
+                  </video>
+                {%- elsif desktop_image != blank -%}
+                  <picture class="bloom-hero__picture">
+                    {%- if mobile_image != blank and mobile_image != desktop_image -%}
+                      <source
+                        media="(max-width: 767px)"
+                        srcset="
+                          {{ mobile_image | image_url: width: 480 }} 480w,
+                          {{ mobile_image | image_url: width: 750 }} 750w,
+                          {{ mobile_image | image_url: width: 1000 }} 1000w
+                        "
+                        sizes="100vw"
+                      >
+                    {%- endif -%}
+                    <img
+                      src="{{ desktop_image | image_url: width: 1920 }}"
+                      srcset="
+                        {{ desktop_image | image_url: width: 600 }} 600w,
+                        {{ desktop_image | image_url: width: 900 }} 900w,
+                        {{ desktop_image | image_url: width: 1200 }} 1200w,
+                        {{ desktop_image | image_url: width: 1600 }} 1600w,
+                        {{ desktop_image | image_url: width: 2000 }} 2000w,
+                        {{ desktop_image | image_url: width: 2560 }} 2560w
+                      "
+                      sizes="100vw"
+                      alt="{{ desktop_image.alt | default: block_st.heading | escape }}"
+                      class="bloom-hero__image"
+                      loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                      fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+                      style="--bloom-focal: {{ focal_point }};"
                     >
-                      <span class="bloom-hero__btn-ripple"></span>
-                      <span>{{ block_st.button_label_2 }}</span>
-                    </a>
+                  </picture>
+                {%- else -%}
+                  {%- liquid
+                    assign fallback_mod = forloop.index | modulo: 2
+                    if fallback_mod == 0
+                      assign fallback_asset_name = 'bloom-hero-slide-2.jpg'
+                    else
+                      assign fallback_asset_name = 'bloom-hero-slide-1.jpg'
+                    endif
+                  -%}
+                  <img
+                    src="{{ fallback_asset_name | asset_url }}"
+                    alt="{{ block_st.heading | default: 'Botanical greenhouse sanctuary' | escape }}"
+                    class="bloom-hero__image"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                    fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+                    style="--bloom-focal: {{ focal_point }};"
+                    width="1920"
+                    height="1080"
+                  >
+                {%- endif -%}
+              </div>
+
+              <!-- Overlay -->
+              {%- if enable_overlay -%}
+                <div
+                  class="bloom-hero__overlay{% if enable_gradient %} bloom-hero__overlay--{{ gradient_direction }}{% endif %}"
+                  style="--bloom-overlay-opacity: {{ slide_opacity }};"
+                ></div>
+              {%- endif -%}
+
+              <!-- Content Area with Staggered Planti Reveal -->
+              <div class="bloom-hero__content-box bloom-hero__content-box--{{ content_vertical_position }}" data-align="{{ content_alignment }}">
+                <div class="bloom-hero__inner">
+                  {%- if block_st.subheading != blank -%}
+                    <div class="bloom-hero__eyebrow" can-reveal>
+                      <span class="bloom-hero__eyebrow-text">{{ block_st.subheading }}</span>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block_st.heading != blank -%}
+                    {%- if forloop.first -%}
+                      <h1 class="bloom-hero__heading" can-reveal>
+                        {%- if block_st.highlighted_phrase != blank -%}
+                          {{ block_st.heading }} <em>{{ block_st.highlighted_phrase }}</em>
+                        {%- else -%}
+                          {{ block_st.heading }}
+                        {%- endif -%}
+                      </h1>
+                    {%- else -%}
+                      <h2 class="bloom-hero__heading" can-reveal>
+                        {%- if block_st.highlighted_phrase != blank -%}
+                          {{ block_st.heading }} <em>{{ block_st.highlighted_phrase }}</em>
+                        {%- else -%}
+                          {{ block_st.heading }}
+                        {%- endif -%}
+                      </h2>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  {%- if block_st.description != blank -%}
+                    <div class="bloom-hero__description" can-reveal>
+                      {{ block_st.description }}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if section_st.show_button and block_st.button_label != blank -%}
+                    <div class="bloom-hero__cta-wrapper" can-reveal>
+                      <a
+                        href="{{ btn_url }}"
+                        class="bloom-hero__btn bloom-hero__btn--primary"
+                      >
+                        <span class="bloom-hero__btn-inner">
+                          <span>{{ block_st.button_label }}</span>
+                          <span class="bloom-hero__circle-bg" aria-hidden="true"></span>
+                        </span>
+                      </a>
+                      {%- if block_st.button_label_2 != blank -%}
+                        <a
+                          href="{{ btn_url_2 }}"
+                          class="bloom-hero__btn bloom-hero__btn--secondary"
+                        >
+                          <span class="bloom-hero__btn-inner">
+                            <span>{{ block_st.button_label_2 }}</span>
+                            <span class="bloom-hero__circle-bg" aria-hidden="true"></span>
+                          </span>
+                        </a>
+                      {%- endif -%}
+                    </div>
                   {%- endif -%}
                 </div>
-              {%- endif -%}
+              </div>
             </div>
-          </div>
+          {%- endfor -%}
         </div>
-      {%- endfor -%}
-    </div>
 
-    <!-- Minimal Circular Bottom Pagination -->
-    {%- if section.blocks.size > 1 and show_pagination -%}
-      <div class="bloom-hero__pagination" role="tablist" aria-label="Slideshow pagination">
-        {%- for block in section.blocks -%}
+        <!-- Planti SVG Progress Ring Pagination -->
+        {%- if section.blocks.size > 1 and show_pagination -%}
+          <div class="bloom-hero__pagination" role="tablist" aria-label="Slideshow pagination">
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="bloom-hero__dot{% if forloop.first %} is-active{% endif %}"
+                role="tab"
+                aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-label="Go to slide {{ forloop.index }}"
+                data-index="{{ forloop.index0 }}"
+              >
+                <svg class="bloom-hero__progress-svg" viewBox="0 0 70 70" width="16" height="16" aria-hidden="true">
+                  <path class="bloom-hero__progress-circle" d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z"></path>
+                  <path class="bloom-hero__progress-path" d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" pathLength="1"></path>
+                </svg>
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <!-- Glassmorphic Navigation Chevrons -->
+        {%- if section.blocks.size > 1 and section_st.show_arrows -%}
           <button
             type="button"
-            class="bloom-hero__dot{% if forloop.first %} is-active{% endif %}"
-            role="tab"
-            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-            aria-label="Go to slide {{ forloop.index }}"
-            data-index="{{ forloop.index0 }}"
+            class="bloom-hero__arrow bloom-hero__arrow--prev"
+            aria-label="Previous slide"
           >
-            <span class="bloom-hero__dot-core"></span>
-            <span class="bloom-hero__dot-ring"></span>
-            <svg class="bloom-hero__progress-svg" viewBox="0 0 16 16" aria-hidden="true">
-              <circle class="bloom-hero__progress-track" cx="8" cy="8" r="7"></circle>
-              <circle class="bloom-hero__progress-fill" cx="8" cy="8" r="7"></circle>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
-        {%- endfor -%}
+          <button
+            type="button"
+            class="bloom-hero__arrow bloom-hero__arrow--next"
+            aria-label="Next slide"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        {%- endif -%}
       </div>
-    {%- endif -%}
-
-    <!-- Glassmorphic Navigation Chevrons -->
-    {%- if section.blocks.size > 1 and section_st.show_arrows -%}
-      <button
-        type="button"
-        class="bloom-hero__arrow bloom-hero__arrow--prev"
-        aria-label="Previous slide"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="bloom-hero__arrow bloom-hero__arrow--next"
-        aria-label="Next slide"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-    {%- endif -%}
+    </div>
   </bloom-hero>
 {%- endif -%}
 
@@ -281,6 +300,29 @@
       "id": "enable_section",
       "label": "Enable Section",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_shrink_on_scroll",
+      "label": "Enable Shrink-On-Scroll (Athora Planti Effect)",
+      "default": true,
+      "info": "Smoothly frames the hero section with rounded corners as user scrolls down"
+    },
+    {
+      "type": "select",
+      "id": "slide_animation",
+      "label": "Slideshow Transition",
+      "default": "slide",
+      "options": [
+        {
+          "value": "slide",
+          "label": "Smooth Slide (Athora Planti Default)"
+        },
+        {
+          "value": "fade",
+          "label": "Cross Dissolve / Fade"
+        }
+      ]
     },
     {
       "type": "select",
@@ -705,6 +747,12 @@
           "id": "image_mobile",
           "label": "Mobile Background Image (Optional)",
           "info": "Falls back to desktop image if left empty"
+        },
+        {
+          "type": "text",
+          "id": "html5_video",
+          "label": "Background Video URL (Optional MP4)",
+          "info": "Direct MP4 link for looping background video"
         },
         {
           "type": "select",
