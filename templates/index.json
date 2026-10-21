@@ -9,6 +9,84 @@
  */
 {
   "sections": {
+    "bloom_hero": {
+      "type": "bloom-hero",
+      "blocks": {
+        "bloom_hero_slide_1": {
+          "type": "slide",
+          "settings": {
+            "focal_point": "center center",
+            "subheading": "HANDCRAFTED BOTANICALS",
+            "heading": "Grow Your Own",
+            "highlighted_phrase": "Little Paradise",
+            "description": "Discover beautiful indoor plants and handcrafted planters designed to bring nature into your home sanctuary.",
+            "button_label": "SHOP COLLECTION",
+            "button_link": "shopify://collections/all",
+            "button_label_2": "OUR STORY",
+            "button_link_2": "shopify://pages/about-us",
+            "overlay_opacity_override": 0
+          }
+        },
+        "bloom_hero_slide_2": {
+          "type": "slide",
+          "settings": {
+            "focal_point": "center center",
+            "subheading": "SUSTAINABLY NURTURED",
+            "heading": "Cultivate Your",
+            "highlighted_phrase": "Living Oasis",
+            "description": "Hand-picked, resilient greenery paired with artisanal terracotta vessels for calm, mindful living.",
+            "button_label": "EXPLORE PLANTS",
+            "button_link": "shopify://collections/all",
+            "button_label_2": "CARE GUIDES",
+            "button_link_2": "shopify://blogs/news",
+            "overlay_opacity_override": 0
+          }
+        }
+      },
+      "block_order": [
+        "bloom_hero_slide_1",
+        "bloom_hero_slide_2"
+      ],
+      "settings": {
+        "enable_section": true,
+        "hero_height": "100vh",
+        "desktop_custom_height": 760,
+        "mobile_custom_height": 540,
+        "section_width": "full_bleed",
+        "color_scheme": "default",
+        "content_max_width": 860,
+        "content_alignment": "center",
+        "content_vertical_position": "center",
+        "desktop_focal_point": "center center",
+        "enable_overlay": true,
+        "overlay_color": "#122119",
+        "overlay_opacity": 26,
+        "enable_gradient": true,
+        "gradient_direction": "vertical",
+        "heading_font_size_desktop": 68,
+        "heading_font_size_mobile": 36,
+        "heading_line_height": "1.1",
+        "heading_color": "#ffffff",
+        "italic_heading_color": "#ffffff",
+        "description_font_size_desktop": 18,
+        "description_font_size_mobile": 15,
+        "description_color": "#f5f5f0",
+        "space_between_elements": 20,
+        "show_button": true,
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#183325",
+        "btn_border_color": "transparent",
+        "btn_hover_bg_color": "#f0f7f0",
+        "btn_hover_text_color": "#112319",
+        "btn_radius": 50,
+        "btn_font_size": 13,
+        "enable_autoplay": true,
+        "autoplay_interval": 5,
+        "transition_duration": 800,
+        "show_pagination": true,
+        "show_arrows": true
+      }
+    },
     "slideshow_8KKtNU": {
       "type": "slideshow",
       "blocks": {
@@ -978,7 +1056,7 @@
     }
   },
   "order": [
-    "slideshow_8KKtNU",
+    "bloom_hero",
     "collection_list_VmEYkJ",
     "plant_story_grid_athora",
     "interactive_hotspots_athora",
