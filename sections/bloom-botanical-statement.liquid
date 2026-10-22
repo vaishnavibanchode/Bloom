@@ -1,0 +1,420 @@
+{{ 'bloom-botanical-statement.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-botanical-statement.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign btn_url = section_st.button_link
+  if btn_url == blank
+    assign btn_url = routes.all_products_collection_url
+  endif
+-%}
+
+{%- if section_st.enable_section -%}
+  <bloom-statement
+    id="bloom-statement-{{ section.id }}"
+    class="bloom-statement"
+    data-reveal="{{ section_st.enable_scroll_reveal }}"
+    style="
+      --bloom-stmt-bg: {{ section_st.background_color }};
+      --bloom-stmt-min-h: {{ section_st.section_min_height }}px;
+      --bloom-stmt-pt: {{ section_st.padding_top_desktop }}px;
+      --bloom-stmt-pb: {{ section_st.padding_bottom_desktop }}px;
+      --bloom-stmt-pt-mb: {{ section_st.padding_top_mobile }}px;
+      --bloom-stmt-pb-mb: {{ section_st.padding_bottom_mobile }}px;
+      --bloom-stmt-mw: {{ section_st.max_content_width }}px;
+      --bloom-stmt-leaf-w: {{ section_st.leaf_width_desktop }}px;
+      --bloom-stmt-leaf-w-mb: {{ section_st.leaf_width_mobile }}px;
+      --bloom-stmt-leaf-gap: {{ section_st.space_below_leaf }}px;
+      --bloom-stmt-font-sz: {{ section_st.font_size_desktop }}px;
+      --bloom-stmt-font-sz-mb: {{ section_st.font_size_mobile }}px;
+      --bloom-stmt-lh: {{ section_st.line_height }};
+      --bloom-stmt-ls: {{ section_st.letter_spacing }}px;
+      --bloom-stmt-color: {{ section_st.text_color }};
+      --bloom-stmt-italic-color: {{ section_st.italic_color }};
+      --bloom-stmt-btn-gap: {{ section_st.space_above_button }}px;
+      --bloom-stmt-btn-text: {{ section_st.button_text_color }};
+      --bloom-stmt-btn-border: {{ section_st.button_border_color }};
+      --bloom-stmt-btn-border-w: {{ section_st.button_border_width }}px;
+      --bloom-stmt-btn-hover-bg: {{ section_st.button_hover_bg }};
+      --bloom-stmt-btn-hover-text: {{ section_st.button_hover_text }};
+      --bloom-stmt-btn-sz: {{ section_st.button_font_size }}px;
+      --bloom-stmt-btn-px: {{ section_st.button_padding_x }}px;
+      --bloom-stmt-btn-py: {{ section_st.button_padding_y }}px;
+    "
+  >
+    <div class="bloom-statement__container">
+      <!-- 1. Leaf Image -->
+      {%- if section_st.show_leaf -%}
+        <div class="bloom-statement__leaf-wrapper" data-reveal-item>
+          {%- if section_st.leaf_image != blank -%}
+            <img
+              src="{{ section_st.leaf_image | image_url: width: 240 }}"
+              alt="{{ section_st.leaf_image.alt | default: 'Botanical Leaf' | escape }}"
+              class="bloom-statement__leaf"
+              loading="lazy"
+              width="{{ section_st.leaf_width_desktop }}"
+              height="{{ section_st.leaf_width_desktop | times: 1.08 | round }}"
+            >
+          {%- else -%}
+            <img
+              src="{{ 'bloom-plant-leaf.png' | asset_url }}"
+              alt="Botanical Leaf"
+              class="bloom-statement__leaf"
+              loading="lazy"
+              width="78"
+              height="84"
+            >
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- 2. Statement Heading -->
+      {%- if section_st.statement_heading != blank -%}
+        <h2 class="bloom-statement__heading" data-reveal-item>
+          {{ section_st.statement_heading }}
+        </h2>
+      {%- endif -%}
+
+      <!-- 3. SHOP NOW Button -->
+      {%- if section_st.show_button and section_st.button_label != blank -%}
+        <div class="bloom-statement__btn-wrapper" data-reveal-item>
+          <a
+            href="{{ btn_url }}"
+            class="bloom-statement__btn"
+            aria-label="{{ section_st.button_label | escape }}"
+          >
+            <span class="bloom-statement__btn-text">{{ section_st.button_label }}</span>
+            <span class="bloom-statement__circle-bg" aria-hidden="true"></span>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </bloom-statement>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Botanical Statement",
+  "tag": "section",
+  "class": "section-bloom-botanical-statement",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_reveal",
+      "label": "Enable Smooth Scroll Reveal Animation",
+      "default": true,
+      "info": "Applies Athora Planti subtle upward reveal when section scrolls into view"
+    },
+    {
+      "type": "header",
+      "content": "Background & Dimensions"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FAF9F0",
+      "info": "Warm ivory / off-white matching Athora Planti scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "section_min_height",
+      "label": "Desktop Minimum Height",
+      "min": 300,
+      "max": 650,
+      "step": 10,
+      "default": 460,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "max_content_width",
+      "label": "Maximum Content Width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "default": 1080,
+      "unit": "px",
+      "info": "Controls statement wrapping to achieve the exact two-line layout on desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop Padding Top",
+      "min": 20,
+      "max": 160,
+      "step": 5,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop Padding Bottom",
+      "min": 20,
+      "max": 160,
+      "step": 5,
+      "default": 85,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile Padding Top",
+      "min": 15,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile Padding Bottom",
+      "min": 15,
+      "max": 100,
+      "step": 5,
+      "default": 55,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Botanical Leaf Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_leaf",
+      "label": "Show Leaf Image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "leaf_image",
+      "label": "Custom Leaf Image (Optional)",
+      "info": "Transparent PNG leaf. Automatically uses original Athora Planti leaf if empty."
+    },
+    {
+      "type": "range",
+      "id": "leaf_width_desktop",
+      "label": "Leaf Width (Desktop)",
+      "min": 40,
+      "max": 140,
+      "step": 2,
+      "default": 78,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "leaf_width_mobile",
+      "label": "Leaf Width (Mobile)",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "space_below_leaf",
+      "label": "Spacing Below Leaf",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Statement Typography"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "statement_heading",
+      "label": "Statement Text",
+      "default": "We firmly believe in the positive mental, <em>emotional and physical</em><br class=\"bloom-statement-br\"> <em>health benefits associated with having nature in your home.</em>",
+      "info": "Wrap words in <em>...</em> or italics to apply the elegant italic serif styling."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Statement Text Color",
+      "default": "#234332",
+      "info": "Dark forest green"
+    },
+    {
+      "type": "color",
+      "id": "italic_color",
+      "label": "Italic Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "label": "Desktop Heading Size",
+      "min": 32,
+      "max": 64,
+      "step": 1,
+      "default": 46,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Mobile Heading Size",
+      "min": 20,
+      "max": 38,
+      "step": 1,
+      "default": 28,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "Line Height",
+      "default": "1.22",
+      "options": [
+        {
+          "value": "1.15",
+          "label": "Tight (1.15)"
+        },
+        {
+          "value": "1.22",
+          "label": "Normal (1.22)"
+        },
+        {
+          "value": "1.30",
+          "label": "Relaxed (1.30)"
+        },
+        {
+          "value": "1.40",
+          "label": "Open (1.40)"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter Spacing",
+      "min": -2,
+      "max": 3,
+      "step": 0.5,
+      "default": -0.5,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Pill Button Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "space_above_button",
+      "label": "Spacing Above Button",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border Thickness",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Hover Background Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Hover Text Color",
+      "default": "#FAF9F0"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x",
+      "label": "Button Horizontal Padding",
+      "min": 14,
+      "max": 44,
+      "step": 2,
+      "default": 26,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y",
+      "label": "Button Vertical Padding",
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "default": 9,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Botanical Statement",
+      "settings": {
+        "statement_heading": "We firmly believe in the positive mental, <em>emotional and physical</em><br class=\"bloom-statement-br\"> <em>health benefits associated with having nature in your home.</em>",
+        "button_label": "SHOP NOW"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* ==========================================================================
+   Bloom Botanical Statement Section
+   Matches Athora Planti Botanical Editorial Statement Section
+   ========================================================================== */
+
+.bloom-statement {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bloom-stmt-bg, #FAF9F0);
+  padding-top: var(--bloom-stmt-pt, 80px);
+  padding-bottom: var(--bloom-stmt-pb, 85px);
+  min-height: var(--bloom-stmt-min-h, 460px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.bloom-statement__container {
+  width: 100%;
+  max-width: var(--bloom-stmt-mw, 1080px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 1. Centered Botanical Leaf Asset */
+.bloom-statement__leaf-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--bloom-stmt-leaf-gap, 32px);
+  user-select: none;
+}
+
+.bloom-statement__leaf {
+  display: block;
+  width: var(--bloom-stmt-leaf-w, 78px);
+  height: auto;
+  max-height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(35, 67, 50, 0.05));
+  transition: transform 0.4s ease;
+}
+
+.bloom-statement__leaf-wrapper:hover .bloom-statement__leaf {
+  transform: rotate(3deg) scale(1.04);
+}
+
+/* 2. Editorial Serif Statement */
+.bloom-statement__heading {
+  font-family: var(--bloom-stmt-font-heading, 'Instrument Serif', Georgia, serif);
+  font-size: var(--bloom-stmt-font-sz, 46px);
+  font-weight: 400;
+  line-height: var(--bloom-stmt-lh, 1.22);
+  letter-spacing: var(--bloom-stmt-ls, -0.01em);
+  color: var(--bloom-stmt-color, #234332);
+  margin: 0;
+  padding: 0;
+  text-wrap: balance;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bloom-statement__heading em,
+.bloom-statement__heading i {
+  font-family: var(--bloom-stmt-font-heading, 'Instrument Serif', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bloom-stmt-italic-color, #234332);
+}
+
+/* Forced desktop line break matching screenshot, fluid on mobile */
+@media (min-width: 992px) {
+  .bloom-statement-br {
+    display: block;
+  }
+}
+
+@media (max-width: 991px) {
+  .bloom-statement-br {
+    display: inline;
+  }
+}
+
+/* 3. Small Outlined Pill Button */
+.bloom-statement__btn-wrapper {
+  margin-top: var(--bloom-stmt-btn-gap, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bloom-statement__btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 104px;
+  height: 37px;
+  padding: var(--bloom-stmt-btn-py, 9px) var(--bloom-stmt-btn-px, 24px);
+  background-color: transparent;
+  color: var(--bloom-stmt-btn-text, #234332);
+  border: var(--bloom-stmt-btn-border-w, 1px) solid var(--bloom-stmt-btn-border, #234332);
+  border-radius: var(--bloom-stmt-btn-radius, 9999px);
+  font-family: var(--bloom-stmt-font-body, 'Plus Jakarta Sans', -apple-system, sans-serif);
+  font-size: var(--bloom-stmt-btn-sz, 10px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s ease,
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  clip-path: inset(0 round var(--bloom-stmt-btn-radius, 9999px));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bloom-statement__btn-text {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.bloom-statement__circle-bg {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--bloom-stmt-btn-hover-bg, #234332);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease;
+}
+
+.bloom-statement__btn:hover {
+  background-color: var(--bloom-stmt-btn-hover-bg, #234332);
+  color: var(--bloom-stmt-btn-hover-text, #FAF9F0);
+  border-color: var(--bloom-stmt-btn-hover-bg, #234332);
+  box-shadow: 0 4px 14px rgba(35, 67, 50, 0.12);
+}
+
+.bloom-statement__btn:hover .bloom-statement__circle-bg {
+  opacity: 1;
+}
+
+.bloom-statement__btn:focus-visible {
+  outline: 2px solid var(--bloom-stmt-color, #234332);
+  outline-offset: 3px;
+}
+
+/* 4. Scroll Reveal Animations (Athora Planti can-reveal) */
+.bloom-statement[data-reveal="true"] [data-reveal-item] {
+  opacity: 0.001;
+  transform: translate3d(0, 32px, 0);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.bloom-statement[data-reveal="true"].is-visible [data-reveal-item] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.bloom-statement[data-reveal="true"].is-visible .bloom-statement__leaf-wrapper {
+  transition-delay: 0.05s;
+}
+
+.bloom-statement[data-reveal="true"].is-visible .bloom-statement__heading {
+  transition-delay: 0.20s;
+  transition-duration: 0.85s;
+}
+
+.bloom-statement[data-reveal="true"].is-visible .bloom-statement__btn-wrapper {
+  transition-delay: 0.35s;
+}
+
+/* 5. Responsive Breakpoints */
+@media (max-width: 991px) {
+  .bloom-statement {
+    padding-top: var(--bloom-stmt-pt-mb, 60px);
+    padding-bottom: var(--bloom-stmt-pb-mb, 65px);
+    min-height: auto;
+  }
+  .bloom-statement__heading {
+    font-size: var(--bloom-stmt-font-sz-mb, 32px);
+    line-height: 1.25;
+  }
+  .bloom-statement__leaf {
+    width: var(--bloom-stmt-leaf-w-mb, 64px);
+  }
+  .bloom-statement__leaf-wrapper {
+    margin-bottom: calc(var(--bloom-stmt-leaf-gap, 32px) * 0.8);
+  }
+  .bloom-statement__btn-wrapper {
+    margin-top: calc(var(--bloom-stmt-btn-gap, 48px) * 0.75);
+  }
+}
+
+@media (max-width: 640px) {
+  .bloom-statement {
+    padding-top: var(--bloom-stmt-pt-mb, 50px);
+    padding-bottom: var(--bloom-stmt-pb-mb, 55px);
+  }
+  .bloom-statement__heading {
+    font-size: var(--bloom-stmt-font-sz-mb, 28px);
+    line-height: 1.28;
+  }
+  .bloom-statement__leaf {
+    width: var(--bloom-stmt-leaf-w-mb, 56px);
+  }
+  .bloom-statement__container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom-statement [data-reveal-item],
+  .bloom-statement__btn {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
