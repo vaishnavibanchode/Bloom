@@ -50,6 +50,8 @@
       "name": "Bloom Hero",
       "settings": {
         "enable_section": true,
+        "enable_shrink_on_scroll": true,
+        "slide_animation": "slide",
         "hero_height": "100vh",
         "desktop_custom_height": 760,
         "mobile_custom_height": 540,

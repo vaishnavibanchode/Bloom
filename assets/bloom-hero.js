@@ -118,8 +118,16 @@ if (!customElements.get('bloom-hero')) {
         this.observer.observe(this);
       }
 
-      // 8. Initialize First Slide & Autoplay
-      this.goToSlide(0);
+      // 8. Initialize First Slide & Autoplay with Entrance Animation
+      this.classList.remove('is-ready');
+      this.goToSlide(0, true);
+
+      // Trigger Planti entrance animation on next frame after mount
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          this.classList.add('is-ready');
+        });
+      });
 
       if (this.autoplayEnabled && this.slides.length > 1 && !this.prefersReducedMotion) {
         this.startAutoplay();
@@ -152,7 +160,7 @@ if (!customElements.get('bloom-hero')) {
     /* ========================================================================
        Slide Navigation & Planti Reveal Text Entrance
        ======================================================================== */
-    goToSlide(index) {
+    goToSlide(index, isInitial = false) {
       if (index < 0) index = this.slides.length - 1;
       if (index >= this.slides.length) index = 0;
 
@@ -167,18 +175,42 @@ if (!customElements.get('bloom-hero')) {
       // Update Slides State & ARIA
       this.slides.forEach((slide, i) => {
         const isActive = i === index;
-        slide.classList.toggle('is-active', isActive);
-        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        if (isActive) {
+          slide.classList.add('is-active');
+          slide.setAttribute('aria-hidden', 'false');
 
-        // Reset can-reveal elements on non-active slides so they re-animate on enter
-        if (!isActive && i === previousIndex) {
-          const reveals = slide.querySelectorAll('[can-reveal]');
-          reveals.forEach((el) => {
-            el.style.transition = 'none';
+          // If switching slides (not initial setup), re-arm staggered can-reveal animation
+          if (!isInitial && i !== previousIndex) {
+            const reveals = slide.querySelectorAll('[can-reveal]');
+            reveals.forEach((el) => {
+              el.style.transition = 'none';
+              el.style.opacity = '0.001';
+              el.style.transform = 'translate3d(0, 42px, 0)';
+            });
+
+            const img = slide.querySelector('.bloom-hero__image, .bloom-hero__picture img, .bloom-hero__video');
+            if (img) {
+              img.style.transition = 'none';
+              img.style.transform = 'scale(1.10)';
+            }
+
             // Force reflow
-            void el.offsetHeight;
-            el.style.transition = '';
-          });
+            void slide.offsetHeight;
+
+            reveals.forEach((el) => {
+              el.style.transition = '';
+              el.style.opacity = '';
+              el.style.transform = '';
+            });
+
+            if (img) {
+              img.style.transition = '';
+              img.style.transform = '';
+            }
+          }
+        } else {
+          slide.classList.remove('is-active');
+          slide.setAttribute('aria-hidden', 'true');
         }
       });
 
@@ -257,21 +289,39 @@ if (!customElements.get('bloom-hero')) {
       }
 
       const rect = this.getBoundingClientRect();
-      const heroHeight = rect.height || 600;
-      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const vh = window.innerHeight;
+      const bottom = rect.bottom;
 
-      // Effect begins when user scrolls down from top
-      // Progress p reaches 1 when scrolled ~40% of hero height
-      const maxScrollDist = Math.max(heroHeight * 0.42, 180);
-      let p = Math.min(Math.max(scrollY / maxScrollDist, 0), 1);
+      // Athora Planti exact offset logic: ["1 0.82", "1 0.12"]
+      // Top of page: bottom >= 0.85 * vh -> progress = 0 (hero is full width edge to edge)
+      // Scrolled down towards next section: bottom crosses below 0.85 * vh -> contracts smoothly
+      const startGap = vh * 0.85;
+      const endGap = vh * 0.15;
+
+      let progress = 0;
+      if (bottom >= startGap) {
+        progress = 0;
+      } else if (bottom <= endGap) {
+        progress = 1;
+      } else {
+        progress = (startGap - bottom) / (startGap - endGap);
+      }
+
+      const p = Math.min(Math.max(progress, 0), 1);
 
       if (p <= 0.001) {
         this.shrinkInner.style.clipPath = 'inset(0 round 0)';
       } else if (p >= 0.999) {
         this.shrinkInner.style.clipPath = 'inset(0 var(--clip-x) 0 var(--clip-x) round var(--rounded-lg))';
       } else {
-        this.shrinkInner.style.clipPath = `inset(0 calc(var(--clip-x) * ${p.toFixed(3)}) 0 calc(var(--clip-x) * ${p.toFixed(3)}) round calc(var(--rounded-lg) * ${p.toFixed(3)}))`;
+        this.shrinkInner.style.clipPath = `inset(0 calc(var(--clip-x) * ${p.toFixed(4)}) 0 calc(var(--clip-x) * ${p.toFixed(4)}) round calc(var(--rounded-lg) * ${p.toFixed(4)}))`;
       }
+
+      // Planti translate effect for data-shrink-translate
+      const translates = this.querySelectorAll('[data-shrink-translate="start"]');
+      translates.forEach((el) => {
+        el.style.transform = `translateX(calc(var(--clip-x) * ${(1 - p).toFixed(4)} * 0.35))`;
+      });
     }
 
     /* ========================================================================

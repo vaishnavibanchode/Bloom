@@ -209,14 +209,22 @@ body.has-transparent-header .bloom-hero:first-child {
   height: 100%;
   object-fit: cover;
   object-position: var(--bloom-focal, center center);
-  transform: scale(1);
-  transition: transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: scale(1.10);
+  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.2s ease-out;
+  will-change: transform;
 }
 
-.bloom-hero__slide.is-active .bloom-hero__image,
-.bloom-hero__slide.is-active .bloom-hero__picture img,
-.bloom-hero__slide.is-active .bloom-hero__video {
-  transform: scale(1.035);
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__image,
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__picture img,
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__video {
+  transform: scale(1.0);
+}
+
+.bloom-hero__slide:not(.is-active) .bloom-hero__image,
+.bloom-hero__slide:not(.is-active) .bloom-hero__picture img,
+.bloom-hero__slide:not(.is-active) .bloom-hero__video {
+  transform: scale(1.08);
 }
 
 /* ==========================================================================
@@ -293,34 +301,42 @@ body.has-transparent-header .bloom-hero:first-child {
 }
 
 /* Planti can-reveal Animation Specs:
-   Distance: 16px, Duration: 0.48s, Easing: cubic-bezier(0, 0, 0.2, 1) */
+   Distance: 42px, Duration: 0.7s, Easing: cubic-bezier(0.16, 1, 0.3, 1) */
 .bloom-hero [can-reveal] {
-  opacity: 0.01;
-  transform: translateY(16px);
-  transition: opacity 0.48s cubic-bezier(0, 0, 0.2, 1),
-              transform 0.48s cubic-bezier(0, 0, 0.2, 1);
+  opacity: 0.001;
+  transform: translate3d(0, 42px, 0);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.bloom-hero__slide.is-active [can-reveal] {
+.bloom-hero.is-ready .bloom-hero__slide.is-active [can-reveal] {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
-.bloom-hero__slide.is-active .bloom-hero__eyebrow[can-reveal] {
-  transition-delay: 0.06s;
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__eyebrow[can-reveal] {
+  transition-delay: 0.12s;
 }
 
-.bloom-hero__slide.is-active .bloom-hero__heading[can-reveal] {
-  transition-delay: 0.14s;
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__heading[can-reveal] {
+  transition-delay: 0.26s;
+  transition-duration: 0.85s;
 }
 
-.bloom-hero__slide.is-active .bloom-hero__description[can-reveal] {
-  transition-delay: 0.24s;
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__description[can-reveal] {
+  transition-delay: 0.42s;
 }
 
-.bloom-hero__slide.is-active .bloom-hero__cta-wrapper[can-reveal] {
-  transition-delay: 0.34s;
+.bloom-hero.is-ready .bloom-hero__slide.is-active .bloom-hero__cta-wrapper[can-reveal] {
+  transition-delay: 0.58s;
+}
+
+/* Exiting / Inactive Slide smooth fade-out */
+.bloom-hero__slide:not(.is-active) [can-reveal] {
+  opacity: 0;
+  transform: translate3d(0, -16px, 0);
+  transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
 /* Planti Editorial Eyebrow Badge */
@@ -510,6 +526,18 @@ body.has-transparent-header .bloom-hero:first-child {
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.bloom-hero.is-ready .bloom-hero__pagination {
+  opacity: 1;
+  transition-delay: 0.65s;
+}
+
+[data-shrink-translate] {
+  transition: transform 0.08s linear;
+  will-change: transform;
 }
 
 .bloom-hero__dot {
@@ -586,10 +614,16 @@ body.has-transparent-header .bloom-hero:first-child {
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
   padding: 0;
   outline: none;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+}
+
+.bloom-hero.is-ready .bloom-hero__arrow {
+  opacity: 0.85;
+  transition-delay: 0.65s;
 }
 
 .bloom-hero__arrow svg {

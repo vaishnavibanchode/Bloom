@@ -174,7 +174,7 @@
               {%- endif -%}
 
               <!-- Content Area with Staggered Planti Reveal -->
-              <div class="bloom-hero__content-box bloom-hero__content-box--{{ content_vertical_position }}" data-align="{{ content_alignment }}">
+              <div class="bloom-hero__content-box bloom-hero__content-box--{{ content_vertical_position }}" data-align="{{ content_alignment }}" data-shrink-translate="start">
                 <div class="bloom-hero__inner">
                   {%- if block_st.subheading != blank -%}
                     <div class="bloom-hero__eyebrow" can-reveal>
@@ -240,7 +240,7 @@
 
         <!-- Planti SVG Progress Ring Pagination -->
         {%- if section.blocks.size > 1 and show_pagination -%}
-          <div class="bloom-hero__pagination" role="tablist" aria-label="Slideshow pagination">
+          <div class="bloom-hero__pagination" role="tablist" aria-label="Slideshow pagination" data-shrink-translate="center">
             {%- for block in section.blocks -%}
               <button
                 type="button"
