@@ -15,6 +15,7 @@
         "slide_NYtxEE": {
           "type": "slide",
           "settings": {
+            "html5_video": "",
             "focal_point": "default",
             "subheading": "HANDCRAFTED BOTANICALS",
             "heading": "Grow Your Own",
@@ -30,6 +31,7 @@
         "slide_w4ihc3": {
           "type": "slide",
           "settings": {
+            "html5_video": "",
             "focal_point": "default",
             "subheading": "SUSTAINABLY NURTURED",
             "heading": "Create Your Dream",
@@ -56,7 +58,7 @@
         "desktop_custom_height": 760,
         "mobile_custom_height": 540,
         "section_width": "full_bleed",
-        "color_scheme": "",
+        "color_scheme": "default",
         "content_max_width": 820,
         "content_alignment": "left",
         "content_vertical_position": "bottom",
@@ -78,7 +80,7 @@
         "show_button": true,
         "btn_bg_color": "#ffffff",
         "btn_text_color": "#183325",
-        "btn_border_color": "transparent",
+        "btn_border_color": "rgba(0,0,0,0)",
         "btn_hover_bg_color": "#f0f7f0",
         "btn_hover_text_color": "#112319",
         "btn_radius": 50,
@@ -88,32 +90,6 @@
         "transition_duration": 800,
         "show_pagination": true,
         "show_arrows": true
-      }
-    },
-    "bloom_botanical_statement_planti": {
-      "type": "bloom-botanical-statement",
-      "settings": {
-        "statement_heading": "We firmly believe in the positive mental, <em>emotional and physical</em><br class=\"bloom-statement-br\"> <em>health benefits associated with having nature in your home.</em>",
-        "button_label": "SHOP NOW",
-        "background_color": "#FAF9F0",
-        "text_color": "#234332",
-        "italic_color": "#234332",
-        "button_text_color": "#234332",
-        "button_border_color": "#234332",
-        "button_hover_bg": "#234332",
-        "button_hover_text": "#FAF9F0",
-        "font_size_desktop": 46,
-        "font_size_mobile": 28,
-        "section_min_height": 460,
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 85,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 55,
-        "max_content_width": 1080,
-        "leaf_width_desktop": 78,
-        "leaf_width_mobile": 56,
-        "space_below_leaf": 32,
-        "space_above_button": 48
       }
     },
     "collection_list_VmEYkJ": {
@@ -204,64 +180,6 @@
         "image_width": 185,
         "padding_top": 0,
         "padding_bottom": 0,
-        "reset_spacing": false
-      }
-    },
-    "plant_story_grid_athora": {
-      "type": "plant-story-grid",
-      "blocks": {
-        "feature_1": {
-          "type": "feature",
-          "settings": {
-            "icon_svg": "",
-            "title": "Air Purifying",
-            "subtext": "Filters toxins naturally to boost indoor air freshness."
-          }
-        },
-        "feature_2": {
-          "type": "feature",
-          "settings": {
-            "icon_svg": "",
-            "title": "Low Maintenance",
-            "subtext": "Resilient varieties that thrive even with minimal care."
-          }
-        },
-        "feature_3": {
-          "type": "feature",
-          "settings": {
-            "icon_svg": "",
-            "title": "Pet Safe Varieties",
-            "subtext": "Nontoxic plant species safe for furry companions."
-          }
-        },
-        "feature_4": {
-          "type": "feature",
-          "settings": {
-            "icon_svg": "",
-            "title": "Sustainable Terracotta",
-            "subtext": "Handcrafted terracotta containers built from natural earth."
-          }
-        }
-      },
-      "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3",
-        "feature_4"
-      ],
-      "settings": {
-        "subheading": "OUR PHILOSOPHY",
-        "heading": "Cultivating Living Art for Modern Spaces",
-        "description": "<p>Every plant is nurtured from organic soil to produce healthy, vibrant foliage designed to transform your home into an oasis of calm.</p>",
-        "header_size": "large",
-        "image": "shopify://shop_images/415f56c52c2f90062f00b536f01f7284.jpg",
-        "badge_text": "100% Sustainably Grown",
-        "button_label": "Explore Our Collection",
-        "button_link": "shopify://collections",
-        "section_width": "container",
-        "color_scheme": "scheme-1",
-        "padding_top": 60,
-        "padding_bottom": 60,
         "reset_spacing": false
       }
     },
@@ -1097,9 +1015,7 @@
   },
   "order": [
     "bloom_hero_4qNHAy",
-    "bloom_botanical_statement_planti",
     "collection_list_VmEYkJ",
-    "plant_story_grid_athora",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
     "eco_stats_marquee_athora",
