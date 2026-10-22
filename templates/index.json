@@ -1104,7 +1104,7 @@
         "background_color": "#FAF9F0",
         "container_max_width": 1400,
         "padding_inline_desktop": 44,
-        "card_height_desktop": 600,
+        "card_height_desktop": 500,
         "card_height_mobile": 420,
         "card_border_radius": 12,
         "card_spacing": 24,
