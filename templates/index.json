@@ -92,6 +92,71 @@
         "show_arrows": true
       }
     },
+    "bloom_three_cards_planti": {
+      "type": "bloom-three-cards",
+      "name": "Bloom Botanical Cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "image_focal_point": "center center",
+            "overlay_opacity": 25,
+            "heading": "Bring <em>Nature Home</em>",
+            "description": "Bring life and calm into your space.",
+            "show_button": true,
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "image_focal_point": "center center",
+            "overlay_opacity": 25,
+            "heading": "Grow <em>Your Space</em>",
+            "description": "Fresh plants that transform your home.",
+            "show_button": true,
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "image_focal_point": "center center",
+            "overlay_opacity": 25,
+            "heading": "Plants <em>Made Easy</em>",
+            "description": "Healthy plants delivered to your door.",
+            "show_button": true,
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "enable_section": true,
+        "enable_scroll_reveal": true,
+        "enable_tilt": true,
+        "enable_hover_zoom": true,
+        "background_color": "#FAF9F0",
+        "container_max_width": 1400,
+        "padding_inline_desktop": 44,
+        "card_height_desktop": 600,
+        "card_height_mobile": 420,
+        "card_border_radius": 12,
+        "card_spacing": 24,
+        "mobile_layout": "swipe",
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 65,
+        "padding_top_mobile": 35,
+        "padding_bottom_mobile": 45
+      }
+    },
     "collection_list_VmEYkJ": {
       "type": "collection-list",
       "blocks": {
@@ -1054,6 +1119,7 @@
   "order": [
     "bloom_hero_4qNHAy",
     "bloom_botanical_statement_JTrMh3",
+    "bloom_three_cards_planti",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",

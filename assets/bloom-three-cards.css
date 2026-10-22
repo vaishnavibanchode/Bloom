@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* ==========================================================================
+   Bloom Botanical Three-Card Collection Section
+   Matches Athora Planti Botanical Three-Card Media Grid
+   ========================================================================== */
+
+.bloom-three-cards {
+  display: block;
+  width: 100%;
+  background-color: var(--bloom-tc-bg, #FAF9F0);
+  padding-top: var(--bloom-tc-pt, 50px);
+  padding-bottom: var(--bloom-tc-pb, 65px);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .bloom-three-cards {
+    padding-top: var(--bloom-tc-pt-mb, 35px);
+    padding-bottom: var(--bloom-tc-pb-mb, 45px);
+  }
+}
+
+.bloom-three-cards__outer {
+  width: 100%;
+  max-width: var(--bloom-tc-max-w, 1400px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--bloom-tc-pad-x, 44px);
+  padding-right: var(--bloom-tc-pad-x, 44px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .bloom-three-cards__outer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .bloom-three-cards--swipe-mobile .bloom-three-cards__outer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Track / Grid */
+.bloom-three-cards__track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--bloom-tc-gap, 24px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .bloom-three-cards__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Vertical stack on mobile */
+  .bloom-three-cards--stack-mobile .bloom-three-cards__track {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Horizontal swipe on mobile - matches Planti 84vw card swipe */
+  .bloom-three-cards--swipe-mobile .bloom-three-cards__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .bloom-three-cards--swipe-mobile .bloom-three-cards__track::-webkit-scrollbar {
+    display: none;
+  }
+  .bloom-three-cards--swipe-mobile .bloom-three-cards__item {
+    flex: 0 0 84vw;
+    max-width: 84vw;
+    scroll-snap-align: center;
+  }
+}
+
+/* Card Item & Scroll Reveal */
+.bloom-three-cards__item {
+  position: relative;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bloom-three-cards.is-visible .bloom-three-cards__item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bloom-three-cards.is-visible .bloom-three-cards__item:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.bloom-three-cards.is-visible .bloom-three-cards__item:nth-child(2) {
+  transition-delay: 0.18s;
+}
+.bloom-three-cards.is-visible .bloom-three-cards__item:nth-child(3) {
+  transition-delay: 0.31s;
+}
+.bloom-three-cards.is-visible .bloom-three-cards__item:nth-child(4) {
+  transition-delay: 0.44s;
+}
+
+/* Card Element */
+.bloom-three-cards__card {
+  position: relative;
+  width: 100%;
+  height: var(--bloom-tc-card-h, 600px);
+  border-radius: var(--bloom-tc-radius, 12px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #1a2a20;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 767px) {
+  .bloom-three-cards__card {
+    height: var(--bloom-tc-card-h-mb, 420px);
+  }
+}
+
+/* Media & Image */
+.bloom-three-cards__media-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.bloom-three-cards__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover Image Scale */
+.bloom-three-cards[data-zoom="true"] .bloom-three-cards__card:hover .bloom-three-cards__img {
+  transform: scale(1.06);
+}
+
+/* Bottom Dark Gradient Overlay for Text Readability */
+.bloom-three-cards__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(15, 25, 20, calc(var(--bloom-tc-item-overlay, 0.25) * 3)) 0%,
+    rgba(15, 25, 20, calc(var(--bloom-tc-item-overlay, 0.25) * 2)) 35%,
+    rgba(15, 25, 20, calc(var(--bloom-tc-item-overlay, 0.25) * 0.8)) 65%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Content Container */
+.bloom-three-cards__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 32px 24px 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  pointer-events: auto;
+  transform: translateZ(16px);
+}
+
+@media (max-width: 767px) {
+  .bloom-three-cards__content {
+    padding: 24px 18px 28px;
+  }
+}
+
+/* Card Heading: Elegant Serif */
+.bloom-three-cards__heading {
+  font-family: var(--bloom-stmt-font-heading, 'Instrument Serif', Georgia, serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  padding: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bloom-three-cards__heading em,
+.bloom-three-cards__heading i {
+  font-family: var(--bloom-stmt-font-heading, 'Instrument Serif', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+@media (max-width: 767px) {
+  .bloom-three-cards__heading {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+}
+
+/* Card Description */
+.bloom-three-cards__desc {
+  font-family: var(--bloom-stmt-font-body, 'Plus Jakarta Sans', -apple-system, sans-serif);
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 22px 0;
+  padding: 0;
+  max-width: 320px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 767px) {
+  .bloom-three-cards__desc {
+    font-size: 13.5px;
+    margin-bottom: 18px;
+  }
+}
+
+/* Button CTA: White Pill with Dark Green Text */
+.bloom-three-cards__btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bloom-three-cards__btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 104px;
+  height: 37px;
+  padding: 9px 24px;
+  background-color: #ffffff;
+  color: #234332;
+  border: 1px solid #ffffff;
+  border-radius: 9999px;
+  font-family: var(--bloom-stmt-font-body, 'Plus Jakarta Sans', -apple-system, sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s ease,
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  clip-path: inset(0 round 9999px);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bloom-three-cards__btn-text {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.bloom-three-cards__circle-bg {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #234332;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease;
+}
+
+.bloom-three-cards__btn:hover {
+  color: #ffffff;
+  background-color: #234332;
+  border-color: #234332;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  transform: translateY(-2px);
+}
+
+.bloom-three-cards__btn:hover .bloom-three-cards__btn-text {
+  color: #ffffff;
+}
+
+.bloom-three-cards__btn:hover .bloom-three-cards__circle-bg {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(15);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .bloom-three-cards__item,
+  .bloom-three-cards__card,
+  .bloom-three-cards__img,
+  .bloom-three-cards__btn {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

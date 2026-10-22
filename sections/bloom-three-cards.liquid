@@ -1,0 +1,414 @@
+{{ 'bloom-three-cards.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-three-cards.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign blocks_count = section.blocks.size
+-%}
+
+{%- if section_st.enable_section and blocks_count > 0 -%}
+  <bloom-three-cards
+    id="bloom-three-cards-{{ section.id }}"
+    class="bloom-three-cards{% if section_st.mobile_layout == 'swipe' %} bloom-three-cards--swipe-mobile{% else %} bloom-three-cards--stack-mobile{% endif %}"
+    data-reveal="{{ section_st.enable_scroll_reveal }}"
+    data-tilt="{{ section_st.enable_tilt }}"
+    data-zoom="{{ section_st.enable_hover_zoom }}"
+    style="
+      --bloom-tc-bg: {{ section_st.background_color }};
+      --bloom-tc-max-w: {{ section_st.container_max_width }}px;
+      --bloom-tc-pad-x: {{ section_st.padding_inline_desktop }}px;
+      --bloom-tc-card-h: {{ section_st.card_height_desktop }}px;
+      --bloom-tc-card-h-mb: {{ section_st.card_height_mobile }}px;
+      --bloom-tc-radius: {{ section_st.card_border_radius }}px;
+      --bloom-tc-gap: {{ section_st.card_spacing }}px;
+      --bloom-tc-pt: {{ section_st.padding_top_desktop }}px;
+      --bloom-tc-pb: {{ section_st.padding_bottom_desktop }}px;
+      --bloom-tc-pt-mb: {{ section_st.padding_top_mobile }}px;
+      --bloom-tc-pb-mb: {{ section_st.padding_bottom_mobile }}px;
+    "
+  >
+    <div class="bloom-three-cards__outer">
+      <div class="bloom-three-cards__track" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign block_st = block.settings
+            assign card_idx = forloop.index
+            assign btn_url = block_st.button_link
+            if btn_url == blank
+              assign btn_url = routes.all_products_collection_url
+            endif
+          -%}
+          <div
+            class="bloom-three-cards__item"
+            role="listitem"
+            data-card-index="{{ card_idx }}"
+            {{ block.shopify_attributes }}
+            style="--bloom-tc-item-overlay: {{ block_st.overlay_opacity | default: 25 | divided_by: 100.0 }};"
+          >
+            <div class="bloom-three-cards__card" data-tilt-target>
+              <div class="bloom-three-cards__media-wrapper">
+                {%- if block_st.desktop_image != blank -%}
+                  <picture>
+                    {%- if block_st.mobile_image != blank -%}
+                      <source
+                        media="(max-width: 767px)"
+                        srcset="{{ block_st.mobile_image | image_url: width: 800 }}"
+                      >
+                    {%- endif -%}
+                    <img
+                      src="{{ block_st.desktop_image | image_url: width: 1400 }}"
+                      alt="{{ block_st.desktop_image.alt | default: block_st.heading | strip_html | escape }}"
+                      class="bloom-three-cards__img"
+                      loading="lazy"
+                      style="object-position: {{ block_st.image_focal_point | default: 'center center' }};"
+                    >
+                  </picture>
+                {%- else -%}
+                  {%- liquid
+                    case card_idx
+                      when 1
+                        assign fallback_img = 'bloom-card-cactus.jpg' | asset_url
+                      when 2
+                        assign fallback_img = 'bloom-card-peperomia.jpg' | asset_url
+                      else
+                        assign fallback_img = 'bloom-card-sansevieria.jpg' | asset_url
+                    endcase
+                  -%}
+                  <img
+                    src="{{ fallback_img }}"
+                    alt="{{ block_st.heading | strip_html | escape }}"
+                    class="bloom-three-cards__img"
+                    loading="lazy"
+                    style="object-position: {{ block_st.image_focal_point | default: 'center center' }};"
+                  >
+                {%- endif -%}
+                <div class="bloom-three-cards__overlay" aria-hidden="true"></div>
+              </div>
+
+              <div class="bloom-three-cards__content">
+                {%- if block_st.heading != blank -%}
+                  <h3 class="bloom-three-cards__heading">
+                    {{ block_st.heading }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if block_st.description != blank -%}
+                  <p class="bloom-three-cards__desc">
+                    {{ block_st.description }}
+                  </p>
+                {%- endif -%}
+
+                {%- if block_st.show_button and block_st.button_label != blank -%}
+                  <div class="bloom-three-cards__btn-wrapper">
+                    <a
+                      href="{{ btn_url }}"
+                      class="bloom-three-cards__btn"
+                      aria-label="{{ block_st.button_label | escape }}"
+                    >
+                      <span class="bloom-three-cards__btn-text">{{ block_st.button_label }}</span>
+                      <span class="bloom-three-cards__circle-bg" aria-hidden="true"></span>
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </bloom-three-cards>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bloom Botanical Cards",
+  "tag": "section",
+  "class": "section-bloom-three-cards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_reveal",
+      "label": "Enable Scroll Reveal Animation",
+      "default": true,
+      "info": "Applies Athora Planti staggered upward reveal when section enters viewport"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tilt",
+      "label": "Enable 3D Tilt Effect on Hover",
+      "default": true,
+      "info": "Applies Athora Planti subtle 5-degree interactive 3D perspective tilt on desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_zoom",
+      "label": "Enable Image Hover Zoom",
+      "default": true,
+      "info": "Smoothly scales image on card hover while keeping it clipped inside rounded corners"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Sizing"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FAF9F0",
+      "info": "Warm ivory / off-white matching Athora Planti scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container Maximum Width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "default": 1400,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_desktop",
+      "label": "Desktop Horizontal Page Padding",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 44,
+      "unit": "px",
+      "info": "Matches ~44px page margin at 1920px reference viewport"
+    },
+    {
+      "type": "range",
+      "id": "card_height_desktop",
+      "label": "Desktop Card Height",
+      "min": 400,
+      "max": 800,
+      "step": 20,
+      "default": 600,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Mobile Card Height",
+      "min": 300,
+      "max": 550,
+      "step": 10,
+      "default": 420,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Corner Radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "label": "Card Gutter / Spacing",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "default": 24,
+      "unit": "px",
+      "info": "Spacing between cards (default 24px matches reference)"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Layout Mode",
+      "default": "swipe",
+      "options": [
+        {
+          "value": "swipe",
+          "label": "Horizontal Swipe (Planti 84vw)"
+        },
+        {
+          "value": "stack",
+          "label": "Vertical Stack"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "default": 50,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "default": 65,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile Padding Top",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 35,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile Padding Bottom",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 45,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Botanical Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop Image",
+          "info": "Falls back to original Planti reference photography if blank"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image (Optional)"
+        },
+        {
+          "type": "select",
+          "id": "image_focal_point",
+          "label": "Image Focal Alignment",
+          "default": "center center",
+          "options": [
+            {
+              "value": "center center",
+              "label": "Center Center"
+            },
+            {
+              "value": "top center",
+              "label": "Top Center"
+            },
+            {
+              "value": "bottom center",
+              "label": "Bottom Center"
+            },
+            {
+              "value": "left center",
+              "label": "Left Center"
+            },
+            {
+              "value": "right center",
+              "label": "Right Center"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Dark Vignette Opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "default": 25,
+          "unit": "%",
+          "info": "Subtle bottom gradient ensuring white text remains readable"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Card Heading",
+          "default": "Bring <em>Nature Home</em>",
+          "info": "Wrap words in <em>...</em> or italics to apply the elegant italic serif font"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Card Description",
+          "default": "Bring life and calm into your space."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "label": "Show Button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bloom Botanical Cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Bring <em>Nature Home</em>",
+            "description": "Bring life and calm into your space.",
+            "button_label": "SHOP NOW"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Grow <em>Your Space</em>",
+            "description": "Fresh plants that transform your home.",
+            "button_label": "SHOP NOW"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Plants <em>Made Easy</em>",
+            "description": "Healthy plants delivered to your door.",
+            "button_label": "SHOP NOW"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
