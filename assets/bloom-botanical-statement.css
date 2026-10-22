@@ -81,13 +81,15 @@
 
 /* Forced desktop line break matching screenshot, fluid on mobile */
 @media (min-width: 992px) {
-  .bloom-statement-br {
+  .bloom-statement-br,
+  .bloom-statement__heading br {
     display: block;
   }
 }
 
 @media (max-width: 991px) {
-  .bloom-statement-br {
+  .bloom-statement-br,
+  .bloom-statement__heading br {
     display: inline;
   }
 }
