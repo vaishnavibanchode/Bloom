@@ -130,6 +130,71 @@
         "button_padding_y": 9
       }
     },
+    "bloom_three_cards_dfJkNe": {
+      "type": "bloom-three-cards",
+      "blocks": {
+        "card_TRFhY7": {
+          "type": "card",
+          "settings": {
+            "image_focal_point": "center center",
+            "overlay_opacity": 25,
+            "heading": "Bring <em>Nature Home</em>",
+            "description": "Bring life and calm into your space.",
+            "show_button": true,
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        },
+        "card_XFUi7W": {
+          "type": "card",
+          "settings": {
+            "image_focal_point": "center center",
+            "overlay_opacity": 25,
+            "heading": "Grow <em>Your Space</em>",
+            "description": "Fresh plants that transform your home.",
+            "show_button": true,
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        },
+        "card_9NhiY9": {
+          "type": "card",
+          "settings": {
+            "image_focal_point": "center center",
+            "overlay_opacity": 25,
+            "heading": "Plants <em>Made Easy</em>",
+            "description": "Healthy plants delivered to your door.",
+            "show_button": true,
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_TRFhY7",
+        "card_XFUi7W",
+        "card_9NhiY9"
+      ],
+      "name": "Bloom Botanical Cards",
+      "settings": {
+        "enable_section": true,
+        "enable_scroll_reveal": true,
+        "enable_tilt": true,
+        "enable_hover_zoom": true,
+        "background_color": "#FAF9F0",
+        "container_max_width": 1400,
+        "padding_inline_desktop": 44,
+        "card_height_desktop": 500,
+        "card_height_mobile": 420,
+        "card_border_radius": 12,
+        "card_spacing": 24,
+        "mobile_layout": "swipe",
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 65,
+        "padding_top_mobile": 35,
+        "padding_bottom_mobile": 45
+      }
+    },
     "collection_list_VmEYkJ": {
       "type": "collection-list",
       "blocks": {
@@ -1049,76 +1114,12 @@
         "padding_bottom": 60,
         "reset_spacing": false
       }
-    },
-    "bloom_three_cards_dfJkNe": {
-      "type": "bloom-three-cards",
-      "blocks": {
-        "card_TRFhY7": {
-          "type": "card",
-          "settings": {
-            "image_focal_point": "center center",
-            "overlay_opacity": 25,
-            "heading": "Bring <em>Nature Home</em>",
-            "description": "Bring life and calm into your space.",
-            "show_button": true,
-            "button_label": "SHOP NOW",
-            "button_link": ""
-          }
-        },
-        "card_XFUi7W": {
-          "type": "card",
-          "settings": {
-            "image_focal_point": "center center",
-            "overlay_opacity": 25,
-            "heading": "Grow <em>Your Space</em>",
-            "description": "Fresh plants that transform your home.",
-            "show_button": true,
-            "button_label": "SHOP NOW",
-            "button_link": ""
-          }
-        },
-        "card_9NhiY9": {
-          "type": "card",
-          "settings": {
-            "image_focal_point": "center center",
-            "overlay_opacity": 25,
-            "heading": "Plants <em>Made Easy</em>",
-            "description": "Healthy plants delivered to your door.",
-            "show_button": true,
-            "button_label": "SHOP NOW",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "card_TRFhY7",
-        "card_XFUi7W",
-        "card_9NhiY9"
-      ],
-      "name": "Bloom Botanical Cards",
-      "settings": {
-        "enable_section": true,
-        "enable_scroll_reveal": true,
-        "enable_tilt": true,
-        "enable_hover_zoom": true,
-        "background_color": "#FAF9F0",
-        "container_max_width": 1400,
-        "padding_inline_desktop": 44,
-        "card_height_desktop": 500,
-        "card_height_mobile": 420,
-        "card_border_radius": 12,
-        "card_spacing": 24,
-        "mobile_layout": "swipe",
-        "padding_top_desktop": 50,
-        "padding_bottom_desktop": 65,
-        "padding_top_mobile": 35,
-        "padding_bottom_mobile": 45
-      }
     }
   },
   "order": [
     "bloom_hero_4qNHAy",
     "bloom_botanical_statement_JTrMh3",
+    "bloom_three_cards_dfJkNe",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
@@ -1134,7 +1135,6 @@
     "instagram_shop_nrVWcV",
     "icon_box_TRwJBD",
     "plant_story_grid_KRziDb",
-    "interactive_image_hotspots_9YW3Ap",
-    "bloom_three_cards_dfJkNe"
+    "interactive_image_hotspots_9YW3Ap"
   ]
 }
