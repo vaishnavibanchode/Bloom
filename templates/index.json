@@ -9,6 +9,30 @@
  */
 {
   "sections": {
+    "bloom_scroll_botanical_hero_main": {
+      "type": "bloom-scroll-botanical-hero",
+      "name": "Botanical Scroll Hero",
+      "settings": {
+        "enable_section": true,
+        "enable_animation": true,
+        "scroll_track_height": 340,
+        "p1_gradient_top": "#FAF9EF",
+        "p1_gradient_bottom": "#C4D8BD",
+        "p1_text_color": "#2D4A3E",
+        "p1_subheading": "SALE UP TO 30% OFF",
+        "p1_heading": "Spring",
+        "p1_heading_italic": "Savings",
+        "p2_background_color": "#9C9D97",
+        "p2_text_color": "#FFFFFF",
+        "p2_heading_regular": "Grow Your",
+        "p2_heading_italic": "Green Space",
+        "p2_heading_size": 68,
+        "p2_heading_size_mobile": 36,
+        "p2_description": "Discover beautiful plants and thoughtfully designed pots to refresh your home. Create a calming atmosphere and bring nature closer to everyday living.",
+        "p2_button_label": "SHOP COLLECTION",
+        "p2_button_link": ""
+      }
+    },
     "bloom_hero_4qNHAy": {
       "type": "bloom-hero",
       "blocks": {
@@ -1117,6 +1141,7 @@
     }
   },
   "order": [
+    "bloom_scroll_botanical_hero_main",
     "bloom_hero_4qNHAy",
     "bloom_botanical_statement_JTrMh3",
     "bloom_three_cards_dfJkNe",
