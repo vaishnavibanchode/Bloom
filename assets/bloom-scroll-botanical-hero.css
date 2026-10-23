@@ -1,0 +1,493 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* ==========================================================================
+   Bloom Scroll-Animated Botanical Hero Section
+   Inspired by Athora Planti Botanical Scroll Hero
+   ========================================================================== */
+
+.bloom-scroll-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--bsh-p1-grad-top, #FAF9EF);
+}
+
+.bloom-scroll-hero__track {
+  position: relative;
+  width: 100%;
+  height: var(--bsh-track-h, 340vh);
+}
+
+.bloom-scroll-hero__viewport {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  box-sizing: border-box;
+  contain: layout paint;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   PHASE 1: Mint/Sage Background & Floating Elements
+   -------------------------------------------------------------------------- */
+
+.bloom-scroll-hero__phase-one {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: opacity, transform;
+}
+
+.bloom-scroll-hero__phase-one-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--bsh-p1-grad-top, #FAF9EF) 0%,
+    var(--bsh-p1-grad-bottom, #C4D8BD) 100%
+  );
+  z-index: 1;
+}
+
+/* Floating Layer */
+.bloom-scroll-hero__floating-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bloom-scroll-hero__item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+.bloom-scroll-hero__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(35, 67, 50, 0.08));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Item Dimensions & Coordinates */
+.bloom-scroll-hero__item--flower {
+  width: clamp(140px, 16vw, 240px);
+  top: 42%;
+  left: 50%;
+  margin-left: calc(-1 * clamp(140px, 16vw, 240px) / 2);
+  margin-top: calc(-1 * clamp(140px, 16vw, 240px) / 2);
+  z-index: 5;
+}
+
+.bloom-scroll-hero__item--monstera {
+  width: clamp(120px, 15vw, 220px);
+  top: 55%;
+  left: 50%;
+  margin-left: calc(-1 * clamp(120px, 15vw, 220px) / 2);
+  margin-top: calc(-1 * clamp(120px, 15vw, 220px) / 2);
+  z-index: 4;
+}
+
+.bloom-scroll-hero__item--person {
+  width: clamp(150px, 18vw, 260px);
+  top: 52%;
+  left: 45%;
+  margin-left: calc(-1 * clamp(150px, 18vw, 260px) / 2);
+  margin-top: calc(-1 * clamp(150px, 18vw, 260px) / 2);
+  z-index: 4;
+}
+
+.bloom-scroll-hero__item--trowel {
+  width: clamp(100px, 13vw, 190px);
+  top: 54%;
+  left: 52%;
+  margin-left: calc(-1 * clamp(100px, 13vw, 190px) / 2);
+  margin-top: calc(-1 * clamp(100px, 13vw, 190px) / 2);
+  z-index: 4;
+}
+
+.bloom-scroll-hero__item--can {
+  width: clamp(110px, 14vw, 210px);
+  top: 46%;
+  left: 54%;
+  margin-left: calc(-1 * clamp(110px, 14vw, 210px) / 2);
+  margin-top: calc(-1 * clamp(110px, 14vw, 210px) / 2);
+  z-index: 4;
+}
+
+.bloom-scroll-hero__item--pot {
+  width: clamp(110px, 14vw, 200px);
+  top: 45%;
+  left: 46%;
+  margin-left: calc(-1 * clamp(110px, 14vw, 200px) / 2);
+  margin-top: calc(-1 * clamp(110px, 14vw, 200px) / 2);
+  z-index: 4;
+}
+
+/* Phase 1 Centered Typography */
+.bloom-scroll-hero__spring-content {
+  position: relative;
+  z-index: 6;
+  text-align: center;
+  padding: 0 24px;
+  color: var(--bsh-p1-text-color, #2D4A3E);
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.bloom-scroll-hero__spring-subheading {
+  display: block;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(9px, 0.9vw, 12px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bsh-p1-text-color, #2D4A3E);
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.bloom-scroll-hero__spring-heading {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(38px, 6.2vw, 84px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--bsh-p1-text-color, #2D4A3E);
+  margin: 0;
+  padding: 0;
+  letter-spacing: -0.01em;
+}
+
+.bloom-scroll-hero__spring-heading em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   PHASE 2: Expanding Botanical Card ("Grow Your Green Space")
+   -------------------------------------------------------------------------- */
+
+.bloom-scroll-hero__phase-two {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: auto;
+  overflow: hidden;
+  will-change: clip-path;
+  /* Starting clip-path: completely tucked inside center */
+  clip-path: inset(50% 50% round 32px);
+  transition: none;
+}
+
+.bloom-scroll-hero__card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bsh-p2-bg, #9C9D97);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+/* Botanical Panoramic 5-People Photography at bottom */
+.bloom-scroll-hero__card-media {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bloom-scroll-hero__card-media picture {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bloom-scroll-hero__panoramic-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  will-change: transform;
+}
+
+/* Subtle top gradient overlay to guarantee perfect contrast */
+.bloom-scroll-hero__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(35, 40, 36, 0.42) 0%,
+    rgba(35, 40, 36, 0.15) 35%,
+    rgba(35, 40, 36, 0) 75%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Editorial Botanical Card Content */
+.bloom-scroll-hero__card-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 720px;
+  padding-top: clamp(40px, 8vh, 90px);
+  padding-left: 24px;
+  padding-right: 24px;
+  text-align: center;
+  color: var(--bsh-p2-text-color, #FFFFFF);
+  box-sizing: border-box;
+  will-change: transform, opacity;
+}
+
+.bloom-scroll-hero__card-text-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bloom-scroll-hero__card-heading {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: var(--bsh-p2-heading-sz, 68px);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--bsh-p2-text-color, #FFFFFF);
+  margin: 0 0 16px 0;
+  padding: 0;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bloom-scroll-hero__card-heading em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: inherit;
+}
+
+.bloom-scroll-hero__card-description {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(13px, 1.1vw, 16px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 580px;
+  margin: 0 auto 28px auto;
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bloom-scroll-hero__card-description p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Pill Outline CTA Button */
+.bloom-scroll-hero__card-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bloom-scroll-hero__pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 28px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background-color: transparent;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.bloom-scroll-hero__btn-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.bloom-scroll-hero__pill-btn:hover {
+  background-color: #FFFFFF;
+  color: #234332;
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+.bloom-scroll-hero__pill-btn:hover .bloom-scroll-hero__btn-arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN (Mobile & Tablet)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .bloom-scroll-hero__track {
+    height: 280vh;
+  }
+
+  .bloom-scroll-hero__card-heading {
+    font-size: var(--bsh-p2-heading-sz-mb, 36px);
+    margin-bottom: 12px;
+  }
+
+  .bloom-scroll-hero__card-content {
+    padding-top: 36px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .bloom-scroll-hero__card-description {
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  .bloom-scroll-hero__pill-btn {
+    padding: 9px 22px;
+    font-size: 10px;
+  }
+
+  .bloom-scroll-hero__spring-heading {
+    font-size: 42px;
+  }
+
+  .bloom-scroll-hero__item--flower {
+    width: 140px;
+  }
+
+  .bloom-scroll-hero__item--monstera {
+    width: 120px;
+  }
+
+  .bloom-scroll-hero__item--person {
+    width: 140px;
+  }
+
+  .bloom-scroll-hero__item--trowel {
+    width: 100px;
+  }
+
+  .bloom-scroll-hero__item--can {
+    width: 110px;
+  }
+
+  .bloom-scroll-hero__item--pot {
+    width: 110px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ACCESSIBILITY: Prefers Reduced Motion & Static Fallback
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom-scroll-hero__track {
+    height: auto !important;
+  }
+
+  .bloom-scroll-hero__viewport {
+    position: relative !important;
+    height: 90vh !important;
+    min-height: 600px !important;
+  }
+
+  .bloom-scroll-hero__phase-one {
+    display: none !important;
+  }
+
+  .bloom-scroll-hero__phase-two {
+    position: relative !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .bloom-scroll-hero__card-content {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.bloom-scroll-hero[data-animation="false"] .bloom-scroll-hero__track {
+  height: auto;
+}
+
+.bloom-scroll-hero[data-animation="false"] .bloom-scroll-hero__viewport {
+  position: relative;
+  height: 90vh;
+  min-height: 600px;
+}
+
+.bloom-scroll-hero[data-animation="false"] .bloom-scroll-hero__phase-one {
+  display: none;
+}
+
+.bloom-scroll-hero[data-animation="false"] .bloom-scroll-hero__phase-two {
+  position: relative;
+  clip-path: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.bloom-scroll-hero[data-animation="false"] .bloom-scroll-hero__card-content {
+  opacity: 1 !important;
+  transform: none !important;
+}
