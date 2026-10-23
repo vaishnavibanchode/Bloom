@@ -195,6 +195,30 @@
         "padding_bottom_mobile": 45
       }
     },
+    "bloom_scroll_botanical_hero_gLbnXk": {
+      "type": "bloom-scroll-botanical-hero",
+      "name": "Botanical Scroll Hero",
+      "settings": {
+        "enable_section": true,
+        "enable_animation": true,
+        "scroll_track_height": 340,
+        "p1_gradient_top": "#FAF9EF",
+        "p1_gradient_bottom": "#C4D8BD",
+        "p1_text_color": "#2D4A3E",
+        "p1_subheading": "SALE UP TO 30% OFF",
+        "p1_heading": "Spring",
+        "p1_heading_italic": "Savings",
+        "p2_background_color": "#9C9D97",
+        "p2_text_color": "#FFFFFF",
+        "p2_heading_regular": "Grow Your",
+        "p2_heading_italic": "Green Space",
+        "p2_heading_size": 68,
+        "p2_heading_size_mobile": 36,
+        "p2_description": "Discover beautiful plants and thoughtfully designed pots to refresh your home. Create a calming atmosphere and bring nature closer to everyday living.",
+        "p2_button_label": "SHOP COLLECTION",
+        "p2_button_link": ""
+      }
+    },
     "collection_list_VmEYkJ": {
       "type": "collection-list",
       "blocks": {
@@ -1114,36 +1138,13 @@
         "padding_bottom": 60,
         "reset_spacing": false
       }
-    },
-    "bloom_scroll_botanical_hero_gLbnXk": {
-      "type": "bloom-scroll-botanical-hero",
-      "name": "Botanical Scroll Hero",
-      "settings": {
-        "enable_section": true,
-        "enable_animation": true,
-        "scroll_track_height": 340,
-        "p1_gradient_top": "#FAF9EF",
-        "p1_gradient_bottom": "#C4D8BD",
-        "p1_text_color": "#2D4A3E",
-        "p1_subheading": "SALE UP TO 30% OFF",
-        "p1_heading": "Spring",
-        "p1_heading_italic": "Savings",
-        "p2_background_color": "#9C9D97",
-        "p2_text_color": "#FFFFFF",
-        "p2_heading_regular": "Grow Your",
-        "p2_heading_italic": "Green Space",
-        "p2_heading_size": 68,
-        "p2_heading_size_mobile": 36,
-        "p2_description": "Discover beautiful plants and thoughtfully designed pots to refresh your home. Create a calming atmosphere and bring nature closer to everyday living.",
-        "p2_button_label": "SHOP COLLECTION",
-        "p2_button_link": ""
-      }
     }
   },
   "order": [
     "bloom_hero_4qNHAy",
     "bloom_botanical_statement_JTrMh3",
     "bloom_three_cards_dfJkNe",
+    "bloom_scroll_botanical_hero_gLbnXk",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
@@ -1159,7 +1160,6 @@
     "instagram_shop_nrVWcV",
     "icon_box_TRwJBD",
     "plant_story_grid_KRziDb",
-    "interactive_image_hotspots_9YW3Ap",
-    "bloom_scroll_botanical_hero_gLbnXk"
+    "interactive_image_hotspots_9YW3Ap"
   ]
 }
