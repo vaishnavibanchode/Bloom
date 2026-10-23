@@ -11,7 +11,7 @@
   "sections": {
     "bloom_scroll_botanical_hero_main": {
       "type": "bloom-scroll-botanical-hero",
-      "name": "Bloom Scroll Hero",
+      "name": "Botanical Scroll Hero",
       "settings": {
         "enable_section": true,
         "enable_animation": true,
