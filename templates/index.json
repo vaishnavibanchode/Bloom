@@ -64,7 +64,7 @@
         "content_vertical_position": "bottom",
         "desktop_focal_point": "center center",
         "enable_overlay": true,
-        "overlay_color": "#FFFFFF",
+        "overlay_color": "#122119",
         "overlay_opacity": 28,
         "enable_gradient": true,
         "gradient_direction": "vertical",
