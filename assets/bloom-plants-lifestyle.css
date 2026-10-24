@@ -1,0 +1,433 @@
+/**
+ * ==========================================================================
+ * Bloom Theme - Plants for Every Lifestyle Section (Athora Planti Preset)
+ * ==========================================================================
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* --- Root & Scope --- */
+bloom-plants-lifestyle {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-color: var(--bloom-lifestyle-bg, #FAF9F0);
+  padding-top: var(--bloom-lifestyle-pt, 72px);
+  padding-bottom: var(--bloom-lifestyle-pb, 76px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  bloom-plants-lifestyle {
+    padding-top: var(--bloom-lifestyle-pt-mb, 48px);
+    padding-bottom: var(--bloom-lifestyle-pb-mb, 52px);
+  }
+}
+
+.bloom-lifestyle__container {
+  width: 100%;
+  max-width: var(--bloom-lifestyle-max-w, 1540px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--bloom-lifestyle-pad-x, 40px);
+  padding-right: var(--bloom-lifestyle-pad-x, 40px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .bloom-lifestyle__container {
+    padding-left: var(--bloom-lifestyle-pad-x-mb, 20px);
+    padding-right: var(--bloom-lifestyle-pad-x-mb, 20px);
+  }
+}
+
+/* --- Section Header (Heading & Subtitle) --- */
+.bloom-lifestyle__header {
+  margin-bottom: var(--bloom-lifestyle-header-mb, 36px);
+  text-align: var(--bloom-lifestyle-header-align, left);
+}
+
+.bloom-lifestyle__heading {
+  margin: 0;
+  font-family: var(--bloom-lifestyle-heading-font, "Instrument Serif", Georgia, serif) !important;
+  font-size: var(--bloom-lifestyle-heading-sz, 34px);
+  line-height: var(--bloom-lifestyle-heading-lh, 1.15);
+  font-weight: 400;
+  color: var(--bloom-lifestyle-heading-color, #234332);
+  letter-spacing: -0.01em;
+}
+
+.bloom-lifestyle__heading em,
+.bloom-lifestyle__heading i,
+.bloom-lifestyle__heading-italic {
+  font-style: italic;
+  font-family: var(--bloom-lifestyle-heading-font, "Instrument Serif", Georgia, serif) !important;
+  color: var(--bloom-lifestyle-italic-color, #234332);
+}
+
+@media (max-width: 767px) {
+  .bloom-lifestyle__heading {
+    font-size: var(--bloom-lifestyle-heading-sz-mb, 26px);
+  }
+}
+
+.bloom-lifestyle__subtitle {
+  margin: 10px 0 0 0;
+  font-family: var(--bloom-lifestyle-sub-font, "Plus Jakarta Sans", "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: var(--bloom-lifestyle-sub-sz, 15px);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--bloom-lifestyle-sub-color, #234332);
+  max-width: 700px;
+}
+
+@media (max-width: 767px) {
+  .bloom-lifestyle__subtitle {
+    font-size: var(--bloom-lifestyle-sub-sz-mb, 14px);
+    margin-top: 8px;
+  }
+}
+
+/* --- Cards Grid & Track Layout --- */
+.bloom-lifestyle__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--bloom-lifestyle-cols, 4), 1fr);
+  gap: var(--bloom-lifestyle-gap, 20px);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .bloom-lifestyle__grid {
+    grid-template-columns: repeat(var(--bloom-lifestyle-cols-tb, 2), 1fr);
+    gap: var(--bloom-lifestyle-gap-tb, 18px);
+  }
+}
+
+/* Mobile Layout Modes */
+@media (max-width: 767px) {
+  /* Carousel Mode (Athora Planti Default) */
+  bloom-plants-lifestyle[data-mobile-layout="carousel"] .bloom-lifestyle__grid {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: var(--bloom-lifestyle-gap-mb, 14px);
+    padding-bottom: 8px;
+    margin-left: calc(var(--bloom-lifestyle-pad-x-mb, 20px) * -1);
+    margin-right: calc(var(--bloom-lifestyle-pad-x-mb, 20px) * -1);
+    padding-left: var(--bloom-lifestyle-pad-x-mb, 20px);
+    padding-right: var(--bloom-lifestyle-pad-x-mb, 20px);
+    scrollbar-width: none; /* Firefox */
+  }
+
+  bloom-plants-lifestyle[data-mobile-layout="carousel"] .bloom-lifestyle__grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  bloom-plants-lifestyle[data-mobile-layout="carousel"] .bloom-lifestyle__card-item {
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Grid 2-column mode */
+  bloom-plants-lifestyle[data-mobile-layout="grid_2col"] .bloom-lifestyle__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* Stack 1-column mode */
+  bloom-plants-lifestyle[data-mobile-layout="stack_1col"] .bloom-lifestyle__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* --- Card Item --- */
+.bloom-lifestyle__card-item {
+  position: relative;
+  border-radius: var(--bloom-lifestyle-radius, 20px);
+  box-sizing: border-box;
+}
+
+.bloom-lifestyle__card-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: var(--bloom-lifestyle-card-h, 550px);
+  border-radius: var(--bloom-lifestyle-radius, 20px);
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #e6e5db;
+  outline: none;
+  transform: translateZ(0); /* Hardware accelerated clipping */
+  -webkit-mask-image: -webkit-radial-gradient(white, black); /* Crisp border radius in Safari */
+}
+
+@media (max-width: 1024px) {
+  .bloom-lifestyle__card-link {
+    height: var(--bloom-lifestyle-card-h-tb, 460px);
+  }
+}
+
+@media (max-width: 767px) {
+  .bloom-lifestyle__card-link {
+    height: var(--bloom-lifestyle-card-h-mb, 420px);
+    border-radius: var(--bloom-lifestyle-radius-mb, 16px);
+  }
+}
+
+/* Keyboard focus state */
+.bloom-lifestyle__card-link:focus-visible {
+  box-shadow: 0 0 0 3px var(--bloom-lifestyle-focus, #386D50);
+}
+
+/* --- Card Image --- */
+.bloom-lifestyle__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.bloom-lifestyle__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
+}
+
+/* --- Card Hover Animations --- */
+/* Option 1: Planti Subtle Zoom (Default) */
+bloom-plants-lifestyle[data-hover="subtle_zoom"] .bloom-lifestyle__img {
+  transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+bloom-plants-lifestyle[data-hover="subtle_zoom"] .bloom-lifestyle__card-link:hover .bloom-lifestyle__img {
+  transform: scale(1.09);
+}
+
+/* Option 2: Lift and Zoom */
+bloom-plants-lifestyle[data-hover="lift_and_zoom"] .bloom-lifestyle__card-link {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+bloom-plants-lifestyle[data-hover="lift_and_zoom"] .bloom-lifestyle__img {
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+bloom-plants-lifestyle[data-hover="lift_and_zoom"] .bloom-lifestyle__card-link:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(35, 67, 50, 0.16);
+}
+
+bloom-plants-lifestyle[data-hover="lift_and_zoom"] .bloom-lifestyle__card-link:hover .bloom-lifestyle__img {
+  transform: scale(1.07);
+}
+
+/* Option 3: Card Lift only */
+bloom-plants-lifestyle[data-hover="lift"] .bloom-lifestyle__card-link {
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+bloom-plants-lifestyle[data-hover="lift"] .bloom-lifestyle__card-link:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(35, 67, 50, 0.14);
+}
+
+/* --- Bottom Gradient Overlay --- */
+.bloom-lifestyle__overlay {
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--bloom-lifestyle-gradient-h, 50%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, calc(var(--bloom-lifestyle-gradient-opacity, 0.48) * 0.4)) 45%,
+    rgba(0, 0, 0, var(--bloom-lifestyle-gradient-opacity, 0.48)) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* --- Card Content & Label --- */
+.bloom-lifestyle__content {
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: var(--bloom-lifestyle-label-bottom, 28px);
+  box-sizing: border-box;
+  text-align: var(--bloom-lifestyle-label-align, center);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.bloom-lifestyle__label {
+  display: inline-block;
+  font-family: var(--bloom-lifestyle-label-font, "Instrument Serif", Georgia, serif) !important;
+  font-size: var(--bloom-lifestyle-label-sz, 21px);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--bloom-lifestyle-label-color, #FFFFFF);
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .bloom-lifestyle__label {
+    font-size: var(--bloom-lifestyle-label-sz-mb, 18px);
+  }
+  .bloom-lifestyle__content {
+    padding-bottom: var(--bloom-lifestyle-label-bottom-mb, 20px);
+  }
+}
+
+/* --- Bottom CTA Button --- */
+.bloom-lifestyle__btn-wrap {
+  margin-top: var(--bloom-lifestyle-btn-mt, 42px);
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+.bloom-lifestyle-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: var(--bloom-lifestyle-btn-py, 13px) var(--bloom-lifestyle-btn-px, 26px);
+  border-radius: var(--bloom-lifestyle-btn-radius, 9999px);
+  font-family: var(--bloom-lifestyle-btn-font, "Plus Jakarta Sans", "Instrument Sans", sans-serif);
+  font-size: var(--bloom-lifestyle-btn-sz, 12px);
+  font-weight: var(--bloom-lifestyle-btn-fw, 700);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  background-color: var(--bloom-lifestyle-btn-bg, #234332);
+  color: var(--bloom-lifestyle-btn-text, #FFFFFF) !important;
+  border: var(--bloom-lifestyle-btn-border-w, 1px) solid var(--bloom-lifestyle-btn-border-c, #234332);
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color var(--bloom-lifestyle-btn-dur, 300ms) ease,
+              color var(--bloom-lifestyle-btn-dur, 300ms) ease;
+  -webkit-backface-visibility: hidden;
+  outline: none;
+}
+
+.bloom-lifestyle-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(35, 67, 50, 0.4);
+}
+
+.bloom-lifestyle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(35, 67, 50, 0.2);
+  background-color: var(--bloom-lifestyle-btn-hover-bg, #386D50);
+  color: var(--bloom-lifestyle-btn-hover-text, #FFFFFF) !important;
+}
+
+.bloom-lifestyle-btn__text {
+  position: relative;
+  z-index: 2;
+  line-height: 1;
+}
+
+/* Small right white circular arrow badge */
+.bloom-lifestyle-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bloom-lifestyle-btn:hover .bloom-lifestyle-btn__icon {
+  transform: translate(2px, -2px);
+}
+
+/* Planti Fluid Cursor Ripple Expansion */
+.bloom-lifestyle-circle-bg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--bloom-lifestyle-btn-hover-bg, #386D50);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease-out, height 0.6s ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bloom-lifestyle-btn:hover .bloom-lifestyle-circle-bg {
+  width: 320%;
+  height: 320%;
+}
+
+/* --- Scroll Reveal Animations --- */
+bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--bloom-lifestyle-ani-dur, 800ms) cubic-bezier(0.25, 1, 0.5, 1),
+              transform var(--bloom-lifestyle-ani-dur, 800ms) cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
+}
+
+bloom-plants-lifestyle[data-reveal="true"].is-visible .bloom-lifestyle-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered card delays */
+bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle__card-item:nth-child(1) {
+  transition-delay: calc(var(--bloom-lifestyle-ani-stagger, 90ms) * 1);
+}
+bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle__card-item:nth-child(2) {
+  transition-delay: calc(var(--bloom-lifestyle-ani-stagger, 90ms) * 2);
+}
+bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle__card-item:nth-child(3) {
+  transition-delay: calc(var(--bloom-lifestyle-ani-stagger, 90ms) * 3);
+}
+bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle__card-item:nth-child(4) {
+  transition-delay: calc(var(--bloom-lifestyle-ani-stagger, 90ms) * 4);
+}
+bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle__btn-wrap {
+  transition-delay: calc(var(--bloom-lifestyle-ani-stagger, 90ms) * 5);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  bloom-plants-lifestyle[data-reveal="true"] .bloom-lifestyle-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  bloom-plants-lifestyle[data-hover="subtle_zoom"] .bloom-lifestyle__img,
+  bloom-plants-lifestyle[data-hover="lift_and_zoom"] .bloom-lifestyle__img,
+  bloom-plants-lifestyle[data-hover="lift"] .bloom-lifestyle__card-link {
+    transition: none !important;
+    transform: none !important;
+  }
+}

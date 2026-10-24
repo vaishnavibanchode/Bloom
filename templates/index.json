@@ -1138,12 +1138,119 @@
         "padding_bottom": 60,
         "reset_spacing": false
       }
+    },
+    "bloom_plants_lifestyle": {
+      "type": "bloom-plants-lifestyle",
+      "blocks": {
+        "card_bright_light": {
+          "type": "card",
+          "settings": {
+            "label": "Bright light",
+            "link": ""
+          }
+        },
+        "card_easy_care": {
+          "type": "card",
+          "settings": {
+            "label": "Easy care",
+            "link": ""
+          }
+        },
+        "card_pet_friendly": {
+          "type": "card",
+          "settings": {
+            "label": "Pet friendly",
+            "link": ""
+          }
+        },
+        "card_indoor_plants": {
+          "type": "card",
+          "settings": {
+            "label": "Indoor plants",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_bright_light",
+        "card_easy_care",
+        "card_pet_friendly",
+        "card_indoor_plants"
+      ],
+      "name": "Plants for Every Lifestyle",
+      "settings": {
+        "enable_section": true,
+        "background_color": "#FAF9F0",
+        "container_max_width": 1540,
+        "heading": "Plants for Every Lifestyle",
+        "italic_phrase": "Every Lifestyle",
+        "subtitle": "Tell us about your space and we'll match you with plants that will thrive.",
+        "header_alignment": "left",
+        "heading_color": "#234332",
+        "italic_color": "#234332",
+        "subtitle_color": "#234332",
+        "heading_size_desktop": 34,
+        "heading_size_mobile": 26,
+        "subtitle_size_desktop": 15,
+        "subtitle_size_mobile": 14,
+        "header_margin_bottom": 36,
+        "columns_desktop": 4,
+        "columns_tablet": 2,
+        "mobile_layout": "carousel",
+        "card_gap_desktop": 20,
+        "card_gap_tablet": 18,
+        "card_gap_mobile": 14,
+        "card_height_desktop": 550,
+        "card_height_tablet": 460,
+        "card_height_mobile": 420,
+        "card_border_radius": 20,
+        "card_border_radius_mobile": 16,
+        "enable_gradient": true,
+        "gradient_opacity": 48,
+        "gradient_height": 50,
+        "label_color": "#FFFFFF",
+        "label_font_size_desktop": 21,
+        "label_font_size_mobile": 18,
+        "label_alignment": "center",
+        "label_bottom_offset": 28,
+        "label_bottom_offset_mobile": 20,
+        "hover_effect": "subtle_zoom",
+        "enable_scroll_reveal": true,
+        "scroll_animation_duration": 800,
+        "scroll_animation_stagger": 90,
+        "show_cta": true,
+        "cta_label": "OR BROWSE ALL PLANTS",
+        "cta_url": "",
+        "show_cta_icon": true,
+        "cta_bg_color": "#234332",
+        "cta_text_color": "#FFFFFF",
+        "cta_icon_color": "#234332",
+        "cta_icon_bg_color": "#FFFFFF",
+        "cta_border_color": "#234332",
+        "cta_border_width": 1,
+        "cta_border_radius": 50,
+        "cta_font_size": 12,
+        "cta_font_weight": "700",
+        "cta_padding_x": 26,
+        "cta_padding_y": 13,
+        "cta_margin_top": 42,
+        "cta_hover_bg_color": "#386D50",
+        "cta_hover_text_color": "#FFFFFF",
+        "cta_hover_transition": 300,
+        "padding_top_desktop": 72,
+        "padding_bottom_desktop": 76,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 52,
+        "padding_horizontal_desktop": 40,
+        "padding_horizontal_mobile": 20
+      }
     }
   },
   "order": [
     "bloom_hero_4qNHAy",
     "bloom_botanical_statement_JTrMh3",
     "bloom_three_cards_dfJkNe",
+    "bloom_plants_lifestyle",
     "bloom_scroll_botanical_hero_gLbnXk",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",

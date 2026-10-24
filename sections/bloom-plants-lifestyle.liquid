@@ -1,0 +1,914 @@
+{{ 'bloom-plants-lifestyle.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-plants-lifestyle.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign blocks_count = section.blocks.size
+
+  # Parse heading & italic phrase
+  assign raw_heading = section_st.heading | default: 'Plants for Every Lifestyle'
+  assign italic_phrase = section_st.italic_phrase | default: 'Every Lifestyle'
+  
+  if italic_phrase != blank and raw_heading contains italic_phrase
+    assign italic_markup = '<em class="bloom-lifestyle__heading-italic">' | append: italic_phrase | append: '</em>'
+    assign formatted_heading = raw_heading | replace: italic_phrase, italic_markup
+  else
+    assign formatted_heading = raw_heading
+  endif
+
+  assign btn_url = section_st.cta_url
+  if btn_url == blank
+    assign btn_url = routes.all_products_collection_url
+  endif
+-%}
+
+{%- if section_st.enable_section and blocks_count > 0 -%}
+  <bloom-plants-lifestyle
+    id="bloom-plants-lifestyle-{{ section.id }}"
+    class="bloom-plants-lifestyle"
+    data-reveal="{{ section_st.enable_scroll_reveal }}"
+    data-hover="{{ section_st.hover_effect }}"
+    data-mobile-layout="{{ section_st.mobile_layout }}"
+    style="
+      --bloom-lifestyle-bg: {{ section_st.background_color }};
+      --bloom-lifestyle-max-w: {{ section_st.container_max_width }}px;
+      --bloom-lifestyle-pad-x: {{ section_st.padding_horizontal_desktop }}px;
+      --bloom-lifestyle-pad-x-mb: {{ section_st.padding_horizontal_mobile }}px;
+      --bloom-lifestyle-pt: {{ section_st.padding_top_desktop }}px;
+      --bloom-lifestyle-pb: {{ section_st.padding_bottom_desktop }}px;
+      --bloom-lifestyle-pt-mb: {{ section_st.padding_top_mobile }}px;
+      --bloom-lifestyle-pb-mb: {{ section_st.padding_bottom_mobile }}px;
+      --bloom-lifestyle-header-mb: {{ section_st.header_margin_bottom }}px;
+      --bloom-lifestyle-header-align: {{ section_st.header_alignment }};
+      --bloom-lifestyle-heading-sz: {{ section_st.heading_size_desktop }}px;
+      --bloom-lifestyle-heading-sz-mb: {{ section_st.heading_size_mobile }}px;
+      --bloom-lifestyle-heading-color: {{ section_st.heading_color }};
+      --bloom-lifestyle-italic-color: {{ section_st.italic_color }};
+      --bloom-lifestyle-sub-sz: {{ section_st.subtitle_size_desktop }}px;
+      --bloom-lifestyle-sub-sz-mb: {{ section_st.subtitle_size_mobile }}px;
+      --bloom-lifestyle-sub-color: {{ section_st.subtitle_color }};
+      --bloom-lifestyle-cols: {{ section_st.columns_desktop }};
+      --bloom-lifestyle-cols-tb: {{ section_st.columns_tablet }};
+      --bloom-lifestyle-gap: {{ section_st.card_gap_desktop }}px;
+      --bloom-lifestyle-gap-tb: {{ section_st.card_gap_tablet }}px;
+      --bloom-lifestyle-gap-mb: {{ section_st.card_gap_mobile }}px;
+      --bloom-lifestyle-card-h: {{ section_st.card_height_desktop }}px;
+      --bloom-lifestyle-card-h-tb: {{ section_st.card_height_tablet }}px;
+      --bloom-lifestyle-card-h-mb: {{ section_st.card_height_mobile }}px;
+      --bloom-lifestyle-radius: {{ section_st.card_border_radius }}px;
+      --bloom-lifestyle-radius-mb: {{ section_st.card_border_radius_mobile }}px;
+      --bloom-lifestyle-gradient-h: {{ section_st.gradient_height }}%;
+      --bloom-lifestyle-gradient-opacity: {{ section_st.gradient_opacity | divided_by: 100.0 }};
+      --bloom-lifestyle-label-sz: {{ section_st.label_font_size_desktop }}px;
+      --bloom-lifestyle-label-sz-mb: {{ section_st.label_font_size_mobile }}px;
+      --bloom-lifestyle-label-color: {{ section_st.label_color }};
+      --bloom-lifestyle-label-align: {{ section_st.label_alignment }};
+      --bloom-lifestyle-label-bottom: {{ section_st.label_bottom_offset }}px;
+      --bloom-lifestyle-label-bottom-mb: {{ section_st.label_bottom_offset_mobile }}px;
+      --bloom-lifestyle-btn-mt: {{ section_st.cta_margin_top }}px;
+      --bloom-lifestyle-btn-bg: {{ section_st.cta_bg_color }};
+      --bloom-lifestyle-btn-text: {{ section_st.cta_text_color }};
+      --bloom-lifestyle-btn-border-c: {{ section_st.cta_border_color }};
+      --bloom-lifestyle-btn-border-w: {{ section_st.cta_border_width }}px;
+      --bloom-lifestyle-btn-radius: {{ section_st.cta_border_radius }}px;
+      --bloom-lifestyle-btn-sz: {{ section_st.cta_font_size }}px;
+      --bloom-lifestyle-btn-fw: {{ section_st.cta_font_weight }};
+      --bloom-lifestyle-btn-px: {{ section_st.cta_padding_x }}px;
+      --bloom-lifestyle-btn-py: {{ section_st.cta_padding_y }}px;
+      --bloom-lifestyle-btn-hover-bg: {{ section_st.cta_hover_bg_color }};
+      --bloom-lifestyle-btn-hover-text: {{ section_st.cta_hover_text_color }};
+      --bloom-lifestyle-btn-dur: {{ section_st.cta_hover_transition }}ms;
+      --bloom-lifestyle-ani-dur: {{ section_st.scroll_animation_duration }}ms;
+      --bloom-lifestyle-ani-stagger: {{ section_st.scroll_animation_stagger }}ms;
+    "
+  >
+    <div class="bloom-lifestyle__container">
+      <!-- Section Header -->
+      {%- if formatted_heading != blank or section_st.subtitle != blank -%}
+        <div class="bloom-lifestyle__header bloom-lifestyle-reveal">
+          {%- if formatted_heading != blank -%}
+            <h2 class="bloom-lifestyle__heading">
+              {{ formatted_heading }}
+            </h2>
+          {%- endif -%}
+
+          {%- if section_st.subtitle != blank -%}
+            <div class="bloom-lifestyle__subtitle">
+              <p>{{ section_st.subtitle }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Cards Grid -->
+      <div class="bloom-lifestyle__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign block_st = block.settings
+            assign card_idx = forloop.index
+            assign card_url = block_st.link
+            if card_url == blank
+              assign card_url = routes.all_products_collection_url
+            endif
+
+            # Accessible label & alt
+            assign card_label = block_st.label | default: 'Collection'
+            assign card_alt = block_st.alt_text
+            if card_alt == blank
+              if block_st.image != blank and block_st.image.alt != blank
+                assign card_alt = block_st.image.alt
+              else
+                assign card_alt = card_label | append: ' - botanical lifestyle plant category'
+              endif
+            endif
+
+            # Individual overlay override
+            assign custom_overlay = ''
+            if block_st.overlay_opacity_override > 0
+              assign custom_op = block_st.overlay_opacity_override | divided_by: 100.0
+              assign custom_overlay = 'style="--bloom-lifestyle-gradient-opacity: ' | append: custom_op | append: ';"'
+            endif
+          -%}
+
+          <div
+            class="bloom-lifestyle__card-item bloom-lifestyle-reveal"
+            role="listitem"
+            data-card-index="{{ card_idx }}"
+            {{ block.shopify_attributes }}
+          >
+            <a
+              href="{{ card_url }}"
+              class="bloom-lifestyle__card-link"
+              aria-label="{{ card_label | escape }}"
+            >
+              <div class="bloom-lifestyle__media">
+                {%- if block_st.image != blank -%}
+                  <picture>
+                    {%- if block_st.mobile_image != blank -%}
+                      <source
+                        media="(max-width: 767px)"
+                        srcset="{{ block_st.mobile_image | image_url: width: 800 }}"
+                      >
+                    {%- endif -%}
+                    <img
+                      src="{{ block_st.image | image_url: width: 1200 }}"
+                      alt="{{ card_alt | escape }}"
+                      class="bloom-lifestyle__img"
+                      loading="lazy"
+                      style="object-position: {{ block_st.image_focal_point | default: 'center center' }};"
+                    >
+                  </picture>
+                {%- else -%}
+                  {%- liquid
+                    case card_idx
+                      when 1
+                        assign fallback_asset = 'bloom-lifestyle-bright-light.jpg' | asset_url
+                      when 2
+                        assign fallback_asset = 'bloom-lifestyle-easy-care.jpg' | asset_url
+                      when 3
+                        assign fallback_asset = 'bloom-lifestyle-pet-friendly.jpg' | asset_url
+                      when 4
+                        assign fallback_asset = 'bloom-lifestyle-indoor-plants.jpg' | asset_url
+                      else
+                        assign fallback_asset = 'bloom-lifestyle-bright-light.jpg' | asset_url
+                    endcase
+                  -%}
+                  <img
+                    src="{{ fallback_asset }}"
+                    alt="{{ card_alt | escape }}"
+                    class="bloom-lifestyle__img"
+                    loading="lazy"
+                    style="object-position: {{ block_st.image_focal_point | default: 'center center' }};"
+                  >
+                {%- endif -%}
+              </div>
+
+              {%- if section_st.enable_gradient -%}
+                <div class="bloom-lifestyle__overlay" aria-hidden="true" {{ custom_overlay }}></div>
+              {%- endif -%}
+
+              {%- if block_st.label != blank -%}
+                <div class="bloom-lifestyle__content">
+                  <span class="bloom-lifestyle__label">
+                    {{ block_st.label }}
+                  </span>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <!-- Centered Bottom CTA Button -->
+      {%- if section_st.show_cta and section_st.cta_label != blank -%}
+        <div class="bloom-lifestyle__btn-wrap bloom-lifestyle-reveal">
+          <a
+            href="{{ btn_url }}"
+            class="bloom-lifestyle-btn"
+            aria-label="{{ section_st.cta_label | escape }}"
+          >
+            <span class="bloom-lifestyle-btn__text">{{ section_st.cta_label }}</span>
+
+            {%- if section_st.show_cta_icon -%}
+              <span class="bloom-lifestyle-btn__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="12" fill="{{ section_st.cta_icon_bg_color | default: '#FFFFFF' }}"/>
+                  <path d="M8 14.4167C8 14.5917 8.05833 14.7083 8.175 14.825C8.40833 15.0583 8.75833 15.0583 8.99167 14.825L14.825 8.99167C15.0583 8.75833 15.0583 8.40833 14.825 8.175C14.5917 7.94167 14.2417 7.94167 14.0083 8.175L8.175 14.0083C8.05833 14.125 8 14.2417 8 14.4167Z" fill="{{ section_st.cta_icon_color | default: '#234332' }}"/>
+                  <path d="M8.58333 8.58333C8.58333 8.93333 8.81667 9.16667 9.16667 9.16667L13.8333 9.16667V13.8333C13.8333 14.1833 14.0667 14.4167 14.4167 14.4167C14.7667 14.4167 15 14.1833 15 13.8333V8.58333C15 8.23333 14.7667 8 14.4167 8L9.16667 8C8.81667 8 8.58333 8.23333 8.58333 8.58333Z" fill="{{ section_st.cta_icon_color | default: '#234332' }}"/>
+                </svg>
+              </span>
+            {%- endif -%}
+
+            <span class="bloom-lifestyle-circle-bg" aria-hidden="true"></span>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </bloom-plants-lifestyle>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Plants for Lifestyle",
+  "tag": "section",
+  "class": "shopify-section-bloom-plants-lifestyle",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "default": "#FAF9F0"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container Max Width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1540
+    },
+    {
+      "type": "header",
+      "content": "Heading & Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Plants for Every Lifestyle"
+    },
+    {
+      "type": "text",
+      "id": "italic_phrase",
+      "label": "Italic Phrase",
+      "default": "Every Lifestyle",
+      "info": "Words matching this phrase in the heading will render in editorial italic serif."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle Description",
+      "default": "Tell us about your space and we'll match you with plants that will thrive."
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "italic_color",
+      "label": "Italic Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading Font Size (Desktop)",
+      "min": 24,
+      "max": 54,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 20,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "label": "Subtitle Font Size (Desktop)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "label": "Subtitle Font Size (Mobile)",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom",
+      "label": "Space Below Subtitle",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Card Layout & Dimensions"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop Columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Tablet Columns",
+      "min": 2,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Layout Mode",
+      "options": [
+        { "value": "carousel", "label": "Horizontal Carousel / Touch Swipe (Planti Reference)" },
+        { "value": "grid_2col", "label": "2 Columns Grid" },
+        { "value": "stack_1col", "label": "1 Column Stack" }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card Gap (Desktop)",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_gap_tablet",
+      "label": "Card Gap (Tablet)",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card Gap (Mobile)",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_height_desktop",
+      "label": "Card Height (Desktop)",
+      "min": 400,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 550
+    },
+    {
+      "type": "range",
+      "id": "card_height_tablet",
+      "label": "Card Height (Tablet)",
+      "min": 350,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 460
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Card Height (Mobile)",
+      "min": 300,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Corner Radius (Desktop)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius_mobile",
+      "label": "Card Corner Radius (Mobile)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Image Overlay & Gradient"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gradient",
+      "label": "Enable Bottom Dark Gradient",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "gradient_opacity",
+      "label": "Gradient Bottom Opacity",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "%",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "gradient_height",
+      "label": "Gradient Height",
+      "min": 25,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Card Category Labels"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_desktop",
+      "label": "Label Font Size (Desktop)",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_mobile",
+      "label": "Label Font Size (Mobile)",
+      "min": 14,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "label_alignment",
+      "label": "Label Horizontal Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "label_bottom_offset",
+      "label": "Label Bottom Offset (Desktop)",
+      "min": 15,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "label_bottom_offset_mobile",
+      "label": "Label Bottom Offset (Mobile)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Card Hover & Scroll Animations"
+    },
+    {
+      "type": "select",
+      "id": "hover_effect",
+      "label": "Card Hover Effect",
+      "options": [
+        { "value": "subtle_zoom", "label": "Subtle Image Zoom (Planti Reference)" },
+        { "value": "lift_and_zoom", "label": "Card Lift + Image Zoom" },
+        { "value": "lift", "label": "Card Lift Only" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "subtle_zoom"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_reveal",
+      "label": "Enable Scroll Reveal Animation",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scroll_animation_duration",
+      "label": "Scroll Animation Duration",
+      "min": 400,
+      "max": 1400,
+      "step": 50,
+      "unit": "ms",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "scroll_animation_stagger",
+      "label": "Card Stagger Delay",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "ms",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Call to Action (CTA) Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show Bottom CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Button Label",
+      "default": "OR BROWSE ALL PLANTS"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_icon",
+      "label": "Show Right Arrow Badge",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Button Background Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_icon_color",
+      "label": "Icon Arrow Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "cta_icon_bg_color",
+      "label": "Icon Circle Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color",
+      "label": "Button Border Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "cta_border_width",
+      "label": "Button Border Width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "Button Corner Radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "label": "Button Font Size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "cta_font_weight",
+      "label": "Button Font Weight",
+      "options": [
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-Bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra Bold (800)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "cta_padding_x",
+      "label": "Button Horizontal Padding",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "cta_padding_y",
+      "label": "Button Vertical Padding",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "cta_margin_top",
+      "label": "Space Above CTA Button",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_bg_color",
+      "label": "Button Hover Background Color",
+      "default": "#386D50"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "cta_hover_transition",
+      "label": "Hover Transition Duration",
+      "min": 150,
+      "max": 600,
+      "step": 25,
+      "unit": "ms",
+      "default": 300
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 15,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 15,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_desktop",
+      "label": "Padding Horizontal (Desktop)",
+      "min": 15,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "label": "Padding Horizontal (Mobile)",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Lifestyle Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category Label",
+          "default": "Bright light"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card Link"
+        },
+        {
+          "type": "select",
+          "id": "image_focal_point",
+          "label": "Image Focal Point",
+          "options": [
+            { "value": "center center", "label": "Center" },
+            { "value": "top center", "label": "Top Center" },
+            { "value": "bottom center", "label": "Bottom Center" },
+            { "value": "center left", "label": "Center Left" },
+            { "value": "center right", "label": "Center Right" }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image Alt Text"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity_override",
+          "label": "Overlay Opacity Override (0 = Section Default)",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Plants for Every Lifestyle",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "label": "Bright light"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "label": "Easy care"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "label": "Pet friendly"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "label": "Indoor plants"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
