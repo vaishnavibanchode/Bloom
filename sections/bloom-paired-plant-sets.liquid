@@ -1,0 +1,1117 @@
+{{ 'bloom-paired-plant-sets.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-paired-plant-sets.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign blocks_count = section.blocks.size
+
+  # Parse heading & italic phrase
+  assign raw_heading = section_st.heading | default: 'Perfectly Paired Plant Sets'
+  assign italic_phrase = section_st.italic_phrase | default: 'Plant Sets'
+
+  if italic_phrase != blank and raw_heading contains italic_phrase
+    assign italic_markup = '<em class="bloom-pps__heading-italic">' | append: italic_phrase | append: '</em>'
+    assign formatted_heading = raw_heading | replace: italic_phrase, italic_markup
+  else
+    assign formatted_heading = raw_heading
+  endif
+-%}
+
+{%- if section_st.enable_section and blocks_count > 0 -%}
+  <bloom-paired-plant-sets
+    id="bloom-paired-plant-sets-{{ section.id }}"
+    class="bloom-paired-plant-sets"
+    data-reveal="{{ section_st.enable_scroll_reveal }}"
+    style="
+      --bloom-pps-bg: {{ section_st.background_color }};
+      --bloom-pps-max-w: {{ section_st.container_max_width }}px;
+      --bloom-pps-pt: {{ section_st.padding_top_desktop }}px;
+      --bloom-pps-pb: {{ section_st.padding_bottom_desktop }}px;
+      --bloom-pps-pt-mb: {{ section_st.padding_top_mobile }}px;
+      --bloom-pps-pb-mb: {{ section_st.padding_bottom_mobile }}px;
+      --bloom-pps-pad-x: {{ section_st.padding_horizontal_desktop }}px;
+      --bloom-pps-pad-x-mb: {{ section_st.padding_horizontal_mobile }}px;
+      --bloom-pps-heading-sz: {{ section_st.heading_size_desktop }}px;
+      --bloom-pps-heading-sz-mb: {{ section_st.heading_size_mobile }}px;
+      --bloom-pps-heading-color: {{ section_st.heading_color }};
+      --bloom-pps-italic-color: {{ section_st.italic_color }};
+      --bloom-pps-eyebrow-color: {{ section_st.eyebrow_color }};
+      --bloom-pps-img-h: {{ section_st.main_image_height_desktop }}px;
+      --bloom-pps-img-h-mb: {{ section_st.main_image_height_mobile }}px;
+      --bloom-pps-img-radius: {{ section_st.main_image_radius }}px;
+      --bloom-pps-thumb-size: {{ section_st.thumbnail_size }}px;
+      --bloom-pps-thumb-gap: {{ section_st.thumbnail_gap }}px;
+      --bloom-pps-ring-color: {{ section_st.ring_color }};
+      --bloom-pps-prod-img-w: {{ section_st.product_image_width }}px;
+      --bloom-pps-prod-radius: {{ section_st.product_image_radius }}px;
+      --bloom-pps-prod-bg: {{ section_st.product_bg_color }};
+      --bloom-pps-hotspot-dot: {{ section_st.hotspot_dot_color }};
+    "
+  >
+    <div class="bloom-pps__container">
+      <!-- Mobile Only Top Heading -->
+      <div class="bloom-pps__header--mobile bloom-pps-reveal">
+        {%- if section_st.eyebrow != blank -%}
+          <p class="bloom-pps__eyebrow">{{ section_st.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="bloom-pps__heading">{{ formatted_heading }}</h2>
+      </div>
+
+      <div class="bloom-pps__layout">
+        <!-- 1. Left Vertical Circular Thumbnails Rail -->
+        <div class="bloom-pps__thumbs-rail bloom-pps-reveal" role="tablist" aria-label="Plant sets gallery">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_st = block.settings
+              assign is_first = forloop.first
+              assign thumb_src = block_st.thumb_image
+              if thumb_src == blank
+                assign thumb_src = block_st.image
+              endif
+            -%}
+            <button
+              type="button"
+              class="bloom-pps__thumb-btn"
+              role="tab"
+              aria-selected="{% if is_first %}true{% else %}false{% endif %}"
+              aria-label="{{ block_st.thumb_label | default: 'View look' }} {{ forloop.index }}"
+              data-look-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="bloom-pps__thumb-ring" aria-hidden="true"></span>
+              <div class="bloom-pps__thumb-img-wrap">
+                {%- if thumb_src != blank -%}
+                  <img
+                    src="{{ thumb_src | image_url: width: 200 }}"
+                    alt="{{ block_st.thumb_label | escape }}"
+                    class="bloom-pps__thumb-img"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {%- liquid
+                    case forloop.index
+                      when 1
+                        assign fallback_thumb = 'bloom-paired-lifestyle-1.jpg' | asset_url
+                      when 2
+                        assign fallback_thumb = 'bloom-paired-lifestyle-2.jpg' | asset_url
+                      when 3
+                        assign fallback_thumb = 'bloom-paired-lifestyle-3.jpg' | asset_url
+                      else
+                        assign fallback_thumb = 'bloom-paired-lifestyle-1.jpg' | asset_url
+                    endcase
+                  -%}
+                  <img
+                    src="{{ fallback_thumb }}"
+                    alt="{{ block_st.thumb_label | escape }}"
+                    class="bloom-pps__thumb-img"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+            </button>
+          {%- endfor -%}
+        </div>
+
+        <!-- 2. Main Portrait Lifestyle Stage with Interactive Hotspots -->
+        <div class="bloom-pps__stage bloom-pps-reveal">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_st = block.settings
+              assign is_first = forloop.first
+              assign look_idx = forloop.index0
+            -%}
+            <div
+              class="bloom-pps__look-view{% if is_first %} is-active{% endif %}"
+              data-look-index="{{ look_idx }}"
+            >
+              {%- if block_st.image != blank -%}
+                <picture>
+                  {%- if block_st.mobile_image != blank -%}
+                    <source
+                      media="(max-width: 767px)"
+                      srcset="{{ block_st.mobile_image | image_url: width: 900 }}"
+                    >
+                  {%- endif -%}
+                  <img
+                    src="{{ block_st.image | image_url: width: 1400 }}"
+                    alt="{{ block_st.thumb_label | default: 'Botanical Plant Sets' | escape }}"
+                    class="bloom-pps__stage-img"
+                    loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+                  >
+                </picture>
+              {%- else -%}
+                {%- liquid
+                  case forloop.index
+                    when 1
+                      assign fallback_stage = 'bloom-paired-lifestyle-1.jpg' | asset_url
+                    when 2
+                      assign fallback_stage = 'bloom-paired-lifestyle-2.jpg' | asset_url
+                    when 3
+                      assign fallback_stage = 'bloom-paired-lifestyle-3.jpg' | asset_url
+                    else
+                      assign fallback_stage = 'bloom-paired-lifestyle-1.jpg' | asset_url
+                  endcase
+                -%}
+                <img
+                  src="{{ fallback_stage }}"
+                  alt="Bloom Botanical Lifestyle Look {{ forloop.index }}"
+                  class="bloom-pps__stage-img"
+                  loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+                >
+              {%- endif -%}
+
+              <!-- Hotspot 1 -->
+              {%- if block_st.hotspot_1_enable -%}
+                {%- liquid
+                  assign p1 = block_st.product_1
+                  assign p1_title = block_st.product_1_title_override
+                  if p1_title == blank and p1 != blank
+                    assign p1_title = p1.title
+                  endif
+                  if p1_title == blank
+                    case forloop.index
+                      when 1
+                        assign p1_title = 'Fiddle leaf fig'
+                      when 2
+                        assign p1_title = 'Pilea Peperomioides'
+                      when 3
+                        assign p1_title = 'Monstera Deliciosa'
+                      else
+                        assign p1_title = 'Botanical Plant'
+                    endcase
+                  endif
+
+                  assign p1_price = block_st.product_1_price_override
+                  if p1_price == blank and p1 != blank
+                    assign p1_price = p1.price | money
+                  endif
+                  if p1_price == blank
+                    case forloop.index
+                      when 1
+                        assign p1_price = '$129.00'
+                      when 2
+                        assign p1_price = '$58.00'
+                      when 3
+                        assign p1_price = '$145.00'
+                    endcase
+                  endif
+
+                  assign p1_url = p1.url | default: routes.all_products_collection_url
+                  assign p1_img = block_st.product_1_image_override
+                  if p1_img == blank and p1.featured_image != blank
+                    assign p1_img = p1.featured_image
+                  endif
+                -%}
+                <div
+                  class="bloom-pps__hotspot"
+                  style="--hotspot-x: {{ block_st.hotspot_1_x }}%; --hotspot-y: {{ block_st.hotspot_1_y }}%;"
+                >
+                  <button
+                    type="button"
+                    class="bloom-pps__hotspot-btn is-active"
+                    data-product-index="0"
+                    aria-label="View {{ p1_title | escape }}"
+                  >
+                    <span class="bloom-pps__hotspot-pulse" aria-hidden="true"></span>
+                    <span class="bloom-pps__hotspot-dot" aria-hidden="true"></span>
+                  </button>
+                  <div class="bloom-pps__popover" role="tooltip">
+                    {%- if p1_img != blank -%}
+                      <img src="{{ p1_img | image_url: width: 100 }}" alt="{{ p1_title | escape }}" class="bloom-pps__popover-img">
+                    {%- else -%}
+                      {%- liquid
+                        case forloop.index
+                          when 1
+                            assign fb_pop_img = 'bloom-paired-product-1.jpg' | asset_url
+                          when 2
+                            assign fb_pop_img = 'bloom-paired-product-3.jpg' | asset_url
+                          when 3
+                            assign fb_pop_img = 'bloom-paired-product-2.jpg' | asset_url
+                          else
+                            assign fb_pop_img = 'bloom-paired-product-1.jpg' | asset_url
+                        endcase
+                      -%}
+                      <img src="{{ fb_pop_img }}" alt="{{ p1_title | escape }}" class="bloom-pps__popover-img">
+                    {%- endif -%}
+                    <div class="bloom-pps__popover-info">
+                      <a href="{{ p1_url }}" class="bloom-pps__popover-title">{{ p1_title }}</a>
+                      <span class="bloom-pps__popover-price">{{ p1_price }}</span>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+
+              <!-- Hotspot 2 -->
+              {%- if block_st.hotspot_2_enable -%}
+                {%- liquid
+                  assign p2 = block_st.product_2
+                  assign p2_title = block_st.product_2_title_override
+                  if p2_title == blank and p2 != blank
+                    assign p2_title = p2.title
+                  endif
+                  if p2_title == blank
+                    case forloop.index
+                      when 1
+                        assign p2_title = 'Monstera Deliciosa'
+                      when 2
+                        assign p2_title = 'Ceramic Ribbed Planter'
+                      when 3
+                        assign p2_title = 'Snake plant'
+                      else
+                        assign p2_title = 'Companion Plant'
+                    endcase
+                  endif
+
+                  assign p2_price = block_st.product_2_price_override
+                  if p2_price == blank and p2 != blank
+                    assign p2_price = p2.price | money
+                  endif
+                  if p2_price == blank
+                    case forloop.index
+                      when 1
+                        assign p2_price = '$89.00'
+                      when 2
+                        assign p2_price = '$42.00'
+                      when 3
+                        assign p2_price = '$68.00'
+                    endcase
+                  endif
+
+                  assign p2_url = p2.url | default: routes.all_products_collection_url
+                  assign p2_img = block_st.product_2_image_override
+                  if p2_img == blank and p2.featured_image != blank
+                    assign p2_img = p2.featured_image
+                  endif
+                -%}
+                <div
+                  class="bloom-pps__hotspot"
+                  style="--hotspot-x: {{ block_st.hotspot_2_x }}%; --hotspot-y: {{ block_st.hotspot_2_y }}%;"
+                >
+                  <button
+                    type="button"
+                    class="bloom-pps__hotspot-btn"
+                    data-product-index="1"
+                    aria-label="View {{ p2_title | escape }}"
+                  >
+                    <span class="bloom-pps__hotspot-pulse" aria-hidden="true"></span>
+                    <span class="bloom-pps__hotspot-dot" aria-hidden="true"></span>
+                  </button>
+                  <div class="bloom-pps__popover" role="tooltip">
+                    {%- if p2_img != blank -%}
+                      <img src="{{ p2_img | image_url: width: 100 }}" alt="{{ p2_title | escape }}" class="bloom-pps__popover-img">
+                    {%- else -%}
+                      {%- liquid
+                        case forloop.index
+                          when 1
+                            assign fb_pop_img2 = 'bloom-paired-product-2.jpg' | asset_url
+                          when 2
+                            assign fb_pop_img2 = 'bloom-paired-product-1.jpg' | asset_url
+                          when 3
+                            assign fb_pop_img2 = 'bloom-paired-product-3.jpg' | asset_url
+                          else
+                            assign fb_pop_img2 = 'bloom-paired-product-2.jpg' | asset_url
+                        endcase
+                      -%}
+                      <img src="{{ fb_pop_img2 }}" alt="{{ p2_title | escape }}" class="bloom-pps__popover-img">
+                    {%- endif -%}
+                    <div class="bloom-pps__popover-info">
+                      <a href="{{ p2_url }}" class="bloom-pps__popover-title">{{ p2_title }}</a>
+                      <span class="bloom-pps__popover-price">{{ p2_price }}</span>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- 3. Spacer Gap Column (Empty for Desktop Grid Alignment) -->
+        <div class="bloom-pps__spacer" aria-hidden="true"></div>
+
+        <!-- 4. Right Column: Desktop Heading & Featured Product Card -->
+        <div class="bloom-pps__panel bloom-pps-reveal">
+          <!-- Desktop Heading -->
+          <div class="bloom-pps__header--desktop">
+            {%- if section_st.eyebrow != blank -%}
+              <p class="bloom-pps__eyebrow">{{ section_st.eyebrow }}</p>
+            {%- endif -%}
+            <h2 class="bloom-pps__heading">{{ formatted_heading }}</h2>
+          </div>
+
+          <!-- Product Panels for Each Look -->
+          <div class="bloom-pps__panel-content-wrap">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign block_st = block.settings
+                assign is_first = forloop.first
+                assign look_idx = forloop.index0
+
+                # Product 1 Details
+                assign p1 = block_st.product_1
+                assign p1_vendor = block_st.product_1_vendor_override | default: p1.vendor | default: 'TERRACOTTA TERRACE'
+                assign p1_title = block_st.product_1_title_override | default: p1.title
+                if p1_title == blank
+                  case forloop.index
+                    when 1
+                      assign p1_title = 'Fiddle leaf fig'
+                    when 2
+                      assign p1_title = 'Pilea Peperomioides'
+                    when 3
+                      assign p1_title = 'Monstera Deliciosa'
+                    else
+                      assign p1_title = 'Botanical Plant'
+                  endcase
+                endif
+
+                assign p1_price = block_st.product_1_price_override
+                if p1_price == blank and p1 != blank
+                  assign p1_price = p1.price | money
+                endif
+                if p1_price == blank
+                  case forloop.index
+                    when 1
+                      assign p1_price = '$129.00'
+                    when 2
+                      assign p1_price = '$58.00'
+                    when 3
+                      assign p1_price = '$145.00'
+                  endcase
+                endif
+
+                assign p1_url = p1.url | default: routes.all_products_collection_url
+                assign p1_img = block_st.product_1_image_override
+                if p1_img == blank and p1.featured_image != blank
+                  assign p1_img = p1.featured_image
+                endif
+
+                # Product 2 Details
+                assign p2 = block_st.product_2
+                assign p2_vendor = block_st.product_2_vendor_override | default: p2.vendor | default: 'BLOOM BOTANICALS'
+                assign p2_title = block_st.product_2_title_override | default: p2.title
+                if p2_title == blank
+                  case forloop.index
+                    when 1
+                      assign p2_title = 'Monstera Deliciosa'
+                    when 2
+                      assign p2_title = 'Ceramic Ribbed Planter'
+                    when 3
+                      assign p2_title = 'Snake plant'
+                    else
+                      assign p2_title = 'Companion Plant'
+                  endcase
+                endif
+
+                assign p2_price = block_st.product_2_price_override
+                if p2_price == blank and p2 != blank
+                  assign p2_price = p2.price | money
+                endif
+                if p2_price == blank
+                  case forloop.index
+                    when 1
+                      assign p2_price = '$89.00'
+                    when 2
+                      assign p2_price = '$42.00'
+                    when 3
+                      assign p2_price = '$68.00'
+                  endcase
+                endif
+
+                assign p2_url = p2.url | default: routes.all_products_collection_url
+                assign p2_img = block_st.product_2_image_override
+                if p2_img == blank and p2.featured_image != blank
+                  assign p2_img = p2.featured_image
+                endif
+              -%}
+
+              <div
+                class="bloom-pps__look-products{% if is_first %} is-active{% endif %}"
+                data-look-index="{{ look_idx }}"
+              >
+                <!-- Product Card Row (Image + Vertical Nav Pill) -->
+                <div class="bloom-pps__product-stage">
+                  <div class="bloom-pps__product-media-card">
+                    <!-- Product Slide 0 -->
+                    <div class="bloom-pps__prod-slide is-active" data-product-index="0">
+                      <a href="{{ p1_url }}" aria-label="{{ p1_title | escape }}">
+                        {%- if p1_img != blank -%}
+                          <img
+                            src="{{ p1_img | image_url: width: 800 }}"
+                            alt="{{ p1_title | escape }}"
+                            class="bloom-pps__prod-img"
+                            loading="lazy"
+                          >
+                        {%- else -%}
+                          {%- liquid
+                            case forloop.index
+                              when 1
+                                assign fb_pimg1 = 'bloom-paired-product-1.jpg' | asset_url
+                              when 2
+                                assign fb_pimg1 = 'bloom-paired-product-3.jpg' | asset_url
+                              when 3
+                                assign fb_pimg1 = 'bloom-paired-product-2.jpg' | asset_url
+                              else
+                                assign fb_pimg1 = 'bloom-paired-product-1.jpg' | asset_url
+                            endcase
+                          -%}
+                          <img
+                            src="{{ fb_pimg1 }}"
+                            alt="{{ p1_title | escape }}"
+                            class="bloom-pps__prod-img"
+                            loading="lazy"
+                          >
+                        {%- endif -%}
+                      </a>
+                    </div>
+
+                    <!-- Product Slide 1 -->
+                    {%- if block_st.hotspot_2_enable -%}
+                      <div class="bloom-pps__prod-slide" data-product-index="1">
+                        <a href="{{ p2_url }}" aria-label="{{ p2_title | escape }}">
+                          {%- if p2_img != blank -%}
+                            <img
+                              src="{{ p2_img | image_url: width: 800 }}"
+                              alt="{{ p2_title | escape }}"
+                              class="bloom-pps__prod-img"
+                              loading="lazy"
+                            >
+                          {%- else -%}
+                            {%- liquid
+                              case forloop.index
+                                when 1
+                                  assign fb_pimg2 = 'bloom-paired-product-2.jpg' | asset_url
+                                when 2
+                                  assign fb_pimg2 = 'bloom-paired-product-1.jpg' | asset_url
+                                when 3
+                                  assign fb_pimg2 = 'bloom-paired-product-3.jpg' | asset_url
+                                else
+                                  assign fb_pimg2 = 'bloom-paired-product-2.jpg' | asset_url
+                              endcase
+                            -%}
+                            <img
+                              src="{{ fb_pimg2 }}"
+                              alt="{{ p2_title | escape }}"
+                              class="bloom-pps__prod-img"
+                              loading="lazy"
+                            >
+                          {%- endif -%}
+                        </a>
+                      </div>
+                    {%- endif -%}
+                  </div>
+
+                  <!-- Vertical Navigation Pill (Athora Planti Signature) -->
+                  {%- if section_st.show_navigation and block_st.hotspot_2_enable -%}
+                    <div class="bloom-pps__nav-pill" aria-label="Product navigation">
+                      <button
+                        type="button"
+                        class="bloom-pps__nav-btn"
+                        data-direction="prev"
+                        aria-label="Previous product"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                      </button>
+
+                      <div class="bloom-pps__nav-track" aria-hidden="true">
+                        <span class="bloom-pps__nav-indicator" style="top: 0%; height: 50%;"></span>
+                      </div>
+
+                      <button
+                        type="button"
+                        class="bloom-pps__nav-btn"
+                        data-direction="next"
+                        aria-label="Next product"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <!-- Product Meta 0 -->
+                <div class="bloom-pps__meta-wrap" data-product-index="0" style="display: block;">
+                  {%- if section_st.show_vendor and p1_vendor != blank -%}
+                    <div class="bloom-pps__vendor">{{ p1_vendor }}</div>
+                  {%- endif -%}
+
+                  <a href="{{ p1_url }}" class="bloom-pps__prod-title">{{ p1_title }}</a>
+
+                  {%- if section_st.show_price and p1_price != blank -%}
+                    <div class="bloom-pps__price">{{ p1_price }}</div>
+                  {%- endif -%}
+
+                  <!-- Swatches -->
+                  {%- if section_st.show_swatches -%}
+                    <ul class="bloom-pps__swatches" role="list" aria-label="Color options">
+                      <li>
+                        <button
+                          type="button"
+                          class="bloom-pps__swatch-btn is-active"
+                          style="background-color: #C86A4B;"
+                          aria-label="Terracotta option"
+                        ></button>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          class="bloom-pps__swatch-btn"
+                          style="background-color: #2D3236;"
+                          aria-label="Matte Charcoal option"
+                        ></button>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          class="bloom-pps__swatch-btn"
+                          style="background-color: #F4F0E8;"
+                          aria-label="Ivory option"
+                        ></button>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          class="bloom-pps__swatch-btn"
+                          style="background-color: #6C7D64;"
+                          aria-label="Olive option"
+                        ></button>
+                      </li>
+                    </ul>
+                  {%- endif -%}
+                </div>
+
+                <!-- Product Meta 1 -->
+                {%- if block_st.hotspot_2_enable -%}
+                  <div class="bloom-pps__meta-wrap" data-product-index="1" style="display: none;">
+                    {%- if section_st.show_vendor and p2_vendor != blank -%}
+                      <div class="bloom-pps__vendor">{{ p2_vendor }}</div>
+                    {%- endif -%}
+
+                    <a href="{{ p2_url }}" class="bloom-pps__prod-title">{{ p2_title }}</a>
+
+                    {%- if section_st.show_price and p2_price != blank -%}
+                      <div class="bloom-pps__price">{{ p2_price }}</div>
+                    {%- endif -%}
+
+                    <!-- Swatches -->
+                    {%- if section_st.show_swatches -%}
+                      <ul class="bloom-pps__swatches" role="list" aria-label="Color options">
+                        <li>
+                          <button
+                            type="button"
+                            class="bloom-pps__swatch-btn is-active"
+                            style="background-color: #C86A4B;"
+                            aria-label="Terracotta option"
+                          ></button>
+                        </li>
+                        <li>
+                          <button
+                            type="button"
+                            class="bloom-pps__swatch-btn"
+                            style="background-color: #F4F0E8;"
+                            aria-label="Bone White option"
+                          ></button>
+                        </li>
+                        <li>
+                          <button
+                            type="button"
+                            class="bloom-pps__swatch-btn"
+                            style="background-color: #5C6B57;"
+                            aria-label="Sage Green option"
+                          ></button>
+                        </li>
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </bloom-paired-plant-sets>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Paired Plant Sets",
+  "tag": "section",
+  "class": "shopify-section-bloom-paired-plant-sets",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "default": "#FAF9F0"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container Max Width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1540
+    },
+    {
+      "type": "header",
+      "content": "Heading & Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Get Inspired"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Perfectly Paired Plant Sets"
+    },
+    {
+      "type": "text",
+      "id": "italic_phrase",
+      "label": "Italic Phrase",
+      "default": "Plant Sets",
+      "info": "Words matching this phrase in the heading will render in editorial italic serif."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "italic_color",
+      "label": "Italic Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading Font Size (Desktop)",
+      "min": 28,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 22,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Lifestyle Image & Thumbnails"
+    },
+    {
+      "type": "range",
+      "id": "main_image_height_desktop",
+      "label": "Stage Height (Desktop)",
+      "min": 600,
+      "max": 950,
+      "step": 10,
+      "unit": "px",
+      "default": 820
+    },
+    {
+      "type": "range",
+      "id": "main_image_height_mobile",
+      "label": "Stage Height (Mobile)",
+      "min": 380,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 490
+    },
+    {
+      "type": "range",
+      "id": "main_image_radius",
+      "label": "Stage Corner Radius",
+      "min": 10,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_size",
+      "label": "Thumbnail Diameter",
+      "min": 60,
+      "max": 110,
+      "step": 2,
+      "unit": "px",
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_gap",
+      "label": "Thumbnail Spacing",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "ring_color",
+      "label": "Active Thumbnail Ring Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_dot_color",
+      "label": "Hotspot Dot Center Color",
+      "default": "#234332"
+    },
+    {
+      "type": "header",
+      "content": "Featured Product Panel"
+    },
+    {
+      "type": "range",
+      "id": "product_image_width",
+      "label": "Product Card Width",
+      "min": 260,
+      "max": 440,
+      "step": 10,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "product_image_radius",
+      "label": "Product Image Radius",
+      "min": 8,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "product_bg_color",
+      "label": "Product Image Background",
+      "default": "#F3F2EA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Show Color Swatches",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show Vertical Navigation Pill",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing & Animations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_reveal",
+      "label": "Enable Scroll Reveal Animation",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_desktop",
+      "label": "Padding Horizontal (Desktop)",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "label": "Padding Horizontal (Mobile)",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "Plant Set Look",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Main Lifestyle Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Lifestyle Image (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumb_image",
+          "label": "Thumbnail Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "thumb_label",
+          "label": "Thumbnail Label",
+          "default": "Botanical Look"
+        },
+        {
+          "type": "header",
+          "content": "Hotspot 1 Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "hotspot_1_enable",
+          "label": "Enable Hotspot 1",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "hotspot_1_x",
+          "label": "Hotspot 1 Horizontal Position (X)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 52
+        },
+        {
+          "type": "range",
+          "id": "hotspot_1_y",
+          "label": "Hotspot 1 Vertical Position (Y)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 43
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Hotspot 1 Product"
+        },
+        {
+          "type": "text",
+          "id": "product_1_title_override",
+          "label": "Product 1 Title Override"
+        },
+        {
+          "type": "text",
+          "id": "product_1_vendor_override",
+          "label": "Product 1 Vendor Override"
+        },
+        {
+          "type": "text",
+          "id": "product_1_price_override",
+          "label": "Product 1 Price Override"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_1_image_override",
+          "label": "Product 1 Image Override"
+        },
+        {
+          "type": "header",
+          "content": "Hotspot 2 Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "hotspot_2_enable",
+          "label": "Enable Hotspot 2",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "hotspot_2_x",
+          "label": "Hotspot 2 Horizontal Position (X)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 55
+        },
+        {
+          "type": "range",
+          "id": "hotspot_2_y",
+          "label": "Hotspot 2 Vertical Position (Y)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 74
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Hotspot 2 Product"
+        },
+        {
+          "type": "text",
+          "id": "product_2_title_override",
+          "label": "Product 2 Title Override"
+        },
+        {
+          "type": "text",
+          "id": "product_2_vendor_override",
+          "label": "Product 2 Vendor Override"
+        },
+        {
+          "type": "text",
+          "id": "product_2_price_override",
+          "label": "Product 2 Price Override"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_2_image_override",
+          "label": "Product 2 Image Override"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paired Plant Sets",
+      "blocks": [
+        {
+          "type": "look",
+          "settings": {
+            "thumb_label": "Plant Set 1",
+            "hotspot_1_x": 52,
+            "hotspot_1_y": 43,
+            "product_1_title_override": "Fiddle leaf fig",
+            "product_1_vendor_override": "TERRACOTTA TERRACE",
+            "product_1_price_override": "$129.00",
+            "hotspot_2_x": 55,
+            "hotspot_2_y": 74,
+            "product_2_title_override": "Monstera Deliciosa",
+            "product_2_vendor_override": "TERRACOTTA TERRACE",
+            "product_2_price_override": "$89.00"
+          }
+        },
+        {
+          "type": "look",
+          "settings": {
+            "thumb_label": "Plant Set 2",
+            "hotspot_1_x": 48,
+            "hotspot_1_y": 62,
+            "product_1_title_override": "Pilea Peperomioides",
+            "product_1_vendor_override": "BLOOM BOTANICALS",
+            "product_1_price_override": "$58.00",
+            "hotspot_2_x": 75,
+            "hotspot_2_y": 28,
+            "product_2_title_override": "Ceramic Ribbed Planter",
+            "product_2_vendor_override": "TERRACOTTA TERRACE",
+            "product_2_price_override": "$42.00"
+          }
+        },
+        {
+          "type": "look",
+          "settings": {
+            "thumb_label": "Plant Set 3",
+            "hotspot_1_x": 36,
+            "hotspot_1_y": 50,
+            "product_1_title_override": "Monstera Deliciosa",
+            "product_1_vendor_override": "TERRACOTTA TERRACE",
+            "product_1_price_override": "$145.00",
+            "hotspot_2_x": 62,
+            "hotspot_2_y": 68,
+            "product_2_title_override": "Snake plant",
+            "product_2_vendor_override": "BLOOM BOTANICALS",
+            "product_2_price_override": "$68.00"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
