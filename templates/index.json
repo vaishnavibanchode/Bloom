@@ -1256,6 +1256,105 @@
         "padding_bottom": 60,
         "reset_spacing": false
       }
+    },
+    "bloom_paired_plant_sets": {
+      "type": "bloom-paired-plant-sets",
+      "blocks": {
+        "look_1": {
+          "type": "look",
+          "settings": {
+            "thumb_label": "Plant Set 1",
+            "hotspot_1_enable": true,
+            "hotspot_1_x": 52,
+            "hotspot_1_y": 43,
+            "product_1_title_override": "Fiddle leaf fig",
+            "product_1_vendor_override": "TERRACOTTA TERRACE",
+            "product_1_price_override": "$129.00",
+            "hotspot_2_enable": true,
+            "hotspot_2_x": 55,
+            "hotspot_2_y": 74,
+            "product_2_title_override": "Monstera Deliciosa",
+            "product_2_vendor_override": "TERRACOTTA TERRACE",
+            "product_2_price_override": "$89.00"
+          }
+        },
+        "look_2": {
+          "type": "look",
+          "settings": {
+            "thumb_label": "Plant Set 2",
+            "hotspot_1_enable": true,
+            "hotspot_1_x": 48,
+            "hotspot_1_y": 62,
+            "product_1_title_override": "Pilea Peperomioides",
+            "product_1_vendor_override": "BLOOM BOTANICALS",
+            "product_1_price_override": "$58.00",
+            "hotspot_2_enable": true,
+            "hotspot_2_x": 75,
+            "hotspot_2_y": 28,
+            "product_2_title_override": "Ceramic Ribbed Planter",
+            "product_2_vendor_override": "TERRACOTTA TERRACE",
+            "product_2_price_override": "$42.00"
+          }
+        },
+        "look_3": {
+          "type": "look",
+          "settings": {
+            "thumb_label": "Plant Set 3",
+            "hotspot_1_enable": true,
+            "hotspot_1_x": 36,
+            "hotspot_1_y": 50,
+            "product_1_title_override": "Monstera Deliciosa",
+            "product_1_vendor_override": "TERRACOTTA TERRACE",
+            "product_1_price_override": "$145.00",
+            "hotspot_2_enable": true,
+            "hotspot_2_x": 62,
+            "hotspot_2_y": 68,
+            "product_2_title_override": "Snake plant",
+            "product_2_vendor_override": "BLOOM BOTANICALS",
+            "product_2_price_override": "$68.00"
+          }
+        }
+      },
+      "block_order": [
+        "look_1",
+        "look_2",
+        "look_3"
+      ],
+      "name": "Paired Plant Sets",
+      "settings": {
+        "enable_section": true,
+        "background_color": "#FAF9F0",
+        "container_max_width": 1540,
+        "eyebrow": "Get Inspired",
+        "heading": "Perfectly Paired Plant Sets",
+        "italic_phrase": "Plant Sets",
+        "heading_color": "#234332",
+        "italic_color": "#234332",
+        "eyebrow_color": "#234332",
+        "heading_size_desktop": 44,
+        "heading_size_mobile": 32,
+        "main_image_height_desktop": 820,
+        "main_image_height_mobile": 490,
+        "main_image_radius": 32,
+        "thumbnail_size": 82,
+        "thumbnail_gap": 22,
+        "ring_color": "#234332",
+        "hotspot_dot_color": "#234332",
+        "product_image_width": 360,
+        "product_image_radius": 20,
+        "product_bg_color": "#F3F2EA",
+        "show_vendor": true,
+        "show_price": true,
+        "show_swatches": true,
+        "show_navigation": true,
+        "enable_scroll_reveal": true,
+        "padding_top_desktop": 90,
+        "padding_bottom_desktop": 110,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 65,
+        "padding_horizontal_desktop": 40,
+        "padding_horizontal_mobile": 20
+      }
     }
   },
   "order": [
@@ -1264,6 +1363,7 @@
     "bloom_three_cards_dfJkNe",
     "bloom_scroll_botanical_hero_gLbnXk",
     "bloom_plants_lifestyle_ktL8db",
+    "bloom_paired_plant_sets",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
