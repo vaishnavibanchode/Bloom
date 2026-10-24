@@ -1434,7 +1434,7 @@
       "name": "Paired Plant Sets",
       "settings": {
         "enable_section": true,
-        "background_color": "#FAF9F0",
+        "background_color": "#faf9f0",
         "container_max_width": 1540,
         "eyebrow": "Get Inspired",
         "heading": "Perfectly Paired Plant Sets",
@@ -1453,7 +1453,7 @@
         "hotspot_dot_color": "#234332",
         "product_image_width": 360,
         "product_image_radius": 20,
-        "product_bg_color": "#F3F2EA",
+        "product_bg_color": "#f3f2ea",
         "show_vendor": true,
         "show_price": true,
         "show_swatches": true,
@@ -1466,6 +1466,78 @@
         "padding_horizontal_desktop": 40,
         "padding_horizontal_mobile": 20
       }
+    },
+    "bloom_trending_plants_N7nQ4X": {
+      "type": "bloom-trending-plants",
+      "blocks": {
+        "tab_U6Agf8": {
+          "type": "tab",
+          "settings": {
+            "title": "Indoor plants",
+            "collection": "",
+            "product_list": [],
+            "mark_as_new": false
+          }
+        },
+        "tab_7HELN9": {
+          "type": "tab",
+          "settings": {
+            "title": "New plants",
+            "collection": "",
+            "product_list": [],
+            "mark_as_new": true
+          }
+        },
+        "tab_dippzL": {
+          "type": "tab",
+          "settings": {
+            "title": "Lights needs",
+            "collection": "",
+            "product_list": [],
+            "mark_as_new": false
+          }
+        }
+      },
+      "block_order": [
+        "tab_U6Agf8",
+        "tab_7HELN9",
+        "tab_dippzL"
+      ],
+      "name": "Trending House Plants",
+      "settings": {
+        "enable_section": true,
+        "background_color": "#FAFAF2",
+        "container_max_width": 1540,
+        "heading": "Trending House Plants",
+        "italic_phrase": "House Plants",
+        "heading_color": "#234332",
+        "heading_size_desktop": 34,
+        "heading_size_mobile": 26,
+        "tabs_bar_bg": "#FFFFFF",
+        "tabs_bar_border": "#E8E6DD",
+        "tab_active_bg": "#234332",
+        "tab_active_color": "#FFFFFF",
+        "tab_inactive_color": "#234332",
+        "products_to_show": 4,
+        "card_gap_desktop": 24,
+        "card_border_radius": 14,
+        "card_image_bg": "#F5F4EC",
+        "show_vendor": true,
+        "show_price": true,
+        "show_swatches": true,
+        "show_quick_view": true,
+        "show_badge": true,
+        "badge_bg_color": "#234332",
+        "badge_text_color": "#FFFFFF",
+        "mobile_layout": "carousel",
+        "enable_scroll_reveal": true,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 90,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 50,
+        "padding_horizontal_desktop": 30,
+        "padding_horizontal_mobile": 20
+      }
     }
   },
   "order": [
@@ -1475,6 +1547,7 @@
     "bloom_scroll_botanical_hero_gLbnXk",
     "bloom_plants_lifestyle_ktL8db",
     "bloom_paired_plant_sets",
+    "bloom_trending_plants_N7nQ4X",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
