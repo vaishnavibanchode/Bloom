@@ -137,7 +137,7 @@
         "logo_position": "left",
         "separator_line": "inner_page",
         "enable_login_popup": true,
-        "sticky_header_type": "on-scroll-up",
+        "sticky_header_type": "none",
         "sticky_header_mobile": true,
         "transparent_header": true,
         "transparent_mobile": true,
