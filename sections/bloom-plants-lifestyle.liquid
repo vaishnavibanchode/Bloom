@@ -374,13 +374,15 @@
       "default": 4
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "columns_tablet",
       "label": "Tablet Columns",
-      "min": 2,
-      "max": 3,
-      "step": 1,
-      "default": 2
+      "options": [
+        { "value": "1", "label": "1 Column" },
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" }
+      ],
+      "default": "2"
     },
     {
       "type": "select",

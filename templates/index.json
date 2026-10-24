@@ -1195,7 +1195,7 @@
         "subtitle_size_mobile": 14,
         "header_margin_bottom": 36,
         "columns_desktop": 4,
-        "columns_tablet": 2,
+        "columns_tablet": "2",
         "mobile_layout": "carousel",
         "card_gap_desktop": 20,
         "card_gap_tablet": 18,
