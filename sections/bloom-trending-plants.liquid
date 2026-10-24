@@ -1,0 +1,555 @@
+{{ 'bloom-trending-plants.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-trending-plants.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign blocks_count = section.blocks.size
+
+  # Parse heading & italic phrase
+  assign raw_heading = section_st.heading | default: 'Trending House Plants'
+  assign italic_phrase = section_st.italic_phrase | default: 'House Plants'
+
+  if italic_phrase != blank and raw_heading contains italic_phrase
+    assign italic_markup = '<em class="bloom-tp__heading-italic">' | append: italic_phrase | append: '</em>'
+    assign formatted_heading = raw_heading | replace: italic_phrase, italic_markup
+  else
+    assign formatted_heading = raw_heading
+  endif
+-%}
+
+{%- if section_st.enable_section -%}
+  <bloom-trending-plants
+    id="bloom-trending-plants-{{ section.id }}"
+    class="bloom-trending-plants"
+    data-reveal="{{ section_st.enable_scroll_reveal }}"
+    style="
+      --bloom-tp-bg: {{ section_st.background_color }};
+      --bloom-tp-max-w: {{ section_st.container_max_width }}px;
+      --bloom-tp-pt: {{ section_st.padding_top_desktop }}px;
+      --bloom-tp-pb: {{ section_st.padding_bottom_desktop }}px;
+      --bloom-tp-pt-mb: {{ section_st.padding_top_mobile }}px;
+      --bloom-tp-pb-mb: {{ section_st.padding_bottom_mobile }}px;
+      --bloom-tp-pad-x: {{ section_st.padding_horizontal_desktop }}px;
+      --bloom-tp-pad-x-mb: {{ section_st.padding_horizontal_mobile }}px;
+      --bloom-tp-heading-sz: {{ section_st.heading_size_desktop }}px;
+      --bloom-tp-heading-sz-mb: {{ section_st.heading_size_mobile }}px;
+      --bloom-tp-heading-color: {{ section_st.heading_color }};
+      --bloom-tp-card-radius: {{ section_st.card_border_radius }}px;
+      --bloom-tp-card-gap: {{ section_st.card_gap_desktop }}px;
+      --bloom-tp-card-bg: {{ section_st.card_image_bg }};
+      --bloom-tp-badge-bg: {{ section_st.badge_bg_color }};
+      --bloom-tp-badge-color: {{ section_st.badge_text_color }};
+      --bloom-tp-tabs-bg: {{ section_st.tabs_bar_bg }};
+      --bloom-tp-tabs-border: {{ section_st.tabs_bar_border }};
+      --bloom-tp-tab-active-bg: {{ section_st.tab_active_bg }};
+      --bloom-tp-tab-active-color: {{ section_st.tab_active_color }};
+      --bloom-tp-tab-inactive-color: {{ section_st.tab_inactive_color }};
+    "
+  >
+    <div class="bloom-tp__container">
+      <!-- Section Header -->
+      <div class="bloom-tp__header bloom-tp-reveal">
+        <h2 class="bloom-tp__heading">{{ formatted_heading }}</h2>
+      </div>
+
+      <!-- Category Tabs Pill Navigation -->
+      <div class="bloom-tp__tabs-wrapper bloom-tp-reveal">
+        <div class="bloom-tp__tablist" role="tablist" aria-label="Plant Categories">
+          {%- if blocks_count > 0 -%}
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign block_st = block.settings
+                assign is_active = forloop.first
+                assign tab_title = block_st.title | default: 'Category'
+                assign tab_img = block_st.tab_image
+              -%}
+              <button
+                type="button"
+                class="bloom-tp__tab-btn{% if is_active %} is-active{% endif %}"
+                role="tab"
+                aria-selected="{% if is_active %}true{% else %}false{% endif %}"
+                tabindex="{% if is_active %}0{% else %}-1{% endif %}"
+                data-tab-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                <span class="bloom-tp__tab-thumb-wrap" aria-hidden="true">
+                  {%- if tab_img != blank -%}
+                    <img
+                      src="{{ tab_img | image_url: width: 80 }}"
+                      alt="{{ tab_title | escape }}"
+                      class="bloom-tp__tab-thumb"
+                      width="32"
+                      height="32"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    {%- liquid
+                      case forloop.index
+                        when 1
+                          assign fb_tab = 'bloom-tab-indoor.jpg' | asset_url
+                        when 2
+                          assign fb_tab = 'bloom-tab-new.jpg' | asset_url
+                        when 3
+                          assign fb_tab = 'bloom-tab-lights.jpg' | asset_url
+                        else
+                          assign fb_tab = 'bloom-tab-indoor.jpg' | asset_url
+                      endcase
+                    -%}
+                    <img
+                      src="{{ fb_tab }}"
+                      alt="{{ tab_title | escape }}"
+                      class="bloom-tp__tab-thumb"
+                      width="32"
+                      height="32"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                </span>
+                <span class="bloom-tp__tab-label">{{ tab_title }}</span>
+              </button>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Default 3 Tabs Fallback -->
+            <button type="button" class="bloom-tp__tab-btn is-active" role="tab" aria-selected="true" tabindex="0" data-tab-index="0">
+              <span class="bloom-tp__tab-thumb-wrap" aria-hidden="true">
+                <img src="{{ 'bloom-tab-indoor.jpg' | asset_url }}" alt="Indoor plants" class="bloom-tp__tab-thumb" width="32" height="32" loading="lazy">
+              </span>
+              <span class="bloom-tp__tab-label">Indoor plants</span>
+            </button>
+            <button type="button" class="bloom-tp__tab-btn" role="tab" aria-selected="false" tabindex="-1" data-tab-index="1">
+              <span class="bloom-tp__tab-thumb-wrap" aria-hidden="true">
+                <img src="{{ 'bloom-tab-new.jpg' | asset_url }}" alt="New plants" class="bloom-tp__tab-thumb" width="32" height="32" loading="lazy">
+              </span>
+              <span class="bloom-tp__tab-label">New plants</span>
+            </button>
+            <button type="button" class="bloom-tp__tab-btn" role="tab" aria-selected="false" tabindex="-1" data-tab-index="2">
+              <span class="bloom-tp__tab-thumb-wrap" aria-hidden="true">
+                <img src="{{ 'bloom-tab-lights.jpg' | asset_url }}" alt="Lights needs" class="bloom-tp__tab-thumb" width="32" height="32" loading="lazy">
+              </span>
+              <span class="bloom-tp__tab-label">Lights needs</span>
+            </button>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Tab Content Panels -->
+      <div class="bloom-tp__panels">
+        {%- if blocks_count > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_st = block.settings
+              assign is_first_tab = forloop.first
+              assign tab_idx = forloop.index0
+              assign tab_col = block_st.collection
+              assign tab_plist = block_st.product_list
+              assign max_prods = section_st.products_to_show | default: 4
+            -%}
+            <div
+              class="bloom-tp__panel{% if is_first_tab %} is-active{% endif %}"
+              data-tab-index="{{ tab_idx }}"
+              style="display: {% if is_first_tab %}block{% else %}none{% endif %};"
+            >
+              <div class="bloom-tp__grid bloom-tp__grid--{{ section_st.mobile_layout }}">
+                {%- if tab_plist != blank and tab_plist.count > 0 -%}
+                  {%- for prod in tab_plist limit: max_prods -%}
+                    {% render 'bloom-trending-product-card',
+                      product: prod,
+                      section_st: section_st,
+                      is_new: block_st.mark_as_new,
+                      index_for: forloop.index
+                    %}
+                  {%- endfor -%}
+                {%- elsif tab_col != blank and tab_col.products_count > 0 -%}
+                  {%- for prod in tab_col.products limit: max_prods -%}
+                    {% render 'bloom-trending-product-card',
+                      product: prod,
+                      section_st: section_st,
+                      is_new: block_st.mark_as_new,
+                      index_for: forloop.index
+                    %}
+                  {%- endfor -%}
+                {%- else -%}
+                  <!-- Curated Editorial Fallback for this Block -->
+                  {%- liquid
+                    assign set_number = forloop.index
+                  -%}
+                  {%- for i in (1..4) -%}
+                    {% render 'bloom-trending-fallback-card',
+                      set_number: set_number,
+                      card_index: i,
+                      section_st: section_st,
+                      mark_new: block_st.mark_as_new
+                    %}
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- 3 Default Curated Panels -->
+          {%- for set_idx in (1..3) -%}
+            <div
+              class="bloom-tp__panel{% if forloop.first %} is-active{% endif %}"
+              data-tab-index="{{ forloop.index0 }}"
+              style="display: {% if forloop.first %}block{% else %}none{% endif %};"
+            >
+              <div class="bloom-tp__grid bloom-tp__grid--{{ section_st.mobile_layout }}">
+                {%- for card_idx in (1..4) -%}
+                  {% render 'bloom-trending-fallback-card',
+                    set_number: set_idx,
+                    card_index: card_idx,
+                    section_st: section_st,
+                    mark_new: false
+                  %}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </bloom-trending-plants>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Trending House Plants",
+  "tag": "section",
+  "class": "shopify-section-bloom-trending-plants",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "default": "#FAFAF2"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container Max Width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1540
+    },
+    {
+      "type": "header",
+      "content": "Heading Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Trending House Plants"
+    },
+    {
+      "type": "text",
+      "id": "italic_phrase",
+      "label": "Italic Phrase",
+      "default": "House Plants",
+      "info": "Words matching this phrase in the heading will render in editorial italic serif."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading Font Size (Desktop)",
+      "min": 24,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Category Tabs Styling"
+    },
+    {
+      "type": "color",
+      "id": "tabs_bar_bg",
+      "label": "Tabs Pill Bar Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "tabs_bar_border",
+      "label": "Tabs Pill Bar Border",
+      "default": "#E8E6DD"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_bg",
+      "label": "Active Tab Background",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_color",
+      "label": "Active Tab Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "tab_inactive_color",
+      "label": "Inactive Tab Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show per Tab",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card Grid Gap (Desktop)",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Image Corner Radius",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "card_image_bg",
+      "label": "Card Image Background",
+      "default": "#F5F4EC"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Show Color Swatches",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view",
+      "label": "Show Quick View Button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Badge Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show New Badge",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge Background Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Mobile & Animation Settings"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Layout",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Swipe Carousel"
+        },
+        {
+          "value": "grid_2col",
+          "label": "2-Column Grid"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_reveal",
+      "label": "Enable Scroll Reveal Animation",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_desktop",
+      "label": "Padding Horizontal (Desktop)",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "label": "Padding Horizontal (Mobile)",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Category Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Label",
+          "default": "Indoor plants"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_image",
+          "label": "Tab Thumbnail (Optional)"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Or Select Specific Products"
+        },
+        {
+          "type": "checkbox",
+          "id": "mark_as_new",
+          "label": "Mark Products as 'NEW'",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending House Plants",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Indoor plants",
+            "mark_as_new": false
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "New plants",
+            "mark_as_new": true
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Lights needs",
+            "mark_as_new": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

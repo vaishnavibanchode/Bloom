@@ -1,0 +1,238 @@
+{% comment %}
+  Curated Fallback Product Card for Bloom Trending House Plants
+  Matches the exact Planti preset reference with bespoke botanical assets.
+  Accepts:
+  - set_number: {Number} 1 = Indoor plants, 2 = New plants, 3 = Lights needs
+  - card_index: {Number} 1 to 4
+  - section_st: {Object} Section settings
+  - mark_new: {Boolean}
+{% endcomment %}
+
+{%- liquid
+  assign title = 'Botanical Plant'
+  assign vendor = 'BLOOM BOTANICALS'
+  assign price = '$68.00'
+  assign is_badge_new = false
+  assign image_name = 'bloom-trending-1.jpg'
+  assign hover_image_name = ''
+  assign swatches = ''
+
+  if set_number == 1
+    # Tab 1: Indoor plants
+    case card_index
+      when 1
+        assign title = 'Hoya tri color'
+        assign vendor = 'MOSS & CLAY PLANTS'
+        assign price = '$81.00'
+        assign is_badge_new = true
+        assign image_name = 'bloom-trending-1.jpg'
+        assign hover_image_name = 'bloom-trending-2.jpg'
+        assign swatches = '#CBA38E:Blush terracotta,#3C3D3A:Charcoal black,#6B7780:Slate gray,#D9A24B:Mustard gold'
+      when 2
+        assign title = 'Jade pothos'
+        assign vendor = 'MOSS & CLAY PLANTS'
+        assign price = '$27.00'
+        assign is_badge_new = false
+        assign image_name = 'bloom-trending-2.jpg'
+        assign hover_image_name = 'bloom-trending-1.jpg'
+        assign swatches = '#FFFFFF:Pure white,#6B7780:Slate gray,#C86A4B:Terracotta,#D9A24B:Mustard gold'
+      when 3
+        assign title = 'Ficus audrey'
+        assign vendor = 'EVERGREEN NOOK'
+        assign price = '$79.00'
+        assign is_badge_new = false
+        assign image_name = 'bloom-trending-3.jpg'
+        assign hover_image_name = 'bloom-trending-4.jpg'
+        assign swatches = '#F4F0E8:Bone ivory,#2D3236:Dark navy,#C86A4B:Terracotta,#6C7D64:Sage green'
+      when 4
+        assign title = 'Ficus ruby'
+        assign vendor = 'URBAN SPROUT NURSERY'
+        assign price = '$109.00'
+        assign is_badge_new = false
+        assign image_name = 'bloom-trending-4.jpg'
+        assign hover_image_name = 'bloom-trending-3.jpg'
+        assign swatches = '#587082:Slate blue,#F4F0E8:Bone ivory,#C86A4B:Terracotta'
+    endcase
+
+  elsif set_number == 2
+    # Tab 2: New plants
+    assign is_badge_new = true
+    case card_index
+      when 1
+        assign title = 'Rattlesnake Calathea'
+        assign vendor = 'BLOOM BOTANICALS'
+        assign price = '$54.00'
+        assign image_name = 'bloom-trending-5.jpg'
+        assign hover_image_name = 'bloom-trending-6.jpg'
+        assign swatches = '#5C6B57:Olive green,#C86A4B:Terracotta,#2D3236:Charcoal black'
+      when 2
+        assign title = 'Mini Monstera'
+        assign vendor = 'TERRACOTTA TERRACE'
+        assign price = '$48.00'
+        assign image_name = 'bloom-trending-6.jpg'
+        assign hover_image_name = 'bloom-trending-5.jpg'
+        assign swatches = '#E8E2D5:Oatmeal ribbed,#F4F0E8:Bone ivory,#6C7D64:Sage green'
+      when 3
+        assign title = 'ZZ Plant'
+        assign vendor = 'URBAN SPROUT NURSERY'
+        assign price = '$62.00'
+        assign image_name = 'bloom-trending-7.jpg'
+        assign hover_image_name = 'bloom-trending-8.jpg'
+        assign swatches = '#2D3236:Matte charcoal,#FFFFFF:Pure white,#5C6B57:Olive green'
+      when 4
+        assign title = 'Monstera Deliciosa'
+        assign vendor = 'TERRACOTTA TERRACE'
+        assign price = '$89.00'
+        assign image_name = 'bloom-trending-8.jpg'
+        assign hover_image_name = 'bloom-trending-7.jpg'
+        assign swatches = '#C86A4B:Terracotta,#6B7780:Slate gray,#F4F0E8:Bone ivory'
+    endcase
+
+  else
+    # Tab 3: Lights needs
+    case card_index
+      when 1
+        assign title = 'Fiddle leaf fig'
+        assign vendor = 'TERRACOTTA TERRACE'
+        assign price = '$129.00'
+        assign is_badge_new = false
+        assign image_name = 'bloom-trending-9.jpg'
+        assign hover_image_name = 'bloom-trending-10.jpg'
+        assign swatches = '#2D3236:Charcoal black,#C86A4B:Terracotta,#F4F0E8:Bone ivory'
+      when 2
+        assign title = 'Snake plant'
+        assign vendor = 'BLOOM BOTANICALS'
+        assign price = '$68.00'
+        assign is_badge_new = false
+        assign image_name = 'bloom-trending-10.jpg'
+        assign hover_image_name = 'bloom-trending-9.jpg'
+        assign swatches = '#F4F0E8:Bone ivory,#C86A4B:Terracotta,#2D3236:Charcoal black'
+      when 3
+        assign title = 'Watermelon Peperomia'
+        assign vendor = 'MOSS & CLAY PLANTS'
+        assign price = '$38.00'
+        assign is_badge_new = mark_new
+        assign image_name = 'bloom-trending-11.jpg'
+        assign hover_image_name = 'bloom-trending-12.jpg'
+        assign swatches = '#DFDDD7:Light stone,#5C6B57:Olive green,#C86A4B:Terracotta'
+      when 4
+        assign title = 'Desert Euphorbia'
+        assign vendor = 'EVERGREEN NOOK'
+        assign price = '$72.00'
+        assign is_badge_new = false
+        assign image_name = 'bloom-trending-12.jpg'
+        assign hover_image_name = 'bloom-trending-11.jpg'
+        assign swatches = '#C86A4B:Terracotta,#FFFFFF:Pure white,#6B7780:Slate gray'
+    endcase
+  endif
+
+  if mark_new
+    assign is_badge_new = true
+  endif
+
+  assign primary_img_url = image_name | asset_url
+  assign hover_img_url = hover_image_name | asset_url
+-%}
+
+<div
+  class="bloom-tp__card bloom-tp-reveal"
+  data-product-title="{{ title | escape }}"
+  data-quickview-json='{
+    "title": {{ title | json }},
+    "vendor": {{ vendor | json }},
+    "price": {{ price | json }},
+    "image": {{ primary_img_url | json }},
+    "url": {{ routes.all_products_collection_url | default: "/collections/all" | json }},
+    "description": "Nurtured in our organic nursery and potted in premium terracotta and ceramic stoneware. Thrives in moderate to bright indirect sunlight with regular weekly watering."
+  }'
+>
+  <!-- Card Media -->
+  <div class="bloom-tp__card-media">
+    <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="bloom-tp__media-link" aria-label="{{ title | escape }}">
+      <img
+        src="{{ primary_img_url }}"
+        alt="{{ title | escape }}"
+        class="bloom-tp__img bloom-tp__img--primary"
+        loading="lazy"
+        width="700"
+        height="700"
+      >
+      {%- if hover_image_name != blank -%}
+        <img
+          src="{{ hover_img_url }}"
+          alt="{{ title | escape }}"
+          class="bloom-tp__img bloom-tp__img--hover"
+          loading="lazy"
+          width="700"
+          height="700"
+        >
+      {%- endif -%}
+    </a>
+
+    <!-- NEW Badge -->
+    {%- if section_st.show_badge and is_badge_new -%}
+      <div class="bloom-tp__badge-wrap">
+        <span class="bloom-tp__badge-new">NEW</span>
+      </div>
+    {%- endif -%}
+
+    <!-- Quick View Button -->
+    {%- if section_st.show_quick_view -%}
+      <div class="bloom-tp__quickview-wrap">
+        <button
+          type="button"
+          class="bloom-tp__quickview-btn"
+          aria-label="Quick View {{ title | escape }}"
+        >
+          <span class="bloom-tp__quickview-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </span>
+          <span>QUICK VIEW</span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Product Details -->
+  <div class="bloom-tp__card-info">
+    {%- if section_st.show_vendor and vendor != blank -%}
+      <div class="bloom-tp__vendor">{{ vendor }}</div>
+    {%- endif -%}
+
+    <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="bloom-tp__title-link">
+      <h3 class="bloom-tp__title">{{ title }}</h3>
+    </a>
+
+    {%- if section_st.show_price -%}
+      <div class="bloom-tp__price">{{ price }}</div>
+    {%- endif -%}
+
+    <!-- Color Swatches -->
+    {%- if section_st.show_swatches and swatches != blank -%}
+      {%- assign swatch_list = swatches | split: ',' -%}
+      <ul class="bloom-tp__swatches" role="radiogroup" aria-label="Pot color options for {{ title | escape }}">
+        {%- for s_item in swatch_list -%}
+          {%- liquid
+            assign parts = s_item | split: ':'
+            assign hex = parts[0]
+            assign label = parts[1]
+            assign is_active = forloop.first
+          -%}
+          <li class="bloom-tp__swatch-item">
+            <button
+              type="button"
+              class="bloom-tp__swatch-btn{% if is_active %} is-active{% endif %}"
+              style="--swatch-color: {{ hex }};"
+              role="radio"
+              aria-checked="{% if is_active %}true{% else %}false{% endif %}"
+              aria-label="{{ label | escape }}"
+            ></button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>

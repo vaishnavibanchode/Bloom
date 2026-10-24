@@ -1,0 +1,184 @@
+{% comment %}
+  Renders a dynamic product card for Bloom Trending House Plants
+  Accepts:
+  - product: {Object} Shopify Product object
+  - section_st: {Object} Section settings
+  - is_new: {Boolean}
+  - index_for: {Number}
+{% endcomment %}
+
+{%- liquid
+  assign primary_image = product.featured_media.preview_image | default: product.featured_image
+  assign hover_image = product.media[1].preview_image
+  if hover_image == blank and product.images.size > 1
+    assign hover_image = product.images[1]
+  endif
+
+  assign has_new_tag = false
+  for tag in product.tags
+    assign down_tag = tag | downcase
+    if down_tag == 'new' or down_tag == 'new arrival'
+      assign has_new_tag = true
+      break
+    endif
+  endfor
+
+  if is_new or has_new_tag
+    assign show_new_badge = true
+  else
+    assign show_new_badge = false
+  endif
+
+  # Find color option
+  assign color_option_index = -1
+  for option in product.options_with_values
+    assign opt_name = option.name | downcase
+    if opt_name contains 'color' or opt_name contains 'colour' or opt_name contains 'finish' or opt_name contains 'pot'
+      assign color_option_index = forloop.index0
+      assign color_option = option
+      break
+    endif
+  endfor
+-%}
+
+<div
+  class="bloom-tp__card bloom-tp-reveal"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-quickview-json='{
+    "id": {{ product.id | json }},
+    "variant_id": {{ product.selected_or_first_available_variant.id | json }},
+    "title": {{ product.title | json }},
+    "vendor": {{ product.vendor | default: "BLOOM BOTANICALS" | json }},
+    "price": {{ product.price | money | json }},
+    "url": {{ product.url | json }},
+    "image": {{ primary_image | image_url: width: 800 | json }},
+    "description": {{ product.description | strip_html | truncatewords: 30 | json }}
+  }'
+>
+  <!-- Card Media -->
+  <div class="bloom-tp__card-media">
+    <a href="{{ product.url }}" class="bloom-tp__media-link" aria-label="{{ product.title | escape }}">
+      {%- if primary_image != blank -%}
+        <img
+          src="{{ primary_image | image_url: width: 700 }}"
+          alt="{{ product.title | escape }}"
+          class="bloom-tp__img bloom-tp__img--primary"
+          loading="lazy"
+          width="700"
+          height="700"
+        >
+      {%- else -%}
+        <div class="bloom-tp__img-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+      {%- endif -%}
+
+      {%- if hover_image != blank -%}
+        <img
+          src="{{ hover_image | image_url: width: 700 }}"
+          alt="{{ product.title | escape }}"
+          class="bloom-tp__img bloom-tp__img--hover"
+          loading="lazy"
+          width="700"
+          height="700"
+        >
+      {%- endif -%}
+    </a>
+
+    <!-- NEW Badge -->
+    {%- if section_st.show_badge and show_new_badge -%}
+      <div class="bloom-tp__badge-wrap">
+        <span class="bloom-tp__badge-new">NEW</span>
+      </div>
+    {%- endif -%}
+
+    <!-- Quick View Button -->
+    {%- if section_st.show_quick_view -%}
+      <div class="bloom-tp__quickview-wrap">
+        <button
+          type="button"
+          class="bloom-tp__quickview-btn"
+          aria-label="Quick View {{ product.title | escape }}"
+        >
+          <span class="bloom-tp__quickview-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </span>
+          <span>QUICK VIEW</span>
+        </button>
+
+        <!-- Hidden theme native trigger hook if present -->
+        <button-quickview
+          data-custom-class="quickview"
+          data-url="/products/{{ product.handle }}?section_id=product-quickview&ajax=1"
+          style="display: none;"
+          aria-hidden="true"
+        ></button-quickview>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Product Info -->
+  <div class="bloom-tp__card-info">
+    {%- if section_st.show_vendor and product.vendor != blank -%}
+      <div class="bloom-tp__vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+
+    <a href="{{ product.url }}" class="bloom-tp__title-link">
+      <h3 class="bloom-tp__title">{{ product.title }}</h3>
+    </a>
+
+    {%- if section_st.show_price -%}
+      <div class="bloom-tp__price">{{ product.price | money }}</div>
+    {%- endif -%}
+
+    <!-- Variant Swatches -->
+    {%- if section_st.show_swatches and color_option != blank and color_option.values.size > 1 -%}
+      <ul class="bloom-tp__swatches" role="radiogroup" aria-label="Color options for {{ product.title | escape }}">
+        {%- for val in color_option.values limit: 5 -%}
+          {%- liquid
+            assign is_active_swatch = forloop.first
+            assign variant_image = ''
+            for variant in product.variants
+              if variant.options[color_option_index] == val and variant.featured_image
+                assign variant_image = variant.featured_image | image_url: width: 700
+                break
+              endif
+            endfor
+
+            # Heuristic hex code fallback if Shopify native swatch is not populated
+            assign down_val = val | downcase
+            assign swatch_hex = '#D9D6CE'
+            if down_val contains 'terracotta' or down_val contains 'clay' or down_val contains 'rust'
+              assign swatch_hex = '#C86A4B'
+            elsif down_val contains 'charcoal' or down_val contains 'black'
+              assign swatch_hex = '#2D3236'
+            elsif down_val contains 'white' or down_val contains 'ivory' or down_val contains 'bone'
+              assign swatch_hex = '#F4F0E8'
+            elsif down_val contains 'slate' or down_val contains 'blue' or down_val contains 'gray' or down_val contains 'grey'
+              assign swatch_hex = '#587082'
+            elsif down_val contains 'olive' or down_val contains 'sage' or down_val contains 'green'
+              assign swatch_hex = '#6C7D64'
+            elsif down_val contains 'mustard' or down_val contains 'gold' or down_val contains 'yellow'
+              assign swatch_hex = '#D9A24B'
+            elsif down_val contains 'blush' or down_val contains 'pink'
+              assign swatch_hex = '#CBA38E'
+            endif
+          -%}
+          <li class="bloom-tp__swatch-item">
+            <button
+              type="button"
+              class="bloom-tp__swatch-btn{% if is_active_swatch %} is-active{% endif %}"
+              style="--swatch-color: {{ swatch_hex }};"
+              role="radio"
+              aria-checked="{% if is_active_swatch %}true{% else %}false{% endif %}"
+              aria-label="{{ val | escape }}"
+              {% if variant_image != blank %}data-swatch-img="{{ variant_image }}"{% endif %}
+            ></button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>

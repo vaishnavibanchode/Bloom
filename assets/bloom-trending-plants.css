@@ -1,0 +1,724 @@
+/* ==========================================================================
+   BLOOM: Trending House Plants Section (Planti Athora Signature)
+   ========================================================================== */
+
+.bloom-trending-plants {
+  display: block;
+  width: 100%;
+  background-color: var(--bloom-tp-bg, #FAFAF2);
+  padding-top: var(--bloom-tp-pt, 80px);
+  padding-bottom: var(--bloom-tp-pb, 90px);
+  padding-left: var(--bloom-tp-pad-x, 30px);
+  padding-right: var(--bloom-tp-pad-x, 30px);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .bloom-trending-plants {
+    padding-top: var(--bloom-tp-pt-mb, 40px);
+    padding-bottom: var(--bloom-tp-pb-mb, 50px);
+    padding-left: var(--bloom-tp-pad-x-mb, 20px);
+    padding-right: var(--bloom-tp-pad-x-mb, 20px);
+  }
+}
+
+.bloom-tp__container {
+  max-width: var(--bloom-tp-max-w, 1540px);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Header & Title
+   -------------------------------------------------------------------------- */
+.bloom-tp__header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.bloom-tp__heading {
+  margin: 0;
+  font-family: var(--font-heading-family, "Playfair Display", "Cormorant Garamond", Georgia, serif);
+  font-size: var(--bloom-tp-heading-sz, 34px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--bloom-tp-heading-color, #234332);
+  letter-spacing: -0.01em;
+}
+
+.bloom-tp__heading-italic {
+  font-style: italic;
+  font-family: inherit;
+  font-weight: 400;
+  color: inherit;
+}
+
+@media (max-width: 767px) {
+  .bloom-tp__heading {
+    font-size: var(--bloom-tp-heading-sz-mb, 26px);
+  }
+  .bloom-tp__header {
+    margin-bottom: 22px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Category Tabs Pill Bar
+   -------------------------------------------------------------------------- */
+.bloom-tp__tabs-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 42px;
+  width: 100%;
+}
+
+.bloom-tp__tablist {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bloom-tp-tabs-bg, #FFFFFF);
+  border: 1px solid var(--bloom-tp-tabs-border, #E8E6DD);
+  border-radius: 9999px;
+  padding: 5px;
+  gap: 6px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 2px 8px rgba(35, 67, 50, 0.04);
+}
+
+.bloom-tp__tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.bloom-tp__tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 5px 22px 5px 6px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--bloom-tp-tab-inactive-color, #234332);
+  font-family: var(--font-body-family, inherit);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  text-decoration: none;
+  user-select: none;
+}
+
+.bloom-tp__tab-btn:hover:not(.is-active) {
+  background: rgba(35, 67, 50, 0.05);
+  color: #234332;
+}
+
+.bloom-tp__tab-btn.is-active {
+  background: var(--bloom-tp-tab-active-bg, #234332);
+  color: var(--bloom-tp-tab-active-color, #FFFFFF);
+  box-shadow: 0 4px 12px rgba(35, 67, 50, 0.18);
+}
+
+.bloom-tp__tab-thumb-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #EFEFE8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.bloom-tp__tab-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.bloom-tp__tab-label {
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 767px) {
+  .bloom-tp__tabs-wrapper {
+    margin-bottom: 30px;
+    justify-content: flex-start;
+  }
+  .bloom-tp__tablist {
+    width: auto;
+    padding: 4px;
+    gap: 4px;
+  }
+  .bloom-tp__tab-btn {
+    min-height: 38px;
+    padding: 4px 16px 4px 5px;
+    gap: 8px;
+    font-size: 13.5px;
+  }
+  .bloom-tp__tab-thumb-wrap {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Panels Container & Transition
+   -------------------------------------------------------------------------- */
+.bloom-tp__panels {
+  position: relative;
+  width: 100%;
+}
+
+.bloom-tp__panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bloom-tp__panel.is-active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Product Grid (Desktop & Tablet)
+   -------------------------------------------------------------------------- */
+.bloom-tp__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--bloom-tp-card-gap, 24px);
+  width: 100%;
+}
+
+@media (max-width: 1080px) and (min-width: 768px) {
+  .bloom-tp__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .bloom-tp__card:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Mobile: Carousel or 2-col Grid */
+@media (max-width: 767px) {
+  .bloom-tp__grid--carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    margin-left: calc(var(--bloom-tp-pad-x-mb, 20px) * -1);
+    margin-right: calc(var(--bloom-tp-pad-x-mb, 20px) * -1);
+    padding-left: var(--bloom-tp-pad-x-mb, 20px);
+    padding-right: var(--bloom-tp-pad-x-mb, 20px);
+  }
+  .bloom-tp__grid--carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .bloom-tp__grid--carousel .bloom-tp__card {
+    flex: 0 0 76vw;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  .bloom-tp__grid--grid_2col {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Product Card
+   -------------------------------------------------------------------------- */
+.bloom-tp__card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* Card Media (Square 1:1) */
+.bloom-tp__card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--bloom-tp-card-bg, #F5F4EC);
+  border-radius: var(--bloom-tp-card-radius, 14px);
+  overflow: hidden;
+  display: block;
+}
+
+.bloom-tp__media-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.bloom-tp__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.bloom-tp__img--primary {
+  position: relative;
+  z-index: 1;
+}
+
+.bloom-tp__img--hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bloom-tp__card:hover .bloom-tp__img--primary {
+  transform: scale(1.04);
+}
+
+.bloom-tp__card:hover .bloom-tp__img--hover {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* Card Badge (NEW) */
+.bloom-tp__badge-wrap {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.bloom-tp__badge-new {
+  display: inline-block;
+  background: var(--bloom-tp-badge-bg, #234332);
+  color: var(--bloom-tp-badge-color, #FFFFFF);
+  font-family: var(--font-body-family, inherit);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  line-height: 1.2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Quick View Pill Button */
+.bloom-tp__quickview-wrap {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translate(-50%, 12px);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 5;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease, visibility 0.28s;
+  pointer-events: auto;
+}
+
+.bloom-tp__card:hover .bloom-tp__quickview-wrap,
+.bloom-tp__card:focus-within .bloom-tp__quickview-wrap {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.bloom-tp__quickview-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #FFFFFF;
+  color: #234332;
+  font-family: var(--font-body-family, inherit);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(35, 67, 50, 0.12);
+  transition: all 0.22s ease;
+  white-space: nowrap;
+  outline: none;
+}
+
+.bloom-tp__quickview-btn:hover {
+  background: #234332;
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px rgba(35, 67, 50, 0.25);
+}
+
+.bloom-tp__quickview-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+}
+
+.bloom-tp__quickview-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+@media (max-width: 767px) {
+  /* On touch devices, quickview can be tapped easily or positioned neatly */
+  .bloom-tp__quickview-wrap {
+    opacity: 0.95;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    bottom: 10px;
+  }
+  .bloom-tp__quickview-btn {
+    padding: 6px 13px;
+    font-size: 10px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Product Details (Vendor, Title, Price, Swatches)
+   -------------------------------------------------------------------------- */
+.bloom-tp__card-info {
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bloom-tp__vendor {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(35, 67, 50, 0.65);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.bloom-tp__title-link {
+  text-decoration: none;
+  color: var(--bloom-tp-heading-color, #234332);
+}
+
+.bloom-tp__title {
+  font-family: var(--font-body-family, inherit);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0 0 6px 0;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.bloom-tp__title-link:hover .bloom-tp__title {
+  opacity: 0.75;
+}
+
+.bloom-tp__price {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--bloom-tp-heading-color, #234332);
+  margin-bottom: 10px;
+}
+
+/* Swatches */
+.bloom-tp__swatches {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bloom-tp__swatch-item {
+  display: inline-flex;
+}
+
+.bloom-tp__swatch-btn {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  background-color: var(--swatch-color, #C86A4B);
+}
+
+.bloom-tp__swatch-btn:hover {
+  transform: scale(1.15);
+}
+
+.bloom-tp__swatch-btn.is-active {
+  box-shadow: 0 0 0 1.5px var(--bloom-tp-bg, #FAFAF2), 0 0 0 3px #234332;
+}
+
+@media (max-width: 767px) {
+  .bloom-tp__title {
+    font-size: 14.5px;
+  }
+  .bloom-tp__price {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .bloom-tp__swatch-btn {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Reveal Animation
+   -------------------------------------------------------------------------- */
+.bloom-tp-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bloom-tp-reveal.is-in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom-tp-reveal,
+  .bloom-tp__panel,
+  .bloom-tp__img,
+  .bloom-tp__quickview-wrap {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Built-In Botanical Quick View Modal
+   -------------------------------------------------------------------------- */
+.bloom-tp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.bloom-tp-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.bloom-tp-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 32, 24, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.bloom-tp-modal__dialog {
+  position: relative;
+  z-index: 2;
+  background: #FAF9F0;
+  width: 100%;
+  max-width: 820px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  transform: scale(0.95) translateY(14px);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bloom-tp-modal.is-open .bloom-tp-modal__dialog {
+  transform: scale(1) translateY(0);
+}
+
+.bloom-tp-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(35, 67, 50, 0.08);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #234332;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10;
+}
+
+.bloom-tp-modal__close:hover {
+  background: #234332;
+  color: #FFFFFF;
+  transform: rotate(90deg);
+}
+
+.bloom-tp-modal__body {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.bloom-tp-modal__media {
+  background: #F3F2EA;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bloom-tp-modal__img {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.bloom-tp-modal__content {
+  padding: 38px 34px 34px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bloom-tp-modal__vendor {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(35, 67, 50, 0.65);
+  margin-bottom: 6px;
+}
+
+.bloom-tp-modal__title {
+  font-family: var(--font-heading-family, "Playfair Display", Georgia, serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: #234332;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.bloom-tp-modal__price {
+  font-size: 20px;
+  font-weight: 600;
+  color: #234332;
+  margin-bottom: 20px;
+}
+
+.bloom-tp-modal__desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(35, 67, 50, 0.85);
+  margin-bottom: 24px;
+}
+
+.bloom-tp-modal__form {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bloom-tp-modal__atc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #234332;
+  color: #FFFFFF;
+  border: 1px solid #234332;
+  border-radius: 50px;
+  padding: 13px 26px;
+  font-family: var(--font-body-family, inherit);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.bloom-tp-modal__atc-btn:hover {
+  background: #386D50;
+  border-color: #386D50;
+  transform: translateY(-1px);
+}
+
+.bloom-tp-modal__view-details {
+  text-align: center;
+  font-size: 13px;
+  color: #234332;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
+}
+
+.bloom-tp-modal__view-details:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 767px) {
+  .bloom-tp-modal__body {
+    grid-template-columns: 1fr;
+  }
+  .bloom-tp-modal__content {
+    padding: 20px 22px 26px 22px;
+  }
+  .bloom-tp-modal__media {
+    padding: 18px;
+  }
+  .bloom-tp-modal__title {
+    font-size: 22px;
+  }
+}
