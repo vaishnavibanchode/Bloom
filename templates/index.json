@@ -202,14 +202,14 @@
         "enable_section": true,
         "enable_animation": true,
         "scroll_track_height": 340,
-        "p1_gradient_top": "#FAF9EF",
-        "p1_gradient_bottom": "#C4D8BD",
-        "p1_text_color": "#2D4A3E",
+        "p1_gradient_top": "#faf9ef",
+        "p1_gradient_bottom": "#c4d8bd",
+        "p1_text_color": "#2d4a3e",
         "p1_subheading": "SALE UP TO 30% OFF",
         "p1_heading": "Spring",
         "p1_heading_italic": "Savings",
-        "p2_background_color": "#9C9D97",
-        "p2_text_color": "#FFFFFF",
+        "p2_background_color": "#9c9d97",
+        "p2_text_color": "#ffffff",
         "p2_heading_regular": "Grow Your",
         "p2_heading_italic": "Green Space",
         "p2_heading_size": 68,
@@ -1139,45 +1139,57 @@
         "reset_spacing": false
       }
     },
-    "bloom_plants_lifestyle": {
+    "bloom_plants_lifestyle_ktL8db": {
       "type": "bloom-plants-lifestyle",
       "blocks": {
-        "card_bright_light": {
+        "card_erUC7p": {
           "type": "card",
           "settings": {
             "label": "Bright light",
-            "link": ""
+            "link": "",
+            "image_focal_point": "center center",
+            "alt_text": "",
+            "overlay_opacity_override": 0
           }
         },
-        "card_easy_care": {
+        "card_U8L64k": {
           "type": "card",
           "settings": {
             "label": "Easy care",
-            "link": ""
+            "link": "",
+            "image_focal_point": "center center",
+            "alt_text": "",
+            "overlay_opacity_override": 0
           }
         },
-        "card_pet_friendly": {
+        "card_cfp4Wp": {
           "type": "card",
           "settings": {
             "label": "Pet friendly",
-            "link": ""
+            "link": "",
+            "image_focal_point": "center center",
+            "alt_text": "",
+            "overlay_opacity_override": 0
           }
         },
-        "card_indoor_plants": {
+        "card_9tKGid": {
           "type": "card",
           "settings": {
             "label": "Indoor plants",
-            "link": ""
+            "link": "",
+            "image_focal_point": "center center",
+            "alt_text": "",
+            "overlay_opacity_override": 0
           }
         }
       },
       "block_order": [
-        "card_bright_light",
-        "card_easy_care",
-        "card_pet_friendly",
-        "card_indoor_plants"
+        "card_erUC7p",
+        "card_U8L64k",
+        "card_cfp4Wp",
+        "card_9tKGid"
       ],
-      "name": "Plants for Every Lifestyle",
+      "name": "Plants for Lifestyle",
       "settings": {
         "enable_section": true,
         "background_color": "#FAF9F0",
@@ -1250,8 +1262,8 @@
     "bloom_hero_4qNHAy",
     "bloom_botanical_statement_JTrMh3",
     "bloom_three_cards_dfJkNe",
-    "bloom_plants_lifestyle",
     "bloom_scroll_botanical_hero_gLbnXk",
+    "bloom_plants_lifestyle_ktL8db",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
