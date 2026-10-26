@@ -890,6 +890,54 @@
         "columns_desktop": "4",
         "columns_mobile": "2"
       }
+    },
+    "bloom_image_hotspots": {
+      "type": "bloom-image-hotspots",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 81,
+            "pos_y": 32,
+            "title": "Monstera Deliciosa",
+            "price": "$89.00",
+            "link_url": "/collections/all"
+          }
+        },
+        "hotspot_2": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 71,
+            "pos_y": 92,
+            "title": "Fiddle Leaf Fig",
+            "price": "$129.00",
+            "link_url": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1",
+        "hotspot_2"
+      ],
+      "settings": {
+        "enable_section": true,
+        "heading": "Elevate Your",
+        "italic_heading": "Space Naturally",
+        "subtitle": "Discover performance gear designed to move with you",
+        "button_label": "SHOP NOW",
+        "button_link": "/collections/all",
+        "desktop_height": 86,
+        "tablet_height": 76,
+        "mobile_height": 74,
+        "image_focal_point": "center center",
+        "enable_parallax": true,
+        "overlay_opacity": 45,
+        "content_max_width": 540,
+        "heading_size_desktop": 68,
+        "heading_size_mobile": 38,
+        "subtitle_size_desktop": 18,
+        "subtitle_size_mobile": 14
+      }
     }
   },
   "order": [
@@ -903,7 +951,8 @@
     "bloom_planti_product_RMbdBj",
     "bloom_room_inspiration_AnXeBx",
     "bloom_compare_table_K6YEjH",
-    "bloom_scroll_hero_stack_dNNDHh",
-    "why_plant_lovers_choose_us_a8YKiD"
+    "bloom_image_hotspots",
+    "why_plant_lovers_choose_us_a8YKiD",
+    "bloom_scroll_hero_stack_dNNDHh"
   ]
 }

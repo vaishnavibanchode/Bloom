@@ -1,0 +1,549 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   Bloom Theme — "Elevate Your Space Naturally" Image Hotspot Section
+   Reproducing the Athora Planti editorial botanical hotspot experience
+   ========================================================================== */
+
+.bloom-image-hotspots-section {
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: #122119;
+}
+
+.bih-viewport {
+  position: relative;
+  width: 100%;
+  height: var(--bih-h-desktop, 86vh);
+  min-height: 560px;
+  max-height: 940px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Background Image & Parallax
+   -------------------------------------------------------------------------- */
+.bih-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bih-img {
+  position: absolute;
+  top: -5%;
+  left: 0;
+  width: 100%;
+  height: 110%;
+  object-fit: cover;
+  object-position: var(--bih-focal, center center);
+  display: block;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.1s linear;
+}
+
+/* Subtle Gradient Overlay for enhanced editorial text readability */
+.bih-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top right,
+    rgba(14, 28, 20, 0.72) 0%,
+    rgba(14, 28, 20, 0.42) 36%,
+    rgba(14, 28, 20, 0.10) 68%,
+    transparent 100%
+  );
+  opacity: var(--bih-overlay-opacity, 0.45);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   Editorial Content Overlay (Lower Left)
+   -------------------------------------------------------------------------- */
+.bih-content-container {
+  position: absolute;
+  left: var(--bih-left, clamp(24px, 5.5vw, 84px));
+  bottom: var(--bih-bottom, clamp(30px, 6.5vh, 84px));
+  max-width: var(--bih-content-max-w, 540px);
+  width: calc(100% - 48px);
+  z-index: 4;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.bih-content-inner {
+  pointer-events: auto;
+  text-align: left;
+}
+
+.bih-heading {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-size: var(--bih-heading-sz, 68px);
+  font-weight: 400;
+  line-height: 1.08;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+  display: block;
+}
+
+.bih-heading-main {
+  font-style: normal;
+  display: block;
+}
+
+.bih-heading-italic {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  display: block;
+}
+
+.bih-subtitle {
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: var(--bih-subtitle-sz, 18px);
+  font-weight: 400;
+  line-height: 1.48;
+  color: rgba(255, 255, 255, 0.94);
+  margin: 0 0 26px 0;
+  max-width: 480px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.005em;
+}
+
+.bih-btn-wrap {
+  display: block;
+}
+
+.bih-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 32px;
+  border-radius: 50px;
+  border: 1.5px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bih-btn:hover {
+  background-color: #ffffff;
+  color: #234332;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.bih-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Hotspots Layer & Circular Plus Markers
+   -------------------------------------------------------------------------- */
+.bih-hotspots-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.bih-hotspot-item {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.bih-hotspot-item.is-active {
+  z-index: 20;
+}
+
+/* Plus Pin Button */
+.bih-hotspot-pin {
+  position: relative;
+  width: var(--bih-pin-sz, 48px);
+  height: var(--bih-pin-sz, 48px);
+  border-radius: 50%;
+  background-color: #234332;
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.bih-hotspot-pin:hover {
+  transform: scale(1.12);
+  background-color: #2a523d;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+}
+
+.bih-hotspot-pin:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+/* Rotate icon when card is active */
+.bih-hotspot-pin__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bih-hotspot-pin__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-pin {
+  background-color: #1a3326;
+  border-color: #ffffff;
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-pin__icon {
+  transform: rotate(45deg);
+}
+
+/* Subtle pulse ripple ring */
+.bih-hotspot-pin::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  animation: bih-pulse 2.8s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes bih-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hotspot Popup Card
+   -------------------------------------------------------------------------- */
+.bih-hotspot-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 16px 40px -8px rgba(18, 35, 25, 0.28),
+              0 0 0 1px rgba(35, 67, 50, 0.08);
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.92);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.25s;
+  z-index: 25;
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-card {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Placement Modifiers (calculated or configured) */
+.bih-hotspot-card--right {
+  top: 50%;
+  left: calc(100% + 14px);
+  transform: translateY(-50%) scale(0.92);
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-card--right {
+  transform: translateY(-50%) scale(1);
+}
+
+.bih-hotspot-card--left {
+  top: 50%;
+  right: calc(100% + 14px);
+  left: auto;
+  transform: translateY(-50%) scale(0.92);
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-card--left {
+  transform: translateY(-50%) scale(1);
+}
+
+.bih-hotspot-card--top {
+  bottom: calc(100% + 14px);
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%) scale(0.92);
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-card--top {
+  transform: translateX(-50%) scale(1);
+}
+
+.bih-hotspot-card--bottom {
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.92);
+}
+
+.bih-hotspot-item.is-active .bih-hotspot-card--bottom {
+  transform: translateX(-50%) scale(1);
+}
+
+/* Card Inner Layout */
+.bih-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bih-card-media {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f2f4ec;
+  flex-shrink: 0;
+}
+
+.bih-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bih-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bih-card-title {
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #234332;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bih-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.bih-card-title a:hover {
+  text-decoration: underline;
+}
+
+.bih-card-price {
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #3b5f4c;
+  margin: 0 0 6px 0;
+}
+
+.bih-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #234332;
+  text-decoration: none;
+}
+
+.bih-card-link:hover {
+  color: #1a3326;
+  text-decoration: underline;
+}
+
+.bih-card-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #7a8c81;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.bih-card-close:hover {
+  color: #234332;
+  background: rgba(35, 67, 50, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+
+/* Tablet (768px – 1024px) */
+@media (max-width: 1024px) {
+  .bih-viewport {
+    height: var(--bih-h-tablet, 75vh);
+    min-height: 520px;
+  }
+
+  .bih-heading {
+    font-size: clamp(48px, 6vw, 56px);
+  }
+
+  .bih-subtitle {
+    font-size: 16px;
+  }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .bih-viewport {
+    height: var(--bih-h-mobile, 74vh);
+    min-height: 480px;
+    max-height: 720px;
+  }
+
+  .bih-content-container {
+    left: 20px;
+    bottom: 24px;
+    width: calc(100% - 40px);
+    max-width: 100%;
+  }
+
+  .bih-heading {
+    font-size: var(--bih-heading-sz-mobile, 38px);
+    line-height: 1.12;
+    margin-bottom: 12px;
+  }
+
+  .bih-subtitle {
+    font-size: var(--bih-subtitle-sz-mobile, 14px);
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  .bih-btn {
+    padding: 11px 26px;
+    font-size: 12px;
+  }
+
+  .bih-hotspot-pin {
+    width: var(--bih-pin-sz-mobile, 38px);
+    height: var(--bih-pin-sz-mobile, 38px);
+  }
+
+  .bih-hotspot-pin__icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Compact card on mobile anchored to bottom or center */
+  .bih-hotspot-card {
+    width: 240px;
+    padding: 10px;
+  }
+
+  .bih-card-media {
+    width: 52px;
+    height: 52px;
+  }
+
+  .bih-card-title {
+    font-size: 13px;
+  }
+}
+
+/* Narrow mobile (< 380px) */
+@media (max-width: 380px) {
+  .bih-heading {
+    font-size: 32px;
+  }
+  .bih-hotspot-card {
+    width: 210px;
+  }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bih-img,
+  .bih-btn,
+  .bih-hotspot-pin,
+  .bih-hotspot-card {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,473 @@
+{{ 'bloom-image-hotspots.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-image-hotspots.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign heading_text = section_st.heading | default: 'Elevate Your'
+  assign italic_text = section_st.italic_heading | default: 'Space Naturally'
+  assign subtitle_text = section_st.subtitle | default: 'Discover performance gear designed to move with you'
+  assign btn_label = section_st.button_label | default: 'SHOP NOW'
+  assign btn_url = section_st.button_link | default: routes.all_products_collection_url
+  assign focal_point = section_st.image_focal_point | default: 'center center'
+  assign overlay_val = section_st.overlay_opacity | default: 45 | divided_by: 100.0
+-%}
+
+{%- if section_st.enable_section -%}
+  <bloom-image-hotspots
+    id="bloom-hotspots-{{ section.id }}"
+    class="bloom-image-hotspots-section"
+    data-section-id="{{ section.id }}"
+    data-parallax="{{ section_st.enable_parallax }}"
+    style="
+      --bih-h-desktop: {{ section_st.desktop_height | default: 86 }}vh;
+      --bih-h-tablet: {{ section_st.tablet_height | default: 75 }}vh;
+      --bih-h-mobile: {{ section_st.mobile_height | default: 74 }}vh;
+      --bih-focal: {{ focal_point }};
+      --bih-overlay-opacity: {{ overlay_val }};
+      --bih-content-max-w: {{ section_st.content_max_width | default: 540 }}px;
+      --bih-heading-sz: {{ section_st.heading_size_desktop | default: 68 }}px;
+      --bih-heading-sz-mobile: {{ section_st.heading_size_mobile | default: 38 }}px;
+      --bih-subtitle-sz: {{ section_st.subtitle_size_desktop | default: 18 }}px;
+      --bih-subtitle-sz-mobile: {{ section_st.subtitle_size_mobile | default: 14 }}px;
+    "
+  >
+    <div class="bih-viewport">
+
+      <!-- Background Image Layer -->
+      <div class="bih-media">
+        <picture>
+          {%- if section_st.mobile_image != blank -%}
+            <source
+              media="(max-width: 767px)"
+              srcset="{{ section_st.mobile_image | image_url: width: 1200 }}"
+            >
+          {%- endif -%}
+
+          {%- if section_st.desktop_image != blank -%}
+            <img
+              src="{{ section_st.desktop_image | image_url: width: 2800 }}"
+              alt="{{ heading_text | escape }} {{ italic_text | escape }}"
+              class="bih-img"
+              width="2800"
+              height="1600"
+              loading="lazy"
+            >
+          {%- else -%}
+            <img
+              src="{{ 'bloom-hotspot-lifestyle.jpg' | asset_url }}"
+              alt="{{ heading_text | escape }} {{ italic_text | escape }}"
+              class="bih-img"
+              width="2800"
+              height="1600"
+              loading="lazy"
+            >
+          {%- endif -%}
+        </picture>
+        <div class="bih-overlay"></div>
+      </div>
+
+      <!-- Editorial Text Overlay (Lower Left) -->
+      <div class="bih-content-container">
+        <div class="bih-content-inner">
+          {%- if heading_text != blank or italic_text != blank -%}
+            <h2 class="bih-heading">
+              {%- if heading_text != blank -%}
+                <span class="bih-heading-main">{{ heading_text }}</span>
+              {%- endif -%}
+              {%- if italic_text != blank -%}
+                <em class="bih-heading-italic">{{ italic_text }}</em>
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+
+          {%- if subtitle_text != blank -%}
+            <p class="bih-subtitle">{{ subtitle_text }}</p>
+          {%- endif -%}
+
+          {%- if btn_label != blank -%}
+            <div class="bih-btn-wrap">
+              <a href="{{ btn_url }}" class="bih-btn">
+                {{ btn_label }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Hotspots Layer -->
+      <div class="bih-hotspots-layer">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign block_st = block.settings
+            assign spot_product = block_st.product
+
+            assign item_title = block_st.title
+            assign item_price = block_st.price
+            assign item_url = block_st.link_url
+            assign item_img = block_st.custom_image
+
+            if spot_product != blank
+              assign item_title = spot_product.title
+              assign item_price = spot_product.price | money
+              assign item_url = spot_product.url
+              if spot_product.featured_image != blank
+                assign item_img = spot_product.featured_image
+              endif
+            endif
+          -%}
+
+          <div
+            class="bih-hotspot-item"
+            style="left: {{ block_st.pos_x }}%; top: {{ block_st.pos_y }}%;"
+            data-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            <!-- Circular Plus Pin Button -->
+            <button
+              type="button"
+              class="bih-hotspot-pin"
+              aria-label="View {{ item_title | default: 'Hotspot product' | escape }}"
+              aria-expanded="false"
+            >
+              <span class="bih-hotspot-pin__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+            </button>
+
+            <!-- Popup Card -->
+            <div class="bih-hotspot-card" role="dialog" aria-modal="false">
+              <button
+                type="button"
+                class="bih-card-close"
+                aria-label="Close hotspot card"
+              >
+                &times;
+              </button>
+              <div class="bih-card-inner">
+                {%- if item_img != blank -%}
+                  <div class="bih-card-media">
+                    <img
+                      src="{{ item_img | image_url: width: 180 }}"
+                      alt="{{ item_title | escape }}"
+                      width="64"
+                      height="64"
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+
+                <div class="bih-card-info">
+                  {%- if item_title != blank -%}
+                    <h3 class="bih-card-title">
+                      {%- if item_url != blank -%}
+                        <a href="{{ item_url }}">{{ item_title }}</a>
+                      {%- else -%}
+                        {{ item_title }}
+                      {%- endif -%}
+                    </h3>
+                  {%- endif -%}
+
+                  {%- if item_price != blank -%}
+                    <div class="bih-card-price">{{ item_price }}</div>
+                  {%- endif -%}
+
+                  {%- if item_url != blank -%}
+                    <a href="{{ item_url }}" class="bih-card-link">
+                      <span>View</span>
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M1 5H9M9 5L5.5 1.5M9 5L5.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </bloom-image-hotspots>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Image Hotspots",
+  "tag": "section",
+  "class": "section-bloom-image-hotspots",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Images & Dimensions"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image (Optional)"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 60,
+      "max": 100,
+      "step": 2,
+      "unit": "vh",
+      "label": "Desktop Section Height",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "tablet_height",
+      "min": 50,
+      "max": 90,
+      "step": 2,
+      "unit": "vh",
+      "label": "Tablet Section Height",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 50,
+      "max": 90,
+      "step": 2,
+      "unit": "vh",
+      "label": "Mobile Section Height",
+      "default": 74
+    },
+    {
+      "type": "select",
+      "id": "image_focal_point",
+      "label": "Image Focal Point",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top Center" },
+        { "value": "center bottom", "label": "Bottom Center" },
+        { "value": "left center", "label": "Left Center" },
+        { "value": "right center", "label": "Right Center" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable Subtle Parallax",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Dark Gradient Overlay Opacity",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Editorial Text Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Main (Regular)",
+      "default": "Elevate Your"
+    },
+    {
+      "type": "text",
+      "id": "italic_heading",
+      "label": "Heading Italic Phrase",
+      "default": "Space Naturally"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Supporting Subtitle",
+      "default": "Discover performance gear designed to move with you"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 380,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "label": "Content Maximum Width",
+      "default": 540
+    },
+    {
+      "type": "header",
+      "content": "Typography Sizes"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 48,
+      "max": 84,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size (Desktop)",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 28,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size (Mobile)",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Size (Desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Size (Mobile)",
+      "default": 14
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Product Hotspot",
+      "settings": [
+        {
+          "type": "range",
+          "id": "pos_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position (X)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position (Y)",
+          "default": 50
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Linked Product",
+          "info": "Automatically populates product title, price, image, and URL."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Custom Price (Fallback)"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Custom Link (Fallback)"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Thumbnail (Fallback)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Hotspots",
+      "settings": {
+        "enable_section": true,
+        "heading": "Elevate Your",
+        "italic_heading": "Space Naturally",
+        "subtitle": "Discover performance gear designed to move with you",
+        "button_label": "SHOP NOW",
+        "desktop_height": 86,
+        "tablet_height": 76,
+        "mobile_height": 74,
+        "image_focal_point": "center center",
+        "enable_parallax": true,
+        "overlay_opacity": 45,
+        "content_max_width": 540,
+        "heading_size_desktop": 68,
+        "heading_size_mobile": 38,
+        "subtitle_size_desktop": 18,
+        "subtitle_size_mobile": 14
+      },
+      "blocks": [
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 81,
+            "pos_y": 32,
+            "title": "Monstera Deliciosa",
+            "price": "$89.00",
+            "link_url": "/collections/all"
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 71,
+            "pos_y": 92,
+            "title": "Fiddle Leaf Fig",
+            "price": "$129.00",
+            "link_url": "/collections/all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
