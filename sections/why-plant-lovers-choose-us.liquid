@@ -1,0 +1,702 @@
+{{ 'why-plant-lovers-choose-us.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign section_st = section.settings
+  assign heading_text = section_st.heading | default: 'Why Plant'
+  assign italic_text = section_st.italic_heading | default: 'Lovers Choose Us'
+  assign subtitle_text = section_st.subtitle | default: 'Shop indoor plants online with confidence.'
+  assign header_alignment = section_st.heading_alignment | default: 'center'
+-%}
+
+{%- if section_st.enable_section and section.blocks.size > 0 -%}
+  <section
+    id="why-choose-us-{{ section.id }}"
+    class="pwcu-section"
+    data-section-id="{{ section.id }}"
+    style="
+      --pwcu-page-bg: {{ section_st.page_bg_color | default: '#FAFAF0' }};
+      --pwcu-sec-bg: {{ section_st.section_bg_color | default: '#F0F0E1' }};
+      --pwcu-card-bg: {{ section_st.card_bg_color | default: '#E8EBDD' }};
+      --pwcu-card-border: {{ section_st.card_border_color | default: '#D3D9C9' }};
+      --pwcu-heading-color: {{ section_st.heading_color | default: '#234638' }};
+      --pwcu-card-text: {{ section_st.card_text_color | default: '#294B3E' }};
+      --pwcu-subtitle-color: {{ section_st.subtitle_color | default: '#183A30' }};
+      --pwcu-icon-color: {{ section_st.icon_color | default: '#234638' }};
+      --pwcu-max-width: {{ section_st.container_max_width | default: 1440 }}px;
+      --pwcu-pt-desktop: {{ section_st.padding_top_desktop | default: 30 }}px;
+      --pwcu-pb-desktop: {{ section_st.padding_bottom_desktop | default: 30 }}px;
+      --pwcu-pt-mobile: {{ section_st.padding_top_mobile | default: 16 }}px;
+      --pwcu-pb-mobile: {{ section_st.padding_bottom_mobile | default: 16 }}px;
+      --pwcu-outer-radius: {{ section_st.outer_radius | default: 24 }}px;
+      --pwcu-outer-radius-mobile: {{ section_st.outer_radius_mobile | default: 18 }}px;
+      --pwcu-card-radius: {{ section_st.card_radius | default: 12 }}px;
+      --pwcu-card-border-thickness: {{ section_st.card_border_thickness | default: 1 }}px;
+      --pwcu-card-gap: {{ section_st.card_gap_desktop | default: 32 }}px;
+      --pwcu-card-gap-mobile: {{ section_st.card_gap_mobile | default: 12 }}px;
+      --pwcu-card-min-h: {{ section_st.card_min_height_desktop | default: 188 }}px;
+      --pwcu-card-min-h-mobile: {{ section_st.card_min_height_mobile | default: 150 }}px;
+      --pwcu-icon-sz: {{ section_st.icon_size_desktop | default: 46 }}px;
+      --pwcu-icon-sz-mobile: {{ section_st.icon_size_mobile | default: 38 }}px;
+      --pwcu-heading-sz: {{ section_st.heading_size_desktop | default: 50 }}px;
+      --pwcu-heading-sz-mobile: {{ section_st.heading_size_mobile | default: 32 }}px;
+      --pwcu-subtitle-sz: {{ section_st.subtitle_size_desktop | default: 16 }}px;
+      --pwcu-subtitle-sz-mobile: {{ section_st.subtitle_size_mobile | default: 14 }}px;
+      --pwcu-card-font-sz: {{ section_st.card_text_size_desktop | default: 15 }}px;
+      --pwcu-card-font-sz-mobile: {{ section_st.card_text_size_mobile | default: 13 }}px;
+      --pwcu-cols-desktop: {{ section_st.columns_desktop | default: 4 }};
+      --pwcu-cols-mobile: {{ section_st.columns_mobile | default: 2 }};
+    "
+  >
+    <div class="pwcu-outer-wrapper">
+      <div class="pwcu-container">
+
+        <!-- Heading & Subtitle -->
+        {%- if heading_text != blank or italic_text != blank or subtitle_text != blank -%}
+          <div class="pwcu-header pwcu-header--{{ header_alignment }}">
+            {%- if heading_text != blank or italic_text != blank -%}
+              <h2 class="pwcu-heading">
+                {%- if heading_text != blank -%}
+                  <span class="pwcu-heading-main">{{ heading_text }}</span>
+                {%- endif -%}
+                {%- if italic_text != blank -%}
+                  <em class="pwcu-heading-italic">{{ italic_text }}</em>
+                {%- endif -%}
+              </h2>
+            {%- endif -%}
+
+            {%- if subtitle_text != blank -%}
+              <p class="pwcu-subtitle">{{ subtitle_text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <!-- Cards Grid -->
+        <div class="pwcu-grid">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_st = block.settings
+              assign card_tag = 'div'
+              if block_st.link_url != blank
+                assign card_tag = 'a'
+              endif
+            -%}
+
+            <{{ card_tag }}
+              class="pwcu-card"
+              {% if block_st.link_url != blank %}
+                href="{{ block_st.link_url }}"
+                {% if block_st.open_new_tab %}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                {% endif %}
+                aria-label="{{ block_st.title | default: 'Benefit card' | escape }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <!-- Icon Element -->
+              <div class="pwcu-icon-wrap" aria-hidden="true">
+                {%- if block_st.custom_image != blank -%}
+                  <img
+                    src="{{ block_st.custom_image | image_url: width: 120 }}"
+                    alt="{{ block_st.title | escape }}"
+                    width="60"
+                    height="60"
+                    loading="lazy"
+                  >
+                {%- elsif block_st.custom_svg != blank -%}
+                  {{ block_st.custom_svg }}
+                {%- else -%}
+                  {%- case block_st.icon -%}
+                    {%- when 'box' -%}
+                      <!-- 3D Isometric Delivery Box -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M24 4.5 L42.5 14.8 L24 25.1 L5.5 14.8 Z" />
+                        <path d="M4.5 17.5 L22.5 27.5 L22.5 43.5 L4.5 33.5 Z" />
+                        <path d="M25.5 27.5 L43.5 17.5 L43.5 33.5 L25.5 43.5 Z" />
+                      </svg>
+
+                    {%- when 'medal' -%}
+                      <!-- Award Guarantee Medal with Star Cutout & Ribbons -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M17.5 26 L17.5 43.5 L22 39.5 L25.5 43.5 L25.5 28 Z" />
+                        <path d="M22.5 28 L22.5 43.5 L26 39.5 L30.5 43.5 L30.5 26 Z" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24 5 C15.716 5 9 11.716 9 20 C9 28.284 15.716 35 24 35 C32.284 35 39 28.284 39 20 C39 11.716 32.284 5 24 5 Z M24 11.5 L26.3 16.5 L31.8 17.2 L27.7 21 L28.8 26.5 L24 23.8 L19.2 26.5 L20.3 21 L16.2 17.2 L21.7 16.5 Z" />
+                      </svg>
+
+                    {%- when 'support' -%}
+                      <!-- Customer Support Agent with Headset -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <circle cx="24" cy="18" r="8.5" />
+                        <path d="M12 18 C12 11.373 17.373 6 24 6 C30.627 6 36 11.373 36 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        <rect x="10.5" y="15" width="3.5" height="7.5" rx="1.75" />
+                        <rect x="34" y="15" width="3.5" height="7.5" rx="1.75" />
+                        <path d="M35 20 C35 24.5 31 27 28 27 L27 27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="25.5" cy="27" r="1.5" />
+                        <path d="M10 40.5 C10 32.8 16.2 30 24 30 C31.8 30 38 32.8 38 40.5 C38 41.5 37 42 35 42 L13 42 C11 42 10 41.5 10 40.5 Z" />
+                      </svg>
+
+                    {%- when 'leaves' -%}
+                      <!-- Botanical Leaves -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M23.5 39 C23.5 39 22 28.5 13.5 25.5 C7 23 8.5 14 14.5 11.5 C20 9 25 15.5 25 23.5 C25 27.5 24 36 23.5 39 Z" />
+                        <path d="M24.5 39 C24.5 39 26 27.5 33.5 22.5 C40 18.5 39 9.5 31.5 9.5 C24.5 9.5 22 16.5 23 25.5 C23.5 29.5 24 36 24.5 39 Z" />
+                      </svg>
+
+                    {%- when 'truck' -%}
+                      <!-- Delivery Truck -->
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 12 H30 V32 H6 Z" />
+                        <path d="M30 18 H38 L42 24 V32 H30 Z" />
+                        <circle cx="14" cy="35" r="4" fill="currentColor" />
+                        <circle cx="36" cy="35" r="4" fill="currentColor" />
+                      </svg>
+
+                    {%- when 'badge' -%}
+                      <!-- Verified Badge -->
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M24 4 L28 8 L34 8 L36 14 L41 17 L40 23 L43 28 L39 33 L40 39 L34 40 L31 45 L25 43 L20 46 L17 41 L11 41 L10 35 L5 32 L7 26 L4 21 L8 16 L8 10 L14 9 L17 4 Z" fill="currentColor" />
+                        <path d="M16 24 L22 30 L32 18" stroke="#E8EBDD" stroke-width="3" />
+                      </svg>
+
+                    {%- when 'return' -%}
+                      <!-- 30-Day Returns -->
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 24 C10 16.268 16.268 10 24 10 C30.627 10 36.183 14.588 37.649 20.8" />
+                        <polyline points="32 21 38 21 38 15" />
+                        <path d="M38 24 C38 31.732 31.732 38 24 38 C17.373 38 11.817 33.412 10.351 27.2" />
+                        <polyline points="16 27 10 27 10 33" />
+                      </svg>
+
+                    {%- when 'shield' -%}
+                      <!-- Secure Shield -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M24 6 L38 11 V22 C38 31.2 32 39.5 24 42 C16 39.5 10 31.2 10 22 V11 Z" />
+                      </svg>
+
+                    {%- when 'plant' -%}
+                      <!-- Potted Plant -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M16 28 L18 42 H30 L32 28 Z" />
+                        <path d="M24 28 V16" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        <path d="M24 20 C20 18 16 12 18 8 C22 8 24 14 24 20 Z" />
+                        <path d="M24 16 C28 14 32 8 30 4 C26 4 24 10 24 16 Z" />
+                      </svg>
+
+                    {%- when 'chat' -%}
+                      <!-- Chat Support -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M24 8 C14.059 8 6 15.163 6 24 C6 28.536 8.1 32.617 11.5 35.48 L10 42 L16.8 38.6 C19 39.5 21.4 40 24 40 C33.941 40 42 32.837 42 24 C42 15.163 33.941 8 24 8 Z" />
+                      </svg>
+
+                    {%- else -%}
+                      <!-- Fallback Box -->
+                      <svg viewBox="0 0 48 48" fill="currentColor">
+                        <path d="M24 4.5 L42.5 14.8 L24 25.1 L5.5 14.8 Z" />
+                        <path d="M4.5 17.5 L22.5 27.5 L22.5 43.5 L4.5 33.5 Z" />
+                        <path d="M25.5 27.5 L43.5 17.5 L43.5 33.5 L25.5 43.5 Z" />
+                      </svg>
+                  {%- endcase -%}
+                {%- endif -%}
+              </div>
+
+              <!-- Card Content -->
+              <div class="pwcu-card-content">
+                {%- if block_st.title != blank -%}
+                  <h3 class="pwcu-card-title">
+                    {{ block_st.title | newline_to_br }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if block_st.subtitle != blank -%}
+                  <span class="pwcu-card-subtitle">
+                    {{ block_st.subtitle }}
+                  </span>
+                {%- endif -%}
+              </div>
+            </{{ card_tag }}>
+          {%- endfor -%}
+        </div>
+
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Why Choose Us",
+  "tag": "section",
+  "class": "section-why-plant-lovers-choose-us",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Heading & Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Main Text",
+      "default": "Why Plant"
+    },
+    {
+      "type": "text",
+      "id": "italic_heading",
+      "label": "Heading Italic Text",
+      "default": "Lovers Choose Us",
+      "info": "Rendered in elegant italic serif typography."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Shop indoor plants online with confidence."
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "page_bg_color",
+      "label": "Outer Page Background Color",
+      "default": "#FAFAF0"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Main Container Background Color",
+      "default": "#F0F0E1"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#E8EBDD"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#D3D9C9"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#234638"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#183A30"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#294B3E"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#234638"
+    },
+    {
+      "type": "header",
+      "content": "Dimensions & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Maximum Width",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Section Top Padding (Desktop)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Section Bottom Padding (Desktop)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Section Top Padding (Mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Section Bottom Padding (Mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "outer_radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Main Container Corner Radius (Desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "outer_radius_mobile",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Main Container Corner Radius (Mobile)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Corner Radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_border_thickness",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Card Border Thickness",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Gap (Desktop)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Gap (Mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_min_height_desktop",
+      "min": 140,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "label": "Card Minimum Height (Desktop)",
+      "default": 188
+    },
+    {
+      "type": "range",
+      "id": "card_min_height_mobile",
+      "min": 110,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Card Minimum Height (Mobile)",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Typography & Sizes"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Font Size (Desktop)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Font Size (Mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Font Size (Desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Font Size (Mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "min": 30,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Artwork Size (Desktop)",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "min": 24,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Artwork Size (Mobile)",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_desktop",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Card Text Size (Desktop)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_mobile",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Card Text Size (Mobile)",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Number of Columns (Desktop)",
+      "options": [
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Number of Columns (Mobile)",
+      "options": [
+        { "value": "1", "label": "1 Column" },
+        { "value": "2", "label": "2 Columns" }
+      ],
+      "default": "2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit_card",
+      "name": "Benefit Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Built-in Icon",
+          "options": [
+            { "value": "box", "label": "Delivery Box / Package (Screenshot match)" },
+            { "value": "medal", "label": "30-Day Guarantee Medal (Screenshot match)" },
+            { "value": "support", "label": "Customer Support Headset (Screenshot match)" },
+            { "value": "leaves", "label": "Botanical Leaves (Screenshot match)" },
+            { "value": "truck", "label": "Fast Delivery Truck" },
+            { "value": "badge", "label": "Verified Check Badge" },
+            { "value": "return", "label": "30-Day Return Cycle" },
+            { "value": "plant", "label": "Potted Plant" },
+            { "value": "shield", "label": "Secure Protection Shield" },
+            { "value": "chat", "label": "Live Chat Support" },
+            { "value": "custom", "label": "Custom SVG or Image" }
+          ],
+          "default": "box"
+        },
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "Custom SVG Code",
+          "info": "Optional. Overrides the selected built-in icon if provided."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Icon Image",
+          "info": "Optional. Overrides built-in icon if uploaded."
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Card Title / Text",
+          "default": "Shipped Direct\nfrom the Nursery",
+          "info": "Press Enter to break text onto multiple lines."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Optional Card Subtitle / Description"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Card Link URL (Optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Choose Us",
+      "settings": {
+        "enable_section": true,
+        "heading": "Why Plant",
+        "italic_heading": "Lovers Choose Us",
+        "subtitle": "Shop indoor plants online with confidence.",
+        "heading_alignment": "center",
+        "page_bg_color": "#FAFAF0",
+        "section_bg_color": "#F0F0E1",
+        "card_bg_color": "#E8EBDD",
+        "card_border_color": "#D3D9C9",
+        "heading_color": "#234638",
+        "subtitle_color": "#183A30",
+        "card_text_color": "#294B3E",
+        "icon_color": "#234638",
+        "container_max_width": 1440,
+        "padding_top_desktop": 30,
+        "padding_bottom_desktop": 30,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "outer_radius": 24,
+        "outer_radius_mobile": 18,
+        "card_radius": 12,
+        "card_border_thickness": 1,
+        "card_gap_desktop": 32,
+        "card_gap_mobile": 12,
+        "card_min_height_desktop": 188,
+        "card_min_height_mobile": 150,
+        "heading_size_desktop": 50,
+        "heading_size_mobile": 32,
+        "subtitle_size_desktop": 16,
+        "subtitle_size_mobile": 14,
+        "icon_size_desktop": 46,
+        "icon_size_mobile": 38,
+        "card_text_size_desktop": 15,
+        "card_text_size_mobile": 13,
+        "columns_desktop": "4",
+        "columns_mobile": "2"
+      },
+      "blocks": [
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "box",
+            "title": "Shipped Direct\nfrom the Nursery"
+          }
+        },
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "medal",
+            "title": "30 Day Happiness Guarantee"
+          }
+        },
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "support",
+            "title": "Expert Customer Support"
+          }
+        },
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "leaves",
+            "title": "Care Instructions Provided"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
