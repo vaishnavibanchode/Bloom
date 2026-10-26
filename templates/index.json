@@ -603,8 +603,8 @@
         "text_color": "#234332",
         "button_border_color": "#234332",
         "button_text_color": "#234332",
-        "card_radius": 20,
-        "card_gap": 28,
+        "card_radius": 18,
+        "card_gap": 32,
         "padding_top": 32,
         "padding_bottom": 32
       }
