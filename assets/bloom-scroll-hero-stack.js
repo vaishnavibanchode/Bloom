@@ -1,7 +1,7 @@
 /**
  * Bloom Scroll-Driven Hero Stack Banner Sequence
  * Custom Web Component <bloom-scroll-hero-stack>
- * Reproduces the Athora Planti scroll-driven hero sequence
+ * Fixed & Optimized Implementation
  */
 
 if (!customElements.get('bloom-scroll-hero-stack')) {
@@ -59,7 +59,7 @@ if (!customElements.get('bloom-scroll-hero-stack')) {
               }
             });
           },
-          { rootMargin: '200px 0px 200px 0px', threshold: 0 }
+          { rootMargin: '300px 0px 300px 0px', threshold: 0 }
         );
         this.observer.observe(this);
       } else {
@@ -120,61 +120,93 @@ if (!customElements.get('bloom-scroll-hero-stack')) {
       }
     }
 
+    /**
+     * Map linear scroll progress (0..1) to smooth slide position (0..count-1)
+     * Includes intentional resting/dwell periods for each slide so they sit 100% aligned
+     * without unwanted edges peeking or premature transitions.
+     */
+    calculateSlidePosition(progress, count) {
+      if (count <= 1) return 0;
+      if (progress <= 0) return 0;
+      if (progress >= 1) return count - 1;
+
+      const numTransitions = count - 1;
+      const dwellRatio = 0.10;
+      const totalDwell = count * dwellRatio;
+      const transitionWindow = (1.0 - totalDwell) / numTransitions;
+
+      for (let i = 0; i < numTransitions; i++) {
+        const dwellStart = i * (dwellRatio + transitionWindow);
+        const dwellEnd = dwellStart + dwellRatio;
+        const transEnd = dwellEnd + transitionWindow;
+
+        if (progress <= dwellEnd) {
+          return i; // Stationary at slide i
+        }
+        if (progress < transEnd) {
+          // Smooth transition from slide i to slide i+1
+          const t = (progress - dwellEnd) / transitionWindow;
+          // Smooth cubic ease-in-out curve
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          return i + ease;
+        }
+      }
+
+      return count - 1; // Stationary at final slide
+    }
+
     update() {
       this.isTicking = false;
 
-      // Check reduced motion preference
+      // Handle reduced motion preference or disabled scroll animation
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !this.enableAnimation) {
         this.resetTransforms();
         return;
       }
 
       const count = this.slides.length;
-      if (count <= 1 || !this.track || !this.slidesRow) return;
+      if (count <= 1 || !this.track || !this.slidesRow || !this.stickyViewport) return;
 
       const trackRect = this.track.getBoundingClientRect();
-      const viewportH = window.innerHeight || document.documentElement.clientHeight;
-      const totalScrollable = trackRect.height - viewportH;
+      const stickyStyle = window.getComputedStyle(this.stickyViewport);
+      const computedStickyTop = parseFloat(stickyStyle.top) || 50;
 
+      // Distance during which the viewport is pinned inside the track
+      const totalScrollable = this.track.offsetHeight - this.stickyViewport.offsetHeight;
       if (totalScrollable <= 0) {
         this.resetTransforms();
         return;
       }
 
-      // Calculate progress strictly from 0 to 1
-      const currentScroll = -trackRect.top;
-      const progress = Math.min(1, Math.max(0, currentScroll / totalScrollable));
+      // Progress is 0.0 exactly when sticky viewport touches its sticky top,
+      // and reaches 1.0 when sticky viewport reaches the bottom of the track.
+      const currentScroll = computedStickyTop - trackRect.top;
+      const rawProgress = Math.min(1, Math.max(0, currentScroll / totalScrollable));
 
-      // 1. Horizontal Group Translation
-      const slideWidth = this.slides[0].offsetWidth;
-      const computedStyle = window.getComputedStyle(this.slidesRow);
-      const gap = parseFloat(computedStyle.columnGap) || 30;
-      const totalTranslatePx = (count - 1) * (slideWidth + gap);
-      const currentTranslatePx = progress * totalTranslatePx;
+      // Calculate the active slide position with dwell periods
+      const slidePosition = this.calculateSlidePosition(rawProgress, count);
 
+      // Slide width & gap calculations based on the actual sticky viewport dimensions
+      const slideWidth = this.stickyViewport.clientWidth;
+      const rowStyle = window.getComputedStyle(this.slidesRow);
+      const gap = parseFloat(rowStyle.columnGap) || 30;
+      const stepDistance = slideWidth + gap;
+
+      // 1. Horizontal Group Translation (translate by exact step distance)
+      const currentTranslatePx = slidePosition * stepDistance;
       this.slidesRow.style.transform = `translate3d(-${currentTranslatePx.toFixed(2)}px, 0, 0)`;
 
-      // 2. Parallax Depth for Inner Images (if enabled)
+      // 2. Subtle, strictly bounded parallax for inner images (if enabled)
       if (this.enableParallax) {
-        const step = 1 / (count - 1);
         this.slides.forEach((slide, idx) => {
           const img = slide.querySelector('.bloom-shs__img');
           if (!img) return;
 
-          let start, end, baseTranslate;
-          if (idx === 0) {
-            start = 0;
-            end = step;
-            baseTranslate = 10;
-          } else {
-            start = step * (idx - 1);
-            end = idx === count - 1 ? step * idx : step * (idx + 0.5);
-            baseTranslate = 18;
-          }
-
-          const localProgress = Math.min(1, Math.max(0, (progress - start) / (end - start)));
-          const imgTranslateX = (-baseTranslate + baseTranslate * localProgress * 2);
-          img.style.transform = `translate3d(${imgTranslateX.toFixed(2)}%, 0, 0)`;
+          // Difference between current slide position and this slide index
+          const offset = slidePosition - idx;
+          // Subtly pan image within [-3%, +3%] range, strictly staying inside the slide boundary
+          const parallaxPercent = Math.min(3.5, Math.max(-3.5, -offset * 3.5));
+          img.style.transform = `translate3d(${parallaxPercent.toFixed(2)}%, 0, 0)`;
         });
       }
     }
@@ -190,23 +222,28 @@ if (!customElements.get('bloom-scroll-hero-stack')) {
 
     scrollToIndex(index) {
       const count = this.slides.length;
-      if (count <= 1 || !this.track) return;
+      if (count <= 1 || !this.track || !this.stickyViewport) return;
 
       const trackRect = this.track.getBoundingClientRect();
-      const viewportH = window.innerHeight || document.documentElement.clientHeight;
-      const sectionTop = window.scrollY + trackRect.top;
-      const totalScrollable = trackRect.height - viewportH;
-
+      const stickyStyle = window.getComputedStyle(this.stickyViewport);
+      const computedStickyTop = parseFloat(stickyStyle.top) || 50;
+      const totalScrollable = this.track.offsetHeight - this.stickyViewport.offsetHeight;
       if (totalScrollable <= 0) return;
 
-      const targetProgress = index / (count - 1);
-      const targetScroll = sectionTop + targetProgress * totalScrollable;
+      const sectionAbsTop = window.scrollY + trackRect.top;
+      // Center of dwell window for index:
+      const numTransitions = count - 1;
+      const dwellRatio = 0.10;
+      const transitionWindow = (1.0 - count * dwellRatio) / numTransitions;
+      const targetProgress = index * (dwellRatio + transitionWindow) + (dwellRatio / 2);
+
+      const targetScroll = (sectionAbsTop - computedStickyTop) + (targetProgress * totalScrollable);
 
       this.isFocusScrolling = true;
       clearTimeout(this.focusScrollTimeout);
 
       window.scrollTo({
-        top: targetScroll,
+        top: Math.max(0, targetScroll),
         behavior: 'smooth'
       });
 
@@ -231,7 +268,7 @@ if (!customElements.get('bloom-scroll-hero-stack')) {
 
     onKeyDown(event) {
       if (event.key !== 'Tab') return;
-      // Allow natural tab navigation
+      // Allow standard tab navigation
     }
   }
 

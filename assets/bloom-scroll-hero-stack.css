@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    Bloom Scroll-Driven Hero Stack Banner Sequence
-   Reproducing Athora Planti Hero Scroll Stack
+   Fixed & Refined Implementation
    ========================================================================== */
 
 .bloom-shs-section {
@@ -13,6 +13,7 @@
   padding-top: var(--bshs-pt-desktop, 60px);
   padding-bottom: var(--bshs-pb-desktop, 60px);
   box-sizing: border-box;
+  overflow: visible;
 }
 
 .bloom-shs__container {
@@ -23,7 +24,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Scroll Track: dictates total scroll duration
+   Scroll Track: defines the total vertical scroll distance
    -------------------------------------------------------------------------- */
 .bloom-shs__track {
   position: relative;
@@ -34,24 +35,28 @@
 
 /* --------------------------------------------------------------------------
    Sticky Viewport Window
+   Strict 2D boundary with rounded corner clipping
    -------------------------------------------------------------------------- */
 .bloom-shs__sticky-viewport {
   position: sticky;
-  top: var(--bshs-sticky-top, 40px);
+  top: var(--bshs-sticky-top, 50px);
   width: 100%;
   height: var(--bshs-item-h-desktop, 75vh);
-  min-height: 540px;
+  min-height: 520px;
   max-height: 820px;
   border-radius: var(--bshs-radius, 28px);
   overflow: hidden;
   box-sizing: border-box;
-  transform-style: preserve-3d;
-  will-change: transform;
+  isolation: isolate;
+  background-color: #234332;
   box-shadow: 0 16px 40px -12px rgba(35, 67, 50, 0.08);
+  /* Enforce smooth GPU clipping on rounded corners across Chrome and Safari */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 
 /* --------------------------------------------------------------------------
-   Horizontal Slides Row / Group Track
+   Horizontal Slides Row / Track
    -------------------------------------------------------------------------- */
 .bloom-shs__slides-row {
   display: flex;
@@ -60,24 +65,30 @@
   width: 100%;
   height: 100%;
   column-gap: var(--bshs-gap, 30px);
+  box-sizing: border-box;
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
 }
 
 /* --------------------------------------------------------------------------
    Individual Banner Card Slide
+   Strictly isolated and paint-contained
    -------------------------------------------------------------------------- */
 .bloom-shs__slide {
   position: relative;
   flex: 0 0 100%;
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   height: 100%;
   border-radius: inherit;
   overflow: hidden;
   box-sizing: border-box;
   background-color: #234332;
-  will-change: transform;
+  isolation: isolate;
+  contain: paint;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 
 /* Media Layer */
@@ -89,22 +100,30 @@
   height: 100%;
   overflow: hidden;
   border-radius: inherit;
-  transform-style: preserve-3d;
+  pointer-events: none;
+  contain: paint;
+}
+
+.bloom-shs__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .bloom-shs__img {
   position: absolute;
   top: 0;
-  left: -12.5%;
-  width: 125%;
-  min-width: 125%;
-  max-width: 125%;
+  left: -5%;
+  width: 110%;
+  min-width: 110%;
+  max-width: 110%;
   height: 100%;
   object-fit: cover;
   object-position: var(--bshs-focal, center center);
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.05s linear;
+  pointer-events: none;
 }
 
 /* Subtle Gradient Overlay for enhanced text readability */
@@ -121,7 +140,7 @@
     rgba(18, 33, 25, 0.08) 75%,
     rgba(18, 33, 25, 0) 100%
   );
-  opacity: var(--bshs-overlay-opacity, 0.28);
+  opacity: var(--bshs-overlay-opacity, 0.25);
   pointer-events: none;
   z-index: 1;
 }
