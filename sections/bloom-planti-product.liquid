@@ -1,0 +1,817 @@
+{{ 'bloom-planti-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-planti-product.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign cur_product = product
+  assign selected_variant = cur_product.selected_or_first_available_variant
+
+  # Curated Bloom botanical imagery assets (high quality indoor plants in designer planters)
+  assign default_img_1 = 'bloom-trending-1.jpg' | asset_url
+  assign default_img_2 = 'bloom-trending-2.jpg' | asset_url
+  assign default_img_3 = 'bloom-trending-6.jpg' | asset_url
+  assign default_img_4 = 'bloom-trending-5.jpg' | asset_url
+
+  assign has_real_media = false
+  if cur_product != blank and cur_product.media.size > 0
+    assign has_real_media = true
+  endif
+
+  # Fallback botanical product title & description for pristine preview
+  assign display_title = cur_product.title | default: 'Aglaonema wishes'
+  assign display_vendor = cur_product.vendor | default: 'Terracotta terrace'
+  
+  if cur_product != blank and cur_product.price > 0
+    assign display_price = cur_product.price | money
+    assign display_compare_price = cur_product.compare_at_price | money
+  else
+    assign display_price = '$50.00'
+    assign display_compare_price = ''
+  endif
+-%}
+
+<section
+  id="bloom-planti-product-{{ section.id }}"
+  class="bloom-planti-product-section"
+  style="
+    --bloom-planti-linen: {{ section_st.background_color | default: '#fafaf0' }};
+    --bloom-planti-panel-bg: {{ section_st.panel_bg_color | default: '#ffffff' }};
+    --bloom-planti-forest: {{ section_st.heading_color | default: '#234332' }};
+    --bloom-planti-forest-hover: {{ section_st.accent_color | default: '#386d50' }};
+    --bloom-planti-orange: {{ section_st.badge_bg_color | default: '#df7143' }};
+    padding-top: {{ section_st.padding_top }}px;
+    padding-bottom: {{ section_st.padding_bottom }}px;
+  "
+>
+  <div class="bloom-planti-container" style="max-width: {{ section_st.container_max_width | default: 1440 }}px;">
+    <bloom-planti-product class="bloom-planti__layout" data-section-id="{{ section.id }}">
+      
+      <!-- ====================================================================
+           LEFT COLUMN: Sticky Media Gallery with Vertical Thumbs & Loupe Lens
+           ==================================================================== -->
+      <div class="bloom-planti__gallery-col {% unless section_st.enable_sticky_gallery %}bloom-planti__gallery--not-sticky{% endunless %}">
+        
+        <!-- Vertical Thumbnails Strip -->
+        <div class="bloom-planti__thumbs-strip" role="tablist" aria-label="Product Media Thumbnails">
+          {%- if has_real_media -%}
+            {%- for media in cur_product.media -%}
+              <button
+                type="button"
+                class="bloom-planti__thumb-btn {% if forloop.first %}is-active{% endif %}"
+                data-index="{{ forloop.index0 }}"
+                data-full-image="{{ media | image_url: width: 1400 }}"
+                role="tab"
+                aria-label="View media {{ forloop.index }}"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                {{ media | image_url: width: 180, height: 210, crop: 'center' | image_tag: loading: 'lazy', alt: media.alt | escape }}
+              </button>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Fallback High-Res Botanical Thumbnails -->
+            <button
+              type="button"
+              class="bloom-planti__thumb-btn is-active"
+              data-index="0"
+              data-full-image="{{ default_img_1 }}"
+              role="tab"
+              aria-label="View plant thumbnail 1 (Blush terracotta)"
+              aria-selected="true"
+            >
+              <img src="{{ default_img_1 }}" alt="Blush terracotta potted indoor plant" loading="lazy" width="72" height="84">
+            </button>
+            <button
+              type="button"
+              class="bloom-planti__thumb-btn"
+              data-index="1"
+              data-full-image="{{ default_img_2 }}"
+              role="tab"
+              aria-label="View plant thumbnail 2 (Ivory beige)"
+              aria-selected="false"
+            >
+              <img src="{{ default_img_2 }}" alt="Ivory beige ceramic potted indoor plant" loading="lazy" width="72" height="84">
+            </button>
+            <button
+              type="button"
+              class="bloom-planti__thumb-btn"
+              data-index="2"
+              data-full-image="{{ default_img_3 }}"
+              role="tab"
+              aria-label="View plant thumbnail 3 (Mustard gold)"
+              aria-selected="false"
+            >
+              <img src="{{ default_img_3 }}" alt="Mustard gold potted indoor plant" loading="lazy" width="72" height="84">
+            </button>
+            <button
+              type="button"
+              class="bloom-planti__thumb-btn"
+              data-index="3"
+              data-full-image="{{ default_img_4 }}"
+              role="tab"
+              aria-label="View plant thumbnail 4 (Olive stone)"
+              aria-selected="false"
+            >
+              <img src="{{ default_img_4 }}" alt="Olive stone planter indoor plant" loading="lazy" width="72" height="84">
+            </button>
+          {%- endif -%}
+        </div>
+
+        <!-- Primary Large Image Container -->
+        <div class="bloom-planti__main-media-wrap">
+          {%- if has_real_media -%}
+            {%- assign first_media = cur_product.media.first -%}
+            <img
+              class="bloom-planti__main-img"
+              src="{{ first_media | image_url: width: 1400 }}"
+              alt="{{ first_media.alt | default: cur_product.title | escape }}"
+              width="1024"
+              height="1190"
+              fetchpriority="high"
+            >
+          {%- else -%}
+            <img
+              class="bloom-planti__main-img"
+              src="{{ default_img_1 }}"
+              alt="Aglaonema wishes in Blush terracotta planter"
+              width="1024"
+              height="1190"
+              fetchpriority="high"
+            >
+          {%- endif -%}
+
+          <!-- Orange Circular "GREEN MOMENTS" Badge -->
+          {%- if section_st.enable_badge -%}
+            <div class="bloom-planti__badge" title="{{ section_st.badge_text | default: 'GREEN MOMENTS' }}">
+              <svg class="bloom-planti__badge-svg" viewBox="0 0 100 100" aria-hidden="true">
+                <path id="badge-curve-{{ section.id }}" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+                <text font-size="10.8" font-weight="700" letter-spacing="2.8" fill="#ffffff">
+                  <textPath href="#badge-curve-{{ section.id }}" startOffset="50%" text-anchor="middle">
+                    • {{ section_st.badge_text | default: 'GREEN MOMENTS' }} •
+                  </textPath>
+                </text>
+              </svg>
+              <div class="bloom-planti__badge-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a9 9 0 0 1 9 9v1a9 9 0 0 1-9 9 9 9 0 0 1-9-9v-1a9 9 0 0 1 9-9Z"/>
+                  <path d="M12 14v4"/>
+                  <path d="M12 8a4 4 0 0 0-4 4"/>
+                  <path d="M12 8a4 4 0 0 1 4 4"/>
+                </svg>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Vertical Gallery Navigation Pill Control -->
+          {%- if section_st.enable_gallery_nav_pill -%}
+            <div class="bloom-planti__nav-pill" aria-label="Gallery Navigation">
+              <button type="button" class="bloom-planti__nav-arrow bloom-planti__nav-arrow--up" aria-label="Previous image">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M1 5L5 1L9 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="bloom-planti__nav-track">
+                <div class="bloom-planti__nav-thumb-indicator"></div>
+              </div>
+              <button type="button" class="bloom-planti__nav-arrow bloom-planti__nav-arrow--down" aria-label="Next image">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          {%- endif -%}
+
+          <!-- Image Zoom Lightbox Button -->
+          <button type="button" class="bloom-planti__zoom-btn" aria-label="Open enlarged image lightbox">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </button>
+
+          <!-- Interactive Blue Grid Loupe Lens Box -->
+          <div class="bloom-planti__zoom-lens" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           RIGHT COLUMN: White Rounded Product Details Panel
+           ==================================================================== -->
+      <div class="bloom-planti__info-col">
+        <div class="bloom-planti__info-card">
+          
+          <!-- High-Resolution Magnified Loupe Viewport (Overlays Details Card on Hover) -->
+          <div class="bloom-planti__zoom-viewer" aria-hidden="true">
+            <img
+              class="bloom-planti__zoom-viewer-img"
+              src="{% if has_real_media %}{{ cur_product.media.first | image_url: width: 2200 }}{% else %}{{ default_img_1 }}{% endif %}"
+              alt="Zoomed detailed botanical view"
+            >
+          </div>
+
+          <!-- Vendor / Category Pill Tag -->
+          <span class="bloom-planti__vendor-pill">{{ display_vendor }}</span>
+
+          <!-- Product Title in Refined Serif Font -->
+          <h1 class="bloom-planti__title">{{ display_title }}</h1>
+
+          <!-- Price Display -->
+          <div class="bloom-planti__price-wrap">
+            <span class="bloom-planti__price">{{ display_price }}</span>
+            {%- if display_compare_price != blank and display_compare_price != display_price -%}
+              <span class="bloom-planti__price-compare">{{ display_compare_price }}</span>
+              <span class="bloom-planti__badge-sale">Sale</span>
+            {%- endif -%}
+          </div>
+
+          <!-- Thin Divider -->
+          <hr class="bloom-planti__divider">
+
+          <!-- Short Description & Botanical Care Sheet -->
+          <div class="bloom-planti__description">
+            {%- if cur_product != blank and cur_product.description != blank -%}
+              {{ cur_product.description }}
+            {%- else -%}
+              <p>Aglaonema wishes is a simple way to add a calm plant that brings texture without demanding attention.</p>
+              <h3 class="bloom-planti__care-heading">Care cheat sheet</h3>
+              <p>It’s happy in softer light—no need for a sunny window. It handles lower light surprisingly well.<br>Let the surface dry a bit, then water thoroughly.</p>
+              <p>The foliage brings subtle color, not just ‘plain green’. Let the pot dry slightly between waterings for best results.</p>
+              <p>Good for desks, shelves, and bright corners.</p>
+            {%- endif -%}
+          </div>
+
+          <!-- Promotional Deal Countdown Card -->
+          {%- if section_st.enable_promo_card -%}
+            <div
+              class="bloom-planti__deal-card"
+              data-countdown-end="{{ section_st.promo_end_date | default: '2028-12-31T23:59:59' }}"
+            >
+              <div class="bloom-planti__deal-info">
+                <h4 class="bloom-planti__deal-title">{{ section_st.promo_title | default: "Don't miss the deal" }}</h4>
+                <div class="bloom-planti__coupon-wrap">
+                  <span class="bloom-planti__coupon-code">{{ section_st.promo_code | default: 'SALE30%' }}</span>
+                  <button type="button" class="bloom-planti__copy-btn" aria-label="Copy discount coupon">
+                    <svg width="10" height="11" viewBox="0 0 12 14" fill="none">
+                      <path d="M1 4.5C1 3.67 1.67 3 2.5 3H8.5C9.33 3 10 3.67 10 4.5V11.5C10 12.33 9.33 13 8.5 13H2.5C1.67 13 1 12.33 1 11.5V4.5Z" stroke="currentColor" stroke-width="1.4"/>
+                      <path d="M3 3V2.5C3 1.67 3.67 1 4.5 1H10.5C11.33 1 12 1.67 12 2.5V9.5C12 10.33 11.33 11 10.5 11H10" stroke="currentColor" stroke-width="1.4"/>
+                    </svg>
+                    <span>COPY</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Live Countdown Timer -->
+              <div class="bloom-planti__timer-grid" aria-label="Offer expiration countdown">
+                <div class="bloom-planti__timer-block">
+                  <span class="bloom-planti__timer-val" data-timer-days>99</span>
+                  <span class="bloom-planti__timer-lbl">Days</span>
+                </div>
+                <div class="bloom-planti__timer-block">
+                  <span class="bloom-planti__timer-val" data-timer-hours>22</span>
+                  <span class="bloom-planti__timer-lbl">Hours</span>
+                </div>
+                <div class="bloom-planti__timer-block">
+                  <span class="bloom-planti__timer-val" data-timer-mins>44</span>
+                  <span class="bloom-planti__timer-lbl">Mins</span>
+                </div>
+                <div class="bloom-planti__timer-block">
+                  <span class="bloom-planti__timer-val" data-timer-secs>26</span>
+                  <span class="bloom-planti__timer-lbl">Secs</span>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Functional Shopify Form for Variants & Cart -->
+          {%- form 'product', cur_product, class: 'bloom-planti__form', id: 'bloom-planti-product-form' -%}
+            
+            <input
+              type="hidden"
+              name="id"
+              class="bloom-planti__variant-id-input"
+              value="{{ selected_variant.id | default: '44272455319594' }}"
+            >
+
+            <!-- Color Swatches & Variant Picker -->
+            <div class="bloom-planti__variant-section">
+              <div class="bloom-planti__variant-label">
+                Color: <span class="bloom-planti__variant-label-val">Blush terracotta</span>
+              </div>
+              <div class="bloom-planti__swatches-row" role="radiogroup" aria-label="Color options">
+                {%- if cur_product != blank and cur_product.variants.size > 1 -%}
+                  {%- for variant in cur_product.variants -%}
+                    {%- liquid
+                      assign color_name = variant.title
+                      assign swatch_color = '#cba38e'
+                      if color_name contains 'Ivory' or color_name contains 'White' or color_name contains 'Cream'
+                        assign swatch_color = '#e0d7c4'
+                      elsif color_name contains 'Mustard' or color_name contains 'Gold' or color_name contains 'Yellow'
+                        assign swatch_color = '#d9a24b'
+                      elsif color_name contains 'Olive' or color_name contains 'Sage' or color_name contains 'Stone' or color_name contains 'Green'
+                        assign swatch_color = '#baac93'
+                      elsif color_name contains 'Blush' or color_name contains 'Terracotta' or color_name contains 'Rose'
+                        assign swatch_color = '#cba38e'
+                      endif
+                    -%}
+                    <button
+                      type="button"
+                      class="bloom-planti__swatch-btn {% if forloop.first %}is-selected{% endif %}"
+                      style="background-color: {{ swatch_color }};"
+                      data-value="{{ variant.title | escape }}"
+                      data-variant-id="{{ variant.id }}"
+                      data-image-index="{{ forloop.index0 }}"
+                      data-price="{{ variant.price | money }}"
+                      role="radio"
+                      aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+                      aria-label="{{ variant.title }}"
+                      title="{{ variant.title }}"
+                    ></button>
+                  {%- endfor -%}
+                {%- else -%}
+                  <!-- Curated Planti Color Palette Swatches -->
+                  <button
+                    type="button"
+                    class="bloom-planti__swatch-btn is-selected"
+                    style="background-color: #cba38e;"
+                    data-value="Blush terracotta"
+                    data-variant-id="{{ selected_variant.id | default: '44272455319594' }}"
+                    data-image-index="0"
+                    data-price="$50.00"
+                    role="radio"
+                    aria-checked="true"
+                    aria-label="Blush terracotta"
+                    title="Blush terracotta"
+                  ></button>
+                  <button
+                    type="button"
+                    class="bloom-planti__swatch-btn"
+                    style="background-color: #e0d7c4;"
+                    data-value="Ivory beige"
+                    data-variant-id="{{ selected_variant.id | default: '44272455352362' }}"
+                    data-image-index="1"
+                    data-price="$50.00"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="Ivory beige"
+                    title="Ivory beige"
+                  ></button>
+                  <button
+                    type="button"
+                    class="bloom-planti__swatch-btn"
+                    style="background-color: #d9a24b;"
+                    data-value="Mustard gold"
+                    data-variant-id="{{ selected_variant.id | default: '44272455385130' }}"
+                    data-image-index="2"
+                    data-price="$50.00"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="Mustard gold"
+                    title="Mustard gold"
+                  ></button>
+                  <button
+                    type="button"
+                    class="bloom-planti__swatch-btn"
+                    style="background-color: #baac93;"
+                    data-value="Olive stone"
+                    data-variant-id="{{ selected_variant.id | default: '44272455417898' }}"
+                    data-image-index="3"
+                    data-price="$50.00"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="Olive stone"
+                    title="Olive stone"
+                  ></button>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <!-- Quantity Selector & Add to Cart -->
+            <div class="bloom-planti__actions-row">
+              <div class="bloom-planti__qty-pill" aria-label="Quantity selector">
+                <button type="button" class="bloom-planti__qty-btn bloom-planti__qty-btn--minus" aria-label="Decrease quantity">−</button>
+                <input
+                  type="number"
+                  name="quantity"
+                  class="bloom-planti__qty-val"
+                  value="1"
+                  min="1"
+                  readonly
+                  aria-label="Selected quantity"
+                >
+                <button type="button" class="bloom-planti__qty-btn bloom-planti__qty-btn--plus" aria-label="Increase quantity">+</button>
+              </div>
+
+              <button type="submit" name="add" class="bloom-planti__atc-btn">
+                <div class="bloom-planti__atc-spinner"></div>
+                <span class="bloom-planti__atc-text">ADD TO CART</span>
+              </button>
+            </div>
+
+            <!-- Outlined Buy It Now Button -->
+            <button
+              type="submit"
+              name="checkout"
+              class="bloom-planti__buy-now-btn"
+            >
+              BUY IT NOW
+            </button>
+          {%- endform -%}
+
+          <!-- Stock Availability Indicator -->
+          {%- if section_st.enable_stock_bar -%}
+            <div class="bloom-planti__stock-wrap">
+              <div class="bloom-planti__stock-label">
+                <span class="bloom-planti__stock-dot"></span>
+                <span>{{ section_st.stock_count | default: 24 }} in stock</span>
+              </div>
+              <div class="bloom-planti__stock-bar-track">
+                <div class="bloom-planti__stock-bar-fill" style="width: 82%;"></div>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Pickup Availability Information -->
+          {%- if section_st.enable_pickup -%}
+            <div class="bloom-planti__pickup-card">
+              <svg class="bloom-planti__pickup-icon" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M14 0H2C0.9 0 0 0.9 0 2v12c0 1.1 0.9 2 2 2h12c1.1 0 2-0.9 2-2V2c0-1.1-0.9-2-2-2zm-2.3 6.3l-5 5c-.2.2-.4.3-.7.3s-.5-.1-.7-.3l-2.6-2.6c-.4-.4-.4-1 0-1.4s1-.4 1.4 0l1.9 1.9 4.3-4.3c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4z"/>
+              </svg>
+              <div class="bloom-planti__pickup-details">
+                <h4 class="bloom-planti__pickup-title">Pickup available at {{ section_st.pickup_store_name | default: 'Planti United States Store' }}</h4>
+                <p class="bloom-planti__pickup-subtitle">{{ section_st.pickup_time | default: 'Usually ready in 24 hours' }}</p>
+                <button type="button" class="bloom-planti__pickup-link">
+                  <span>VIEW STORE INFORMATION</span>
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <circle cx="7" cy="7" r="6" fill="currentColor"/>
+                    <path d="M5.5 4.5L8.5 7L5.5 9.5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Key Botanical Features / Benefits Row -->
+          {%- if section_st.enable_benefits_row -%}
+            <div class="bloom-planti__benefits-row">
+              <div class="bloom-planti__benefit-item">
+                <svg class="bloom-planti__benefit-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M3 7h10a4 4 0 0 1 4 4v1a4 4 0 0 1-4 4H7"/>
+                  <polyline points="7 3 3 7 7 11"/>
+                </svg>
+                <span>30 days return</span>
+              </div>
+              <div class="bloom-planti__benefit-item">
+                <svg class="bloom-planti__benefit-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M9 1L3 4v5c0 5 6 8 6 8s6-3 6-8V4l-6-3z"/>
+                  <polyline points="6 9 8 11 12 7"/>
+                </svg>
+                <span>2-Year Warranty</span>
+              </div>
+              <div class="bloom-planti__benefit-item">
+                <svg class="bloom-planti__benefit-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <rect x="1" y="3" width="11" height="9" rx="1"/>
+                  <polygon points="12 6 16 6 17 9 17 12 12 12"/>
+                  <circle cx="5" cy="14" r="2"/>
+                  <circle cx="14" cy="14" r="2"/>
+                </svg>
+                <span>Fast and secure delivery</span>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Ask a Question & Share Actions -->
+          {%- if section_st.enable_ask_share -%}
+            <div class="bloom-planti__meta-links">
+              <button type="button" class="bloom-planti__meta-btn" id="bloom-planti-ask-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Ask a question</span>
+              </button>
+              <button type="button" class="bloom-planti__meta-btn" id="bloom-planti-share-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                <span>Share</span>
+              </button>
+            </div>
+          {%- endif -%}
+
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           FULLSCREEN LIGHTBOX MODAL
+           ==================================================================== -->
+      <div class="bloom-planti__lightbox" role="dialog" aria-modal="true" aria-label="Enlarged plant photo">
+        <button type="button" class="bloom-planti__lightbox-close" aria-label="Close enlarged view">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <button type="button" class="bloom-planti__lightbox-nav bloom-planti__lightbox-prev" aria-label="Previous photo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="bloom-planti__lightbox-img-wrap">
+          <img class="bloom-planti__lightbox-img" src="" alt="Enlarged view">
+        </div>
+        <button type="button" class="bloom-planti__lightbox-nav bloom-planti__lightbox-next" aria-label="Next photo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ====================================================================
+           STORE PICKUP INFORMATION MODAL
+           ==================================================================== -->
+      <div class="bloom-planti__modal-overlay" id="bloom-planti-pickup-modal" role="dialog" aria-modal="true">
+        <div class="bloom-planti__modal-box">
+          <button type="button" class="bloom-planti__modal-close" aria-label="Close store modal">✕</button>
+          <h3 style="font-family: var(--bloom-planti-serif); font-size: 24px; color: var(--bloom-planti-forest); margin-top: 0;">Store Pickup Locations</h3>
+          <p style="font-size: 13.5px; color: var(--bloom-planti-text-muted); margin-bottom: 20px;">
+            Order online and pick up at your convenience. Bring your confirmation email when picking up.
+          </p>
+          <div style="background: #f7f7f4; border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+            <h4 style="margin: 0 0 6px; font-size: 15px; color: var(--bloom-planti-forest);">{{ section_st.pickup_store_name | default: 'Planti United States Store' }}</h4>
+            <p style="margin: 0 0 6px; font-size: 13px; color: #428445; font-weight: 600;">✓ Pickup available, usually ready in 24 hours</p>
+            <p style="margin: 0 0 8px; font-size: 13px; color: var(--bloom-planti-text-muted);">{{ section_st.pickup_address | default: '742 Southwest Evergreen Terrace, Portland OR 97205' }}</p>
+            <p style="margin: 0; font-size: 13px; color: var(--bloom-planti-forest); font-weight: 600;">{{ section_st.pickup_phone | default: '+1 503 555 2847' }}</p>
+          </div>
+          <a
+            href="https://maps.google.com/?q={{ section_st.pickup_address | default: '742 Southwest Evergreen Terrace, Portland OR 97205' | url_encode }}"
+            target="_blank"
+            rel="noopener"
+            class="bloom-planti__buy-now-btn"
+            style="margin-top: 0; text-align: center;"
+          >
+            GET DIRECTIONS →
+          </a>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           ASK A QUESTION MODAL
+           ==================================================================== -->
+      <div class="bloom-planti__modal-overlay" id="bloom-planti-ask-modal" role="dialog" aria-modal="true">
+        <div class="bloom-planti__modal-box">
+          <button type="button" class="bloom-planti__modal-close" aria-label="Close question modal">✕</button>
+          <h3 style="font-family: var(--bloom-planti-serif); font-size: 24px; color: var(--bloom-planti-forest); margin-top: 0;">Ask a Question</h3>
+          <p style="font-size: 13px; color: var(--bloom-planti-text-muted); margin-bottom: 16px;">Have questions about care, sunlight, or pot sizing? Send us a message.</p>
+          {%- form 'contact', id: 'bloom-planti-ask-form' -%}
+            <input type="hidden" name="contact[product]" value="{{ display_title }} - {{ shop.url }}{{ cur_product.url }}">
+            <div style="margin-bottom: 12px;">
+              <input type="text" name="contact[name]" placeholder="Your Name" required style="width: 100%; height: 42px; border-radius: 8px; border: 1px solid #ddd; padding: 0 12px; box-sizing: border-box; font-family: inherit;">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <input type="email" name="contact[email]" placeholder="Your Email" required style="width: 100%; height: 42px; border-radius: 8px; border: 1px solid #ddd; padding: 0 12px; box-sizing: border-box; font-family: inherit;">
+            </div>
+            <div style="margin-bottom: 16px;">
+              <textarea name="contact[body]" rows="4" placeholder="How can our botanists help you?" required style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 10px 12px; box-sizing: border-box; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            <button type="submit" class="bloom-planti__atc-btn" style="width: 100%;">SEND QUESTION</button>
+          {%- endform -%}
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SHARE MODAL
+           ==================================================================== -->
+      <div class="bloom-planti__modal-overlay" id="bloom-planti-share-modal" role="dialog" aria-modal="true">
+        <div class="bloom-planti__modal-box">
+          <button type="button" class="bloom-planti__modal-close" aria-label="Close share modal">✕</button>
+          <h3 style="font-family: var(--bloom-planti-serif); font-size: 24px; color: var(--bloom-planti-forest); margin-top: 0;">Share this Botanical</h3>
+          <div style="display: flex; gap: 12px; margin: 20px 0; justify-content: center;">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ cur_product.url }}" target="_blank" rel="noopener" style="width: 44px; height: 44px; border-radius: 50%; background: #f0f2eb; display: flex; align-items: center; justify-content: center; color: var(--bloom-planti-forest);">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7v-3h3V9.5C10 6.46 11.82 5 14.5 5c1.28 0 2.63.23 2.63.23v2.9h-1.48c-1.5 0-1.97.94-1.97 1.9V12h3.25l-.52 3H13.68v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+            </a>
+            <a href="https://twitter.com/intent/tweet?text={{ display_title | url_encode }}&url={{ shop.url }}{{ cur_product.url }}" target="_blank" rel="noopener" style="width: 44px; height: 44px; border-radius: 50%; background: #f0f2eb; display: flex; align-items: center; justify-content: center; color: var(--bloom-planti-forest);">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://wa.me/?text={{ display_title | url_encode }}%20{{ shop.url }}{{ cur_product.url }}" target="_blank" rel="noopener" style="width: 44px; height: 44px; border-radius: 50%; background: #f0f2eb; display: flex; align-items: center; justify-content: center; color: var(--bloom-planti-forest);">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </bloom-planti-product>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Planti Product Showcase",
+  "tag": "section",
+  "class": "bloom-planti-product-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Page Background Color",
+      "default": "#fafaf0"
+    },
+    {
+      "type": "color",
+      "id": "panel_bg_color",
+      "label": "Product Panel Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "container_max_width",
+      "label": "Container Max Width (px)",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Typography & Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading & Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Button Hover / Accent Color",
+      "default": "#386d50"
+    },
+    {
+      "type": "header",
+      "content": "Gallery Behaviors"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_gallery",
+      "label": "Enable Sticky Gallery on Desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_lens_zoom",
+      "label": "Enable High-Definition Loupe Zoom",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gallery_nav_pill",
+      "label": "Show Vertical Gallery Navigation Pill",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Badges & Highlights"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_badge",
+      "label": "Show Circular Rotating Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "GREEN MOMENTS"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge Background Color",
+      "default": "#df7143"
+    },
+    {
+      "type": "header",
+      "content": "Promotional Deal Countdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_promo_card",
+      "label": "Show Deal Countdown Banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "promo_title",
+      "label": "Deal Heading",
+      "default": "Don't miss the deal"
+    },
+    {
+      "type": "text",
+      "id": "promo_code",
+      "label": "Coupon Code",
+      "default": "SALE30%"
+    },
+    {
+      "type": "text",
+      "id": "promo_end_date",
+      "label": "Countdown Expiration (YYYY-MM-DDTHH:MM:SS)",
+      "default": "2028-12-31T23:59:59"
+    },
+    {
+      "type": "header",
+      "content": "Stock & Pickup Availability"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_stock_bar",
+      "label": "Show Stock Availability Bar",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "stock_count",
+      "label": "Stock Items Count",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_pickup",
+      "label": "Show Pickup Availability Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pickup_store_name",
+      "label": "Pickup Store Name",
+      "default": "Planti United States Store"
+    },
+    {
+      "type": "text",
+      "id": "pickup_time",
+      "label": "Pickup Time Window",
+      "default": "Usually ready in 24 hours"
+    },
+    {
+      "type": "text",
+      "id": "pickup_address",
+      "label": "Store Address",
+      "default": "742 Southwest Evergreen Terrace, Portland OR 97205"
+    },
+    {
+      "type": "text",
+      "id": "pickup_phone",
+      "label": "Store Phone",
+      "default": "+1 503 555 2847"
+    },
+    {
+      "type": "header",
+      "content": "Botanical Benefits & Actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_benefits_row",
+      "label": "Show 3-Item Benefits Row",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ask_share",
+      "label": "Show 'Ask a Question' & 'Share' Links",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Planti Product Showcase"
+    }
+  ]
+}
+{% endschema %}
