@@ -43,6 +43,7 @@ class BloomRoomInspiration extends HTMLElement {
     const { signal } = this.abortController;
 
     this.init();
+    this.initButtonRipple(signal);
 
     // Listeners
     window.addEventListener('scroll', this.onScroll.bind(this), { passive: true, signal });
@@ -227,6 +228,40 @@ class BloomRoomInspiration extends HTMLElement {
       if (cardInner) {
         cardInner.style.removeProperty('--bri-tilt');
       }
+    });
+  }
+
+  initButtonRipple(signal) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const interactiveButtons = [
+      ...Array.from(this.querySelectorAll('.bloom-ri-btn')),
+      ...Array.from(this.querySelectorAll('.bloom-ri-card-label'))
+    ];
+
+    interactiveButtons.forEach((btn) => {
+      const circle = btn.querySelector('.bloom-ri-circle-bg, .bloom-ri-card-circle-bg');
+      if (!circle) return;
+
+      const updatePos = (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        circle.style.left = `${x}px`;
+        circle.style.top = `${y}px`;
+      };
+
+      btn.addEventListener('mouseenter', updatePos, { signal, passive: true });
+      btn.addEventListener('mousemove', updatePos, { signal, passive: true });
+      btn.addEventListener(
+        'mouseleave',
+        () => {
+          circle.style.opacity = '0';
+          circle.style.transform = 'translate(-50%, -50%) scale(0)';
+        },
+        { signal, passive: true }
+      );
     });
   }
 }

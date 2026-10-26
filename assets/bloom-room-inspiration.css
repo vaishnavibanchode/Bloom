@@ -30,6 +30,80 @@
 }
 
 /* ==========================================================================
+   Planti Signature Interactive Buttons & Cursor Ripple
+   ========================================================================== */
+.bloom-ri-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bri-btn-border, #234332);
+  border-radius: 9999px;
+  padding: 13px 32px;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bri-btn-text, #234332);
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+  clip-path: inset(0 round 9999px);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s ease,
+              background-color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+.bloom-ri-btn-text {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.bloom-ri-circle-bg {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--bri-btn-hover-bg, #234332);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease;
+}
+
+.bloom-ri-btn:hover {
+  background-color: var(--bri-btn-hover-bg, #234332);
+  border-color: var(--bri-btn-hover-border, var(--bri-btn-hover-bg, #234332));
+  color: var(--bri-btn-hover-text, #ffffff);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(35, 67, 50, 0.2);
+}
+
+.bloom-ri-btn:hover .bloom-ri-btn-text {
+  color: var(--bri-btn-hover-text, #ffffff);
+}
+
+.bloom-ri-btn:hover .bloom-ri-circle-bg {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(22);
+}
+
+.bloom-ri-btn:focus-visible {
+  outline: 2px solid var(--bri-btn-hover-bg, #234332);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
    Desktop Viewport & Sticky Scroll Mechanics (min-width: 1024px)
    ========================================================================== */
 @media screen and (min-width: 1024px) {
@@ -118,31 +192,7 @@
   }
 
   .bloom-ri-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--bri-btn-border, #234332);
-    border-radius: 9999px;
-    padding: 13px 32px;
-    font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--bri-btn-text, #234332);
-    text-decoration: none;
-    background: transparent;
-    cursor: pointer;
-    box-sizing: border-box;
-    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  .bloom-ri-btn:hover {
-    background-color: var(--bri-heading-color, #234332);
-    color: #ffffff;
-    border-color: var(--bri-heading-color, #234332);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(35, 67, 50, 0.16);
+    /* Uses base button and cursor ripple styles */
   }
 
   /* Cards Track Viewport on Desktop */
@@ -229,7 +279,7 @@
   transform: scale(1.06);
 }
 
-/* White Pill Button at Bottom Center */
+/* White Pill Button on Cards with Dynamic Hover */
 .bloom-ri-card-label-wrap {
   position: absolute;
   bottom: 24px;
@@ -242,9 +292,13 @@
 }
 
 .bloom-ri-card-label {
-  display: inline-block;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #ffffff;
   color: #234332;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
   font-size: 13px;
   font-weight: 600;
@@ -255,14 +309,56 @@
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
   pointer-events: auto;
   white-space: nowrap;
-  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+  isolation: isolate;
+  clip-path: inset(0 round 9999px);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s ease,
+              background-color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
 }
 
-.bloom-ri-card-inner:hover .bloom-ri-card-label {
+.bloom-ri-card-label-text {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.bloom-ri-card-circle-bg {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--bri-heading-color, #234332);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease;
+}
+
+/* Card hover and direct pill hover styles */
+.bloom-ri-card-inner:hover .bloom-ri-card-label,
+.bloom-ri-card-label:hover {
+  background-color: var(--bri-heading-color, #234332);
+  border-color: var(--bri-heading-color, #234332);
+  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(35, 67, 50, 0.16);
-  background-color: #ffffff;
-  color: #1a3326;
+  box-shadow: 0 8px 24px rgba(35, 67, 50, 0.22);
+}
+
+.bloom-ri-card-inner:hover .bloom-ri-card-label-text,
+.bloom-ri-card-label:hover .bloom-ri-card-label-text {
+  color: #ffffff;
+}
+
+.bloom-ri-card-inner:hover .bloom-ri-card-circle-bg,
+.bloom-ri-card-label:hover .bloom-ri-card-circle-bg {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(22);
 }
 
 /* ==========================================================================
@@ -342,20 +438,8 @@
   }
 
   .bloom-ri-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--bri-btn-border, #234332);
-    border-radius: 9999px;
     padding: 11px 26px;
-    font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
     font-size: 11.5px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--bri-btn-text, #234332);
-    text-decoration: none;
-    background: transparent;
   }
 
   /* Touch-Friendly Horizontal Swipe Track */
@@ -468,7 +552,11 @@
   .bloom-ri-card-inner,
   .bloom-ri-card-img,
   .bloom-ri-card-label,
-  .bloom-ri-btn {
+  .bloom-ri-card-label-text,
+  .bloom-ri-card-circle-bg,
+  .bloom-ri-btn,
+  .bloom-ri-btn-text,
+  .bloom-ri-circle-bg {
     transition: none !important;
     animation: none !important;
   }

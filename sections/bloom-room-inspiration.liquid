@@ -19,6 +19,9 @@
       --bri-text-color: {{ section_st.text_color | default: '#234332' }};
       --bri-btn-border: {{ section_st.button_border_color | default: '#234332' }};
       --bri-btn-text: {{ section_st.button_text_color | default: '#234332' }};
+      --bri-btn-hover-bg: {{ section_st.button_hover_bg_color | default: section_st.heading_color | default: '#234332' }};
+      --bri-btn-hover-text: {{ section_st.button_hover_text_color | default: '#ffffff' }};
+      --bri-btn-hover-border: {{ section_st.button_hover_border_color | default: section_st.button_hover_bg_color | default: section_st.heading_color | default: '#234332' }};
       --bri-card-radius: {{ section_st.card_radius | default: 20 }}px;
       --bri-card-gap: {{ section_st.card_gap | default: 28 }}px;
       --bri-pt: {{ section_st.padding_top | default: 32 }}px;
@@ -51,8 +54,10 @@
                   <a
                     href="{{ section_st.button_link | default: '/collections' }}"
                     class="bloom-ri-btn"
+                    aria-label="{{ section_st.button_label | escape }}"
                   >
-                    <span>{{ section_st.button_label }}</span>
+                    <span class="bloom-ri-btn-text">{{ section_st.button_label }}</span>
+                    <span class="bloom-ri-circle-bg" aria-hidden="true"></span>
                   </a>
                 {%- endif -%}
               </div>
@@ -138,7 +143,10 @@
                           {%- endif -%}
                         </div>
                         <div class="bloom-ri-card-label-wrap">
-                          <span class="bloom-ri-card-label">{{ card_title }}</span>
+                          <span class="bloom-ri-card-label">
+                            <span class="bloom-ri-card-label-text">{{ card_title }}</span>
+                            <span class="bloom-ri-card-circle-bg" aria-hidden="true"></span>
+                          </span>
                         </div>
                       </a>
                     </div>
@@ -244,6 +252,24 @@
       "type": "color",
       "id": "button_text_color",
       "label": "Button Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button Hover Background",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Button Hover Border Color",
       "default": "#234332"
     },
     {
