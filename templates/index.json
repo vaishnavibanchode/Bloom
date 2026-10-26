@@ -598,108 +598,101 @@
         "subtitle": "Decorate every room with plants",
         "button_label": "SHOP NOW",
         "button_link": "",
-        "background_color": "#EFEFE0",
+        "background_color": "#efefe0",
         "heading_color": "#234332",
         "text_color": "#234332",
         "button_border_color": "#234332",
         "button_text_color": "#234332",
         "card_radius": 24,
-        "card_width_desktop": 480,
-        "card_height_desktop": 560,
-        "card_aspect_ratio_desktop": "auto",
-        "card_gap_desktop": 28,
-        "card_width_mobile": 290,
-        "card_height_mobile": 360,
-        "card_aspect_ratio_mobile": "auto",
-        "card_gap_mobile": 16,
-        "category_btn_bg": "#ffffff",
-        "category_btn_text": "#234332",
-        "category_btn_hover_bg": "#2e6444",
-        "category_btn_hover_text": "#ffffff",
-        "category_btn_transition": 250,
-        "enable_mobile_scroll": true,
-        "padding_top_desktop": 32,
-        "padding_bottom_desktop": 32,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
+        "card_gap": 28,
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
-    "bloom_compare_table": {
+    "bloom_compare_table_K6YEjH": {
       "type": "bloom-compare-table",
       "blocks": {
-        "row_1": {
-          "type": "row",
+        "comparison_row_VMkMEr": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Quality",
             "brand_value": "Premium, hand-selected 🌱",
             "competitor_1_value": "Standard quality",
-            "competitor_2_value": "Good but mass-produced"
+            "competitor_2_value": "Good but mass-produced",
+            "highlight_row": false
           }
         },
-        "row_2": {
-          "type": "row",
+        "comparison_row_dFR7DL": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Aesthetic & Branding",
             "brand_value": "Modern, trendy 💚",
             "competitor_1_value": "Simple",
-            "competitor_2_value": "Basic"
+            "competitor_2_value": "Basic",
+            "highlight_row": false
           }
         },
-        "row_3": {
-          "type": "row",
+        "comparison_row_xfjhmN": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Care Guidance",
             "brand_value": "✅ Included",
             "competitor_1_value": "❌ Not included",
-            "competitor_2_value": "❌ Not included"
+            "competitor_2_value": "❌ Not included",
+            "highlight_row": false
           }
         },
-        "row_4": {
-          "type": "row",
+        "comparison_row_AFagh6": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Packaging",
             "brand_value": "Standard packaging",
             "competitor_1_value": "Basic wrapping",
-            "competitor_2_value": "Standard packaging"
+            "competitor_2_value": "Standard packaging",
+            "highlight_row": false
           }
         },
-        "row_5": {
-          "type": "row",
+        "comparison_row_xfgCEe": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Customer Experience",
             "brand_value": "😊 Fast response",
             "competitor_1_value": "😊 Average service",
-            "competitor_2_value": "🙂 Slower response"
+            "competitor_2_value": "🙂 Slower response",
+            "highlight_row": false
           }
         },
-        "row_6": {
-          "type": "row",
+        "comparison_row_q6DYzP": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Unique Plants",
             "brand_value": "Curated & limited collections 🌿",
             "competitor_1_value": "Mostly common plants",
-            "competitor_2_value": "Some rare plants"
+            "competitor_2_value": "Some rare plants",
+            "highlight_row": false
           }
         },
-        "row_7": {
-          "type": "row",
+        "comparison_row_yimKgz": {
+          "type": "comparison_row",
           "settings": {
             "feature_name": "Online Shopping",
             "brand_value": "😊 Fast response",
             "competitor_1_value": "Social media orders only 😊",
-            "competitor_2_value": "Basic website"
+            "competitor_2_value": "Basic website",
+            "highlight_row": false
           }
         }
       },
       "block_order": [
-        "row_1",
-        "row_2",
-        "row_3",
-        "row_4",
-        "row_5",
-        "row_6",
-        "row_7"
+        "comparison_row_VMkMEr",
+        "comparison_row_dFR7DL",
+        "comparison_row_xfjhmN",
+        "comparison_row_AFagh6",
+        "comparison_row_xfgCEe",
+        "comparison_row_q6DYzP",
+        "comparison_row_yimKgz"
       ],
+      "name": "Bloom Comparison Table",
       "settings": {
         "enable_section": true,
         "enable_scroll_reveal": true,
@@ -708,8 +701,31 @@
         "italic_heading": "Best to the Rest",
         "subtitle": "Tell us about your space and we'll match you with plants that will thrive.",
         "brand_name": "BLOOM",
+        "brand_logo_width": 130,
         "competitor_1_name": "Green Corner",
-        "competitor_2_name": "Urban Jungle"
+        "competitor_2_name": "Urban Jungle",
+        "section_bg_color": "#FAF9F0",
+        "table_bg_color": "#FFFFFF",
+        "highlight_column_bg": "#234332",
+        "highlight_column_text": "#FFFFFF",
+        "text_color": "#234332",
+        "heading_color": "#234332",
+        "border_color": "#E5E5DC",
+        "row_border_color": "rgba(35, 67, 50, 0.08)",
+        "max_table_width": 1240,
+        "table_radius": 28,
+        "cell_padding_y_desktop": 20,
+        "cell_padding_x_desktop": 24,
+        "cell_padding_y_mobile": 14,
+        "cell_padding_x_mobile": 14,
+        "heading_font_size_desktop": 48,
+        "heading_font_size_mobile": 32,
+        "heading_spacing_bottom": 14,
+        "subtitle_spacing_bottom": 48,
+        "padding_top_desktop": 70,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 50
       }
     }
   },
@@ -723,6 +739,6 @@
     "bloom_trending_plants_N7nQ4X",
     "bloom_planti_product_RMbdBj",
     "bloom_room_inspiration_AnXeBx",
-    "bloom_compare_table"
+    "bloom_compare_table_K6YEjH"
   ]
 }
