@@ -728,6 +728,150 @@
         "padding_bottom_mobile": 0
       }
     },
+    "bloom_image_hotspots": {
+      "type": "bloom-image-hotspots",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 81,
+            "pos_y": 32,
+            "product": "",
+            "title": "Monstera Deliciosa",
+            "price": "$89.00",
+            "link_url": "/collections/all"
+          }
+        },
+        "hotspot_2": {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 71,
+            "pos_y": 92,
+            "product": "",
+            "title": "Fiddle Leaf Fig",
+            "price": "$129.00",
+            "link_url": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1",
+        "hotspot_2"
+      ],
+      "settings": {
+        "enable_section": true,
+        "desktop_height": 86,
+        "tablet_height": 76,
+        "mobile_height": 74,
+        "image_focal_point": "center center",
+        "enable_parallax": true,
+        "overlay_opacity": 45,
+        "heading": "Elevate Your",
+        "italic_heading": "Space Naturally",
+        "subtitle": "Discover performance gear designed to move with you",
+        "button_label": "SHOP NOW",
+        "button_link": "/collections/all",
+        "content_max_width": 540,
+        "heading_size_desktop": 68,
+        "heading_size_mobile": 38,
+        "subtitle_size_desktop": 18,
+        "subtitle_size_mobile": 14
+      }
+    },
+    "why_plant_lovers_choose_us_a8YKiD": {
+      "type": "why-plant-lovers-choose-us",
+      "blocks": {
+        "benefit_card_iB4nhd": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "box",
+            "custom_svg": "",
+            "title": "Shipped Direct\nfrom the Nursery",
+            "subtitle": "",
+            "link_url": "",
+            "open_new_tab": false
+          }
+        },
+        "benefit_card_YX6bK4": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "medal",
+            "custom_svg": "",
+            "title": "30 Day Happiness Guarantee",
+            "subtitle": "",
+            "link_url": "",
+            "open_new_tab": false
+          }
+        },
+        "benefit_card_eF3VBJ": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "support",
+            "custom_svg": "",
+            "title": "Expert Customer Support",
+            "subtitle": "",
+            "link_url": "",
+            "open_new_tab": false
+          }
+        },
+        "benefit_card_pKEQFf": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "leaves",
+            "custom_svg": "",
+            "title": "Care Instructions Provided",
+            "subtitle": "",
+            "link_url": "",
+            "open_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "benefit_card_iB4nhd",
+        "benefit_card_YX6bK4",
+        "benefit_card_eF3VBJ",
+        "benefit_card_pKEQFf"
+      ],
+      "name": "Why Choose Us",
+      "settings": {
+        "enable_section": true,
+        "heading": "Why Plant",
+        "italic_heading": "Lovers Choose Us",
+        "subtitle": "Shop indoor plants online with confidence.",
+        "heading_alignment": "center",
+        "page_bg_color": "#ffffff",
+        "section_bg_color": "#f0f0e1",
+        "card_bg_color": "#e8ebdd",
+        "card_border_color": "#d3d9c9",
+        "heading_color": "#234638",
+        "subtitle_color": "#183a30",
+        "card_text_color": "#294b3e",
+        "icon_color": "#234638",
+        "container_max_width": 1440,
+        "padding_top_desktop": 10,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "outer_radius": 24,
+        "outer_radius_mobile": 18,
+        "card_radius": 12,
+        "card_border_thickness": 1,
+        "card_gap_desktop": 32,
+        "card_gap_mobile": 12,
+        "card_min_height_desktop": 188,
+        "card_min_height_mobile": 150,
+        "heading_size_desktop": 50,
+        "heading_size_mobile": 32,
+        "subtitle_size_desktop": 16,
+        "subtitle_size_mobile": 14,
+        "icon_size_desktop": 46,
+        "icon_size_mobile": 38,
+        "card_text_size_desktop": 15,
+        "card_text_size_mobile": 13,
+        "columns_desktop": "4",
+        "columns_mobile": "2"
+      }
+    },
     "bloom_scroll_hero_stack_dNNDHh": {
       "type": "bloom-scroll-hero-stack",
       "blocks": {
@@ -797,118 +941,26 @@
         "padding_bottom_mobile": 30
       }
     },
-    "why_plant_lovers_choose_us_a8YKiD": {
-      "type": "why-plant-lovers-choose-us",
-      "blocks": {
-        "benefit_card_iB4nhd": {
-          "type": "benefit_card",
-          "settings": {
-            "icon": "box",
-            "custom_svg": "",
-            "title": "Shipped Direct\nfrom the Nursery",
-            "subtitle": "",
-            "link_url": "",
-            "open_new_tab": false
-          }
-        },
-        "benefit_card_YX6bK4": {
-          "type": "benefit_card",
-          "settings": {
-            "icon": "medal",
-            "custom_svg": "",
-            "title": "30 Day Happiness Guarantee",
-            "subtitle": "",
-            "link_url": "",
-            "open_new_tab": false
-          }
-        },
-        "benefit_card_eF3VBJ": {
-          "type": "benefit_card",
-          "settings": {
-            "icon": "support",
-            "custom_svg": "",
-            "title": "Expert Customer Support",
-            "subtitle": "",
-            "link_url": "",
-            "open_new_tab": false
-          }
-        },
-        "benefit_card_pKEQFf": {
-          "type": "benefit_card",
-          "settings": {
-            "icon": "leaves",
-            "custom_svg": "",
-            "title": "Care Instructions Provided",
-            "subtitle": "",
-            "link_url": "",
-            "open_new_tab": false
-          }
-        }
-      },
-      "block_order": [
-        "benefit_card_iB4nhd",
-        "benefit_card_YX6bK4",
-        "benefit_card_eF3VBJ",
-        "benefit_card_pKEQFf"
-      ],
-      "name": "Why Choose Us",
-      "settings": {
-        "enable_section": true,
-        "heading": "Why Plant",
-        "italic_heading": "Lovers Choose Us",
-        "subtitle": "Shop indoor plants online with confidence.",
-        "heading_alignment": "center",
-        "page_bg_color": "#FFFFFF",
-        "section_bg_color": "#f0f0e1",
-        "card_bg_color": "#e8ebdd",
-        "card_border_color": "#d3d9c9",
-        "heading_color": "#234638",
-        "subtitle_color": "#183a30",
-        "card_text_color": "#294b3e",
-        "icon_color": "#234638",
-        "container_max_width": 1440,
-        "padding_top_desktop": 10,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16,
-        "outer_radius": 24,
-        "outer_radius_mobile": 18,
-        "card_radius": 12,
-        "card_border_thickness": 1,
-        "card_gap_desktop": 32,
-        "card_gap_mobile": 12,
-        "card_min_height_desktop": 188,
-        "card_min_height_mobile": 150,
-        "heading_size_desktop": 50,
-        "heading_size_mobile": 32,
-        "subtitle_size_desktop": 16,
-        "subtitle_size_mobile": 14,
-        "icon_size_desktop": 46,
-        "icon_size_mobile": 38,
-        "card_text_size_desktop": 15,
-        "card_text_size_mobile": 13,
-        "columns_desktop": "4",
-        "columns_mobile": "2"
-      }
-    },
-    "bloom_image_hotspots": {
+    "bloom_image_hotspots_WAxRqf": {
       "type": "bloom-image-hotspots",
       "blocks": {
-        "hotspot_1": {
+        "hotspot_aTcexg": {
           "type": "hotspot",
           "settings": {
             "pos_x": 81,
             "pos_y": 32,
+            "product": "",
             "title": "Monstera Deliciosa",
             "price": "$89.00",
             "link_url": "/collections/all"
           }
         },
-        "hotspot_2": {
+        "hotspot_BRKdJP": {
           "type": "hotspot",
           "settings": {
             "pos_x": 71,
             "pos_y": 92,
+            "product": "",
             "title": "Fiddle Leaf Fig",
             "price": "$129.00",
             "link_url": "/collections/all"
@@ -916,22 +968,23 @@
         }
       },
       "block_order": [
-        "hotspot_1",
-        "hotspot_2"
+        "hotspot_aTcexg",
+        "hotspot_BRKdJP"
       ],
+      "name": "Image Hotspots",
       "settings": {
         "enable_section": true,
-        "heading": "Elevate Your",
-        "italic_heading": "Space Naturally",
-        "subtitle": "Discover performance gear designed to move with you",
-        "button_label": "SHOP NOW",
-        "button_link": "/collections/all",
         "desktop_height": 86,
         "tablet_height": 76,
         "mobile_height": 74,
         "image_focal_point": "center center",
         "enable_parallax": true,
         "overlay_opacity": 45,
+        "heading": "Elevate Your",
+        "italic_heading": "Space Naturally",
+        "subtitle": "Discover performance gear designed to move with you",
+        "button_label": "SHOP NOW",
+        "button_link": "",
         "content_max_width": 540,
         "heading_size_desktop": 68,
         "heading_size_mobile": 38,
@@ -953,6 +1006,7 @@
     "bloom_compare_table_K6YEjH",
     "bloom_image_hotspots",
     "why_plant_lovers_choose_us_a8YKiD",
-    "bloom_scroll_hero_stack_dNNDHh"
+    "bloom_scroll_hero_stack_dNNDHh",
+    "bloom_image_hotspots_WAxRqf"
   ]
 }
