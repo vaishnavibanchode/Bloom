@@ -545,6 +545,65 @@
         "enable_benefits_row": true,
         "enable_ask_share": true
       }
+    },
+    "bloom_room_inspiration": {
+      "type": "bloom-room-inspiration",
+      "blocks": {
+        "card_living_room": {
+          "type": "room_card",
+          "settings": {
+            "title": "LIVING ROOM PLANTS",
+            "custom_link": "/collections/living-room-plants"
+          }
+        },
+        "card_office": {
+          "type": "room_card",
+          "settings": {
+            "title": "OFFICE PLANTS",
+            "custom_link": "/collections/office-plants"
+          }
+        },
+        "card_bedroom": {
+          "type": "room_card",
+          "settings": {
+            "title": "BEDROOM PLANTS",
+            "custom_link": "/collections/bedroom-plants"
+          }
+        },
+        "card_bathroom": {
+          "type": "room_card",
+          "settings": {
+            "title": "BATHROOM PLANTS",
+            "custom_link": "/collections/bathroom-plants"
+          }
+        }
+      },
+      "block_order": [
+        "card_living_room",
+        "card_office",
+        "card_bedroom",
+        "card_bathroom"
+      ],
+      "name": "Bloom Room Inspiration",
+      "settings": {
+        "enable_section": true,
+        "enable_sticky_scroll": true,
+        "enable_tilt_effect": true,
+        "heading": "Room",
+        "italic_heading": "Inspiration",
+        "subtitle": "Decorate every room with plants",
+        "button_label": "SHOP NOW",
+        "button_link": "/collections",
+        "background_color": "#EFEFE0",
+        "heading_color": "#234332",
+        "text_color": "#234332",
+        "button_border_color": "#234332",
+        "button_text_color": "#234332",
+        "card_radius": 20,
+        "card_gap": 28,
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
     }
   },
   "order": [
@@ -554,6 +613,7 @@
     "bloom_scroll_botanical_hero_gLbnXk",
     "bloom_plants_lifestyle_ktL8db",
     "bloom_paired_plant_sets",
+    "bloom_room_inspiration",
     "bloom_trending_plants_N7nQ4X",
     "bloom_planti_product_RMbdBj"
   ]

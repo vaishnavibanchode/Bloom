@@ -1,0 +1,475 @@
+/* ==========================================================================
+   Bloom "Room Inspiration" Section - Athora Planti Recreation
+   ========================================================================== */
+
+.bloom-room-inspiration-section {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding-top: var(--bri-pt, 32px);
+  padding-bottom: var(--bri-pb, 32px);
+  box-sizing: border-box;
+}
+
+/* Outer Container: Rounded Editorial Card */
+.bloom-ri-wrapper {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.bloom-ri-outer-container {
+  width: calc(100% - 48px);
+  max-width: 1740px;
+  margin: 0 auto;
+  background-color: var(--bri-bg, #EFEFE0);
+  border-radius: 28px;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ==========================================================================
+   Desktop Viewport & Sticky Scroll Mechanics (min-width: 1024px)
+   ========================================================================== */
+@media screen and (min-width: 1024px) {
+  .bloom-ri-wrapper.is-sticky-enabled {
+    /* Height computed dynamically in JS to map vertical scroll to horizontal travel */
+    height: calc(100vh + var(--bri-scroll-distance, 130vh));
+  }
+
+  .bloom-ri-wrapper.is-sticky-enabled .bloom-ri-sticky-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .bloom-ri-wrapper.is-sticky-enabled .bloom-ri-outer-container {
+    height: calc(100vh - 64px);
+    max-height: 820px;
+    min-height: 580px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bloom-ri-content-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Left Header: Stationary column positioned at left edge */
+  .bloom-ri-header-wrap {
+    position: absolute;
+    left: clamp(40px, 4.5vw, 72px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(280px, 24vw, 360px);
+    box-sizing: border-box;
+    z-index: 1; /* Cards with z-index 2 glide smoothly over it */
+    pointer-events: auto;
+    opacity: calc(1 - var(--bri-header-fade, 0));
+    transition: opacity 0.2s ease-out;
+  }
+
+  .bloom-ri-header {
+    width: 100%;
+  }
+
+  .bloom-ri-heading {
+    font-family: var(--planti-font-heading, var(--planti-serif-font, 'Instrument Serif', Georgia, serif));
+    font-size: clamp(42px, 4.4vw, 60px);
+    font-weight: 400;
+    line-height: 1.06;
+    color: var(--bri-heading-color, #234332);
+    letter-spacing: -0.015em;
+    margin: 0 0 16px 0;
+    display: block;
+  }
+
+  .bloom-ri-heading-italic {
+    font-family: var(--planti-font-heading, var(--planti-serif-font, 'Instrument Serif', Georgia, serif));
+    font-style: italic;
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  .bloom-ri-subtitle {
+    font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bri-text-color, #234332);
+    opacity: 0.85;
+    margin: 0 0 36px 0;
+  }
+
+  .bloom-ri-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--bri-btn-border, #234332);
+    border-radius: 9999px;
+    padding: 13px 32px;
+    font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bri-btn-text, #234332);
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .bloom-ri-btn:hover {
+    background-color: var(--bri-heading-color, #234332);
+    color: #ffffff;
+    border-color: var(--bri-heading-color, #234332);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(35, 67, 50, 0.16);
+  }
+
+  /* Cards Track Viewport on Desktop */
+  .bloom-ri-track-viewport {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+
+  .bloom-ri-track {
+    display: flex;
+    flex-direction: row;
+    gap: var(--bri-card-gap, 28px);
+    will-change: transform;
+    /* Track starts to the right of header at scroll 0, translates leftwards on scroll */
+    padding-left: var(--bri-track-offset-left, clamp(380px, 32vw, 480px));
+    padding-right: 48px;
+    transform: translate3d(calc(-1px * var(--bri-x, 0)), 0, 0);
+    box-sizing: border-box;
+  }
+
+  /* Card Item */
+  .bloom-ri-card-item {
+    width: clamp(340px, 26vw, 420px);
+    height: clamp(440px, 58vh, 580px);
+    flex-shrink: 0;
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+    isolation: isolate;
+  }
+
+  .bloom-ri-card-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--bri-card-radius, 20px);
+    overflow: hidden;
+    position: relative;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(35, 67, 50, 0.06);
+    /* Subtle 3D tilt */
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform: rotateY(var(--bri-tilt, 0deg));
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+  }
+}
+
+/* ==========================================================================
+   Shared Card Visuals (Images, Pill Button, Hover)
+   ========================================================================== */
+.bloom-ri-card-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bloom-ri-card-media {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: #f7f7f4;
+}
+
+.bloom-ri-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bloom-ri-card-inner:hover .bloom-ri-card-img {
+  transform: scale(1.06);
+}
+
+/* White Pill Button at Bottom Center */
+.bloom-ri-card-label-wrap {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.bloom-ri-card-label {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #234332;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 13px 26px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  pointer-events: auto;
+  white-space: nowrap;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bloom-ri-card-inner:hover .bloom-ri-card-label {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(35, 67, 50, 0.16);
+  background-color: #ffffff;
+  color: #1a3326;
+}
+
+/* ==========================================================================
+   Mobile & Tablet Responsive (max-width: 1023px)
+   ========================================================================== */
+@media screen and (max-width: 1023px) {
+  .bloom-room-inspiration-section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .bloom-ri-wrapper {
+    height: auto !important;
+  }
+
+  .bloom-ri-sticky-viewport {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .bloom-ri-outer-container {
+    width: calc(100% - 24px);
+    margin: 0 auto;
+    border-radius: 20px;
+    padding: 36px 20px 40px;
+    height: auto !important;
+  }
+
+  .bloom-ri-content-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 28px;
+    position: static;
+  }
+
+  /* Header Stacks Above Cards */
+  .bloom-ri-header-wrap {
+    position: static;
+    transform: none;
+    width: 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+    opacity: 1 !important;
+  }
+
+  .bloom-ri-header {
+    max-width: 100%;
+  }
+
+  .bloom-ri-heading {
+    font-family: var(--planti-font-heading, var(--planti-serif-font, 'Instrument Serif', Georgia, serif));
+    font-size: clamp(30px, 8vw, 42px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--bri-heading-color, #234332);
+    letter-spacing: -0.01em;
+    margin: 0 0 10px 0;
+  }
+
+  .bloom-ri-heading-italic {
+    font-family: var(--planti-font-heading, var(--planti-serif-font, 'Instrument Serif', Georgia, serif));
+    font-style: italic;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  .bloom-ri-subtitle {
+    font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--bri-text-color, #234332);
+    opacity: 0.85;
+    margin: 0 0 24px 0;
+  }
+
+  .bloom-ri-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--bri-btn-border, #234332);
+    border-radius: 9999px;
+    padding: 11px 26px;
+    font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bri-btn-text, #234332);
+    text-decoration: none;
+    background: transparent;
+  }
+
+  /* Touch-Friendly Horizontal Swipe Track */
+  .bloom-ri-track-viewport {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .bloom-ri-track-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bloom-ri-track {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 4px 20px 12px;
+    width: max-content;
+    transform: none !important;
+  }
+
+  .bloom-ri-card-item {
+    width: clamp(260px, 75vw, 320px);
+    height: clamp(340px, 96vw, 420px);
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .bloom-ri-card-inner {
+    border-radius: 18px;
+    transform: none !important;
+    box-shadow: 0 6px 20px rgba(35, 67, 50, 0.07);
+  }
+
+  .bloom-ri-card-label-wrap {
+    bottom: 18px;
+  }
+
+  .bloom-ri-card-label {
+    font-size: 11.5px;
+    padding: 11px 22px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Small Mobile Screens (<= 400px) */
+@media screen and (max-width: 400px) {
+  .bloom-ri-outer-container {
+    width: calc(100% - 16px);
+    padding: 30px 14px 34px;
+    border-radius: 16px;
+  }
+
+  .bloom-ri-track-viewport {
+    width: calc(100% + 28px);
+    margin-left: -14px;
+    margin-right: -14px;
+  }
+
+  .bloom-ri-track {
+    gap: 12px;
+    padding: 4px 14px 10px;
+  }
+
+  .bloom-ri-card-item {
+    width: 250px;
+    height: 330px;
+  }
+
+  .bloom-ri-card-label {
+    font-size: 11px;
+    padding: 9px 18px;
+  }
+}
+
+/* Tablet adjustments (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .bloom-ri-outer-container {
+    padding: 48px 32px 52px;
+  }
+
+  .bloom-ri-track-viewport {
+    width: calc(100% + 64px);
+    margin-left: -32px;
+    margin-right: -32px;
+  }
+
+  .bloom-ri-track {
+    gap: 20px;
+    padding: 4px 32px 14px;
+  }
+
+  .bloom-ri-card-item {
+    width: 360px;
+    height: 460px;
+  }
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .bloom-ri-track,
+  .bloom-ri-card-inner,
+  .bloom-ri-card-img,
+  .bloom-ri-card-label,
+  .bloom-ri-btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}

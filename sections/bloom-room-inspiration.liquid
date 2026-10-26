@@ -1,0 +1,355 @@
+{{ 'bloom-room-inspiration.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-room-inspiration.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign blocks_count = section.blocks.size
+  assign heading_text = section_st.heading | default: 'Room'
+  assign italic_text = section_st.italic_heading | default: 'Inspiration'
+-%}
+
+{%- if section_st.enable_section and blocks_count > 0 -%}
+  <section
+    id="bloom-room-inspiration-{{ section.id }}"
+    class="bloom-room-inspiration-section"
+    data-section-id="{{ section.id }}"
+    style="
+      --bri-bg: {{ section_st.background_color | default: '#EFEFE0' }};
+      --bri-heading-color: {{ section_st.heading_color | default: '#234332' }};
+      --bri-text-color: {{ section_st.text_color | default: '#234332' }};
+      --bri-btn-border: {{ section_st.button_border_color | default: '#234332' }};
+      --bri-btn-text: {{ section_st.button_text_color | default: '#234332' }};
+      --bri-card-radius: {{ section_st.card_radius | default: 20 }}px;
+      --bri-card-gap: {{ section_st.card_gap | default: 28 }}px;
+      --bri-pt: {{ section_st.padding_top | default: 32 }}px;
+      --bri-pb: {{ section_st.padding_bottom | default: 32 }}px;
+    "
+  >
+    <bloom-room-inspiration
+      class="bloom-ri-wrapper"
+      data-total-items="{{ blocks_count }}"
+      data-sticky="{{ section_st.enable_sticky_scroll }}"
+      data-tilt="{{ section_st.enable_tilt_effect }}"
+    >
+      <div class="bloom-ri-sticky-viewport">
+        <div class="bloom-ri-outer-container">
+          <div class="bloom-ri-content-layout">
+
+            <!-- Left Introduction Area -->
+            <div class="bloom-ri-header-wrap">
+              <div class="bloom-ri-header">
+                <h2 class="bloom-ri-heading">
+                  <span class="bloom-ri-heading-main">{{ heading_text }}</span>
+                  {%- if italic_text != blank -%}
+                    <em class="bloom-ri-heading-italic">{{ italic_text }}</em>
+                  {%- endif -%}
+                </h2>
+                {%- if section_st.subtitle != blank -%}
+                  <p class="bloom-ri-subtitle">{{ section_st.subtitle }}</p>
+                {%- endif -%}
+                {%- if section_st.button_label != blank -%}
+                  <a
+                    href="{{ section_st.button_link | default: '/collections' }}"
+                    class="bloom-ri-btn"
+                  >
+                    <span>{{ section_st.button_label }}</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <!-- Cards Scroll Track -->
+            <div class="bloom-ri-track-viewport">
+              <div class="bloom-ri-track">
+                {%- for block in section.blocks -%}
+                  {%- liquid
+                    assign card_title = block.settings.title | default: 'Room Category'
+                    assign card_link = block.settings.custom_link
+                    if card_link == blank and block.settings.collection != blank
+                      assign card_link = block.settings.collection.url
+                    endif
+                    if card_link == blank
+                      assign card_link = '/collections'
+                    endif
+                  -%}
+                  <div
+                    class="bloom-ri-card-item"
+                    data-index="{{ forloop.index }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    <div class="bloom-ri-card-inner">
+                      <a href="{{ card_link }}" class="bloom-ri-card-link" aria-label="{{ card_title | escape }}">
+                        <div class="bloom-ri-card-media">
+                          {%- if block.settings.image != blank -%}
+                            {{ block.settings.image | image_url: width: 1200 | image_tag:
+                              loading: 'lazy',
+                              class: 'bloom-ri-card-img',
+                              widths: '360, 540, 720, 960, 1200',
+                              alt: card_title | escape
+                            }}
+                          {%- else -%}
+                            {%- case forloop.index -%}
+                              {%- when 1 -%}
+                                <img
+                                  src="{{ 'bloom-trending-1.jpg' | asset_url }}"
+                                  alt="{{ card_title | escape }}"
+                                  class="bloom-ri-card-img"
+                                  loading="lazy"
+                                  width="800"
+                                  height="1000"
+                                >
+                              {%- when 2 -%}
+                                <img
+                                  src="{{ 'bloom-trending-2.jpg' | asset_url }}"
+                                  alt="{{ card_title | escape }}"
+                                  class="bloom-ri-card-img"
+                                  loading="lazy"
+                                  width="800"
+                                  height="1000"
+                                >
+                              {%- when 3 -%}
+                                <img
+                                  src="{{ 'bloom-trending-6.jpg' | asset_url }}"
+                                  alt="{{ card_title | escape }}"
+                                  class="bloom-ri-card-img"
+                                  loading="lazy"
+                                  width="800"
+                                  height="1000"
+                                >
+                              {%- when 4 -%}
+                                <img
+                                  src="{{ 'bloom-trending-5.jpg' | asset_url }}"
+                                  alt="{{ card_title | escape }}"
+                                  class="bloom-ri-card-img"
+                                  loading="lazy"
+                                  width="800"
+                                  height="1000"
+                                >
+                              {%- else -%}
+                                <img
+                                  src="{{ 'bloom-trending-3.jpg' | asset_url }}"
+                                  alt="{{ card_title | escape }}"
+                                  class="bloom-ri-card-img"
+                                  loading="lazy"
+                                  width="800"
+                                  height="1000"
+                                >
+                            {%- endcase -%}
+                          {%- endif -%}
+                        </div>
+                        <div class="bloom-ri-card-label-wrap">
+                          <span class="bloom-ri-card-label">{{ card_title }}</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </bloom-room-inspiration>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bloom Room Inspiration",
+  "tag": "section",
+  "class": "section-bloom-room-inspiration",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_scroll",
+      "label": "Enable Sticky Desktop Scroll",
+      "info": "Vertical page scroll drives horizontal card movement on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tilt_effect",
+      "label": "Enable 3D Card Tilt Effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Header Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Room"
+    },
+    {
+      "type": "text",
+      "id": "italic_heading",
+      "label": "Italic Word",
+      "default": "Inspiration"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Decorate every room with plants"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors & Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#EFEFE0"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Border Radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 12,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap Between Cards",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "room_card",
+      "name": "Room Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "LIVING ROOM PLANTS"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Plant Image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Linked Collection"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Destination Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bloom Room Inspiration",
+      "blocks": [
+        {
+          "type": "room_card",
+          "settings": {
+            "title": "LIVING ROOM PLANTS",
+            "custom_link": "/collections/living-room-plants"
+          }
+        },
+        {
+          "type": "room_card",
+          "settings": {
+            "title": "OFFICE PLANTS",
+            "custom_link": "/collections/office-plants"
+          }
+        },
+        {
+          "type": "room_card",
+          "settings": {
+            "title": "BEDROOM PLANTS",
+            "custom_link": "/collections/bedroom-plants"
+          }
+        },
+        {
+          "type": "room_card",
+          "settings": {
+            "title": "BATHROOM PLANTS",
+            "custom_link": "/collections/bathroom-plants"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
