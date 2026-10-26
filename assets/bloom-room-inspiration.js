@@ -112,11 +112,12 @@ class BloomRoomInspiration extends HTMLElement {
     this.track.style.setProperty('--bri-track-offset-left', `${initialOffsetLeft}px`);
 
     // Total width occupied by the cards (sum of widths and gaps)
+    const computedGap = parseFloat(getComputedStyle(this.track).gap) || 28;
     let totalCardsWidth = 0;
     this.cards.forEach((card, index) => {
       totalCardsWidth += card.offsetWidth;
       if (index < this.cards.length - 1) {
-        totalCardsWidth += 28; // gap
+        totalCardsWidth += computedGap;
       }
     });
 
@@ -235,13 +236,10 @@ class BloomRoomInspiration extends HTMLElement {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    const interactiveButtons = [
-      ...Array.from(this.querySelectorAll('.bloom-ri-btn')),
-      ...Array.from(this.querySelectorAll('.bloom-ri-card-label'))
-    ];
+    const buttons = Array.from(this.querySelectorAll('.bloom-ri-btn'));
 
-    interactiveButtons.forEach((btn) => {
-      const circle = btn.querySelector('.bloom-ri-circle-bg, .bloom-ri-card-circle-bg');
+    buttons.forEach((btn) => {
+      const circle = btn.querySelector('.bloom-ri-circle-bg');
       if (!circle) return;
 
       const updatePos = (e) => {
@@ -268,4 +266,20 @@ class BloomRoomInspiration extends HTMLElement {
 
 if (!customElements.get('bloom-room-inspiration')) {
   customElements.define('bloom-room-inspiration', BloomRoomInspiration);
+}
+
+// Shopify Theme Editor Integration
+if (window.Shopify && window.Shopify.designMode) {
+  document.addEventListener('shopify:section:load', (e) => {
+    const el = e.target.querySelector('bloom-room-inspiration');
+    if (el && typeof el.init === 'function') {
+      el.init();
+    }
+  });
+  document.addEventListener('shopify:section:select', (e) => {
+    const el = e.target.querySelector('bloom-room-inspiration');
+    if (el && typeof el.init === 'function') {
+      el.init();
+    }
+  });
 }

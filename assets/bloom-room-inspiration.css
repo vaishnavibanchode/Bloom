@@ -6,8 +6,8 @@
   display: block;
   position: relative;
   width: 100%;
-  padding-top: var(--bri-pt, 32px);
-  padding-bottom: var(--bri-pb, 32px);
+  padding-top: var(--bri-pt-desktop, 32px);
+  padding-bottom: var(--bri-pb-desktop, 32px);
   box-sizing: border-box;
 }
 
@@ -23,14 +23,14 @@
   max-width: 1740px;
   margin: 0 auto;
   background-color: var(--bri-bg, #EFEFE0);
-  border-radius: 28px;
+  border-radius: var(--bri-card-radius, 28px);
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
 }
 
 /* ==========================================================================
-   Planti Signature Interactive Buttons & Cursor Ripple
+   Planti Signature Header CTA Button ("SHOP NOW")
    ========================================================================== */
 .bloom-ri-btn {
   position: relative;
@@ -54,11 +54,11 @@
   isolation: isolate;
   clip-path: inset(0 round 9999px);
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.35s ease,
-              background-color 0.35s ease,
-              border-color 0.35s ease,
-              box-shadow 0.35s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s ease,
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
 }
 
 .bloom-ri-btn-text {
@@ -126,8 +126,8 @@
 
   .bloom-ri-wrapper.is-sticky-enabled .bloom-ri-outer-container {
     height: calc(100vh - 64px);
-    max-height: 820px;
-    min-height: 580px;
+    max-height: max(840px, calc(var(--bri-card-h-desktop, 560px) + 90px));
+    min-height: calc(var(--bri-card-h-desktop, 560px) + 70px);
     display: flex;
     align-items: center;
     padding: 0;
@@ -151,7 +151,7 @@
     left: clamp(40px, 4.5vw, 72px);
     top: 50%;
     transform: translateY(-50%);
-    width: clamp(280px, 24vw, 360px);
+    width: clamp(320px, 26vw, 420px);
     box-sizing: border-box;
     z-index: 1; /* Cards with z-index 2 glide smoothly over it */
     pointer-events: auto;
@@ -165,13 +165,22 @@
 
   .bloom-ri-heading {
     font-family: var(--planti-font-heading, var(--planti-serif-font, 'Instrument Serif', Georgia, serif));
-    font-size: clamp(42px, 4.4vw, 60px);
+    font-size: clamp(38px, 4vw, 54px);
     font-weight: 400;
-    line-height: 1.06;
+    line-height: 1.1;
     color: var(--bri-heading-color, #234332);
     letter-spacing: -0.015em;
     margin: 0 0 16px 0;
     display: block;
+    word-break: normal;
+    overflow-wrap: normal;
+    white-space: normal;
+  }
+
+  .bloom-ri-heading-main,
+  .bloom-ri-heading-italic {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   .bloom-ri-heading-italic {
@@ -191,10 +200,6 @@
     margin: 0 0 36px 0;
   }
 
-  .bloom-ri-btn {
-    /* Uses base button and cursor ripple styles */
-  }
-
   /* Cards Track Viewport on Desktop */
   .bloom-ri-track-viewport {
     width: 100%;
@@ -209,19 +214,21 @@
   .bloom-ri-track {
     display: flex;
     flex-direction: row;
-    gap: var(--bri-card-gap, 28px);
+    gap: var(--bri-card-gap-desktop, 28px);
     will-change: transform;
     /* Track starts to the right of header at scroll 0, translates leftwards on scroll */
-    padding-left: var(--bri-track-offset-left, clamp(380px, 32vw, 480px));
-    padding-right: 48px;
+    padding-left: var(--bri-track-offset-left, clamp(420px, 34vw, 520px));
+    padding-right: 64px;
     transform: translate3d(calc(-1px * var(--bri-x, 0)), 0, 0);
     box-sizing: border-box;
   }
 
-  /* Card Item */
+  /* Card Item Dimensions on Desktop (Screenshot 3 Proportion) */
   .bloom-ri-card-item {
-    width: clamp(340px, 26vw, 420px);
-    height: clamp(440px, 58vh, 580px);
+    width: var(--bri-card-w-desktop, 480px);
+    height: var(--bri-card-h-desktop, 560px);
+    aspect-ratio: var(--bri-card-aspect-desktop, auto);
+    max-width: 90vw;
     flex-shrink: 0;
     perspective: 1000px;
     perspective-origin: 50% 50%;
@@ -231,22 +238,25 @@
   .bloom-ri-card-inner {
     width: 100%;
     height: 100%;
-    border-radius: var(--bri-card-radius, 20px);
+    border-radius: var(--bri-card-radius, 24px);
     overflow: hidden;
     position: relative;
     background-color: #ffffff;
-    box-shadow: 0 10px 30px rgba(35, 67, 50, 0.06);
-    /* Subtle 3D tilt */
+    box-shadow: 0 10px 32px rgba(35, 67, 50, 0.08);
     transform-style: preserve-3d;
     backface-visibility: hidden;
     transform: rotateY(var(--bri-tilt, 0deg));
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
     will-change: transform;
+  }
+
+  .bloom-ri-card-inner:hover {
+    box-shadow: 0 16px 44px rgba(35, 67, 50, 0.14);
   }
 }
 
 /* ==========================================================================
-   Shared Card Visuals (Images, Pill Button, Hover)
+   Shared Card Visuals & Category Pill Buttons (Screenshot 2 Hover)
    ========================================================================== */
 .bloom-ri-card-link {
   display: block;
@@ -269,17 +279,17 @@
 .bloom-ri-card-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: var(--bri-img-fit, cover);
+  object-position: var(--bri-img-pos, center center);
   display: block;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .bloom-ri-card-inner:hover .bloom-ri-card-img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
-/* White Pill Button on Cards with Dynamic Hover */
+/* White Pill Button on Cards Centered at Bottom */
 .bloom-ri-card-label-wrap {
   position: absolute;
   bottom: 24px;
@@ -296,69 +306,56 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
-  color: #234332;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background-color: var(--bri-cat-btn-bg, #ffffff);
+  color: var(--bri-cat-btn-text, #234332);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 13px 26px;
+  padding: 13px 28px;
   border-radius: 9999px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
   pointer-events: auto;
   white-space: nowrap;
-  overflow: hidden;
-  isolation: isolate;
-  clip-path: inset(0 round 9999px);
+  transform: none !important; /* Preserves exact position and dimensions: no move or resize */
+  transition: background-color var(--bri-btn-transition, 250ms) ease,
+              color var(--bri-btn-transition, 250ms) ease,
+              border-color var(--bri-btn-transition, 250ms) ease,
+              box-shadow var(--bri-btn-transition, 250ms) ease;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.35s ease,
-              background-color 0.35s ease,
-              border-color 0.35s ease,
-              box-shadow 0.35s ease;
 }
 
 .bloom-ri-card-label-text {
-  position: relative;
-  z-index: 2;
-  transition: color 0.3s ease;
+  color: inherit;
+  transition: inherit;
 }
 
-.bloom-ri-card-circle-bg {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: var(--bri-heading-color, #234332);
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  z-index: 1;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.25s ease;
+/* Hover state: background changes from white to deep botanical green, text to white */
+.bloom-ri-card-label:hover,
+.bloom-ri-card-link:hover .bloom-ri-card-label,
+.bloom-ri-card-inner:hover .bloom-ri-card-label {
+  background-color: var(--bri-cat-btn-hover-bg, #2e6444);
+  color: var(--bri-cat-btn-hover-text, #ffffff);
+  border-color: var(--bri-cat-btn-hover-bg, #2e6444);
+  box-shadow: 0 6px 20px rgba(46, 100, 68, 0.28);
+  transform: none !important; /* Strictly no movement or resizing during hover */
 }
 
-/* Card hover and direct pill hover styles */
-.bloom-ri-card-inner:hover .bloom-ri-card-label,
-.bloom-ri-card-label:hover {
-  background-color: var(--bri-heading-color, #234332);
-  border-color: var(--bri-heading-color, #234332);
+/* Accessible keyboard focus & active touch state */
+.bloom-ri-card-label:focus-visible,
+.bloom-ri-card-link:focus-visible .bloom-ri-card-label {
+  outline: 2px solid var(--bri-cat-btn-hover-bg, #2e6444);
+  outline-offset: 3px;
+  background-color: var(--bri-cat-btn-hover-bg, #2e6444);
+  color: var(--bri-cat-btn-hover-text, #ffffff);
+}
+
+.bloom-ri-card-label:active,
+.bloom-ri-card-link:active .bloom-ri-card-label {
+  background-color: var(--bri-cat-btn-hover-bg, #2e6444);
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(35, 67, 50, 0.22);
-}
-
-.bloom-ri-card-inner:hover .bloom-ri-card-label-text,
-.bloom-ri-card-label:hover .bloom-ri-card-label-text {
-  color: #ffffff;
-}
-
-.bloom-ri-card-inner:hover .bloom-ri-card-circle-bg,
-.bloom-ri-card-label:hover .bloom-ri-card-circle-bg {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(22);
 }
 
 /* ==========================================================================
@@ -366,8 +363,8 @@
    ========================================================================== */
 @media screen and (max-width: 1023px) {
   .bloom-room-inspiration-section {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: var(--bri-pt-mobile, 24px);
+    padding-bottom: var(--bri-pb-mobile, 24px);
   }
 
   .bloom-ri-wrapper {
@@ -382,10 +379,14 @@
 
   .bloom-ri-outer-container {
     width: calc(100% - 24px);
+    max-width: 100%;
     margin: 0 auto;
-    border-radius: 20px;
-    padding: 36px 20px 40px;
+    border-radius: var(--bri-card-radius, 20px);
+    padding: 32px 18px 36px;
     height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+    box-sizing: border-box;
   }
 
   .bloom-ri-content-layout {
@@ -393,7 +394,7 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    gap: 28px;
+    gap: 24px;
     position: static;
   }
 
@@ -402,7 +403,7 @@
     position: static;
     transform: none;
     width: 100%;
-    padding: 0 4px;
+    padding: 0;
     box-sizing: border-box;
     opacity: 1 !important;
   }
@@ -413,9 +414,9 @@
 
   .bloom-ri-heading {
     font-family: var(--planti-font-heading, var(--planti-serif-font, 'Instrument Serif', Georgia, serif));
-    font-size: clamp(30px, 8vw, 42px);
+    font-size: clamp(30px, 7.5vw, 40px);
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.12;
     color: var(--bri-heading-color, #234332);
     letter-spacing: -0.01em;
     margin: 0 0 10px 0;
@@ -434,7 +435,7 @@
     line-height: 1.45;
     color: var(--bri-text-color, #234332);
     opacity: 0.85;
-    margin: 0 0 24px 0;
+    margin: 0 0 20px 0;
   }
 
   .bloom-ri-btn {
@@ -444,13 +445,15 @@
 
   /* Touch-Friendly Horizontal Swipe Track */
   .bloom-ri-track-viewport {
-    width: calc(100% + 40px);
-    margin-left: -20px;
-    margin-right: -20px;
+    width: calc(100% + 36px);
+    margin-left: -18px;
+    margin-right: -18px;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -462,22 +465,24 @@
   .bloom-ri-track {
     display: flex;
     flex-direction: row;
-    gap: 16px;
-    padding: 4px 20px 12px;
+    gap: var(--bri-card-gap-mobile, 16px);
+    padding: 4px 18px 16px;
     width: max-content;
     transform: none !important;
+    box-sizing: border-box;
   }
 
   .bloom-ri-card-item {
-    width: clamp(260px, 75vw, 320px);
-    height: clamp(340px, 96vw, 420px);
+    width: var(--bri-card-w-mobile, 290px);
+    height: var(--bri-card-h-mobile, 360px);
+    aspect-ratio: var(--bri-card-aspect-mobile, auto);
     flex-shrink: 0;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 
   .bloom-ri-card-inner {
-    border-radius: 18px;
+    border-radius: var(--bri-card-radius, 18px);
     transform: none !important;
     box-shadow: 0 6px 20px rgba(35, 67, 50, 0.07);
   }
@@ -491,14 +496,34 @@
     padding: 11px 22px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   }
+
+  /* When mobile horizontal scrolling is disabled in Theme Editor */
+  .bloom-ri-wrapper[data-mobile-scroll="false"] .bloom-ri-track-viewport {
+    overflow-x: visible;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    scroll-snap-type: none;
+  }
+
+  .bloom-ri-wrapper[data-mobile-scroll="false"] .bloom-ri-track {
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .bloom-ri-wrapper[data-mobile-scroll="false"] .bloom-ri-card-item {
+    width: 100%;
+    max-width: 360px;
+  }
 }
 
 /* Small Mobile Screens (<= 400px) */
 @media screen and (max-width: 400px) {
   .bloom-ri-outer-container {
     width: calc(100% - 16px);
-    padding: 30px 14px 34px;
-    border-radius: 16px;
+    padding: 28px 14px 30px;
   }
 
   .bloom-ri-track-viewport {
@@ -508,13 +533,12 @@
   }
 
   .bloom-ri-track {
-    gap: 12px;
-    padding: 4px 14px 10px;
+    gap: calc(var(--bri-card-gap-mobile, 16px) * 0.75);
+    padding: 4px 14px 12px;
   }
 
   .bloom-ri-card-item {
-    width: 250px;
-    height: 330px;
+    width: clamp(240px, 76vw, var(--bri-card-w-mobile, 290px));
   }
 
   .bloom-ri-card-label {
@@ -526,23 +550,23 @@
 /* Tablet adjustments (768px - 1023px) */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .bloom-ri-outer-container {
-    padding: 48px 32px 52px;
+    padding: 44px 28px 48px;
   }
 
   .bloom-ri-track-viewport {
-    width: calc(100% + 64px);
-    margin-left: -32px;
-    margin-right: -32px;
+    width: calc(100% + 56px);
+    margin-left: -28px;
+    margin-right: -28px;
   }
 
   .bloom-ri-track {
     gap: 20px;
-    padding: 4px 32px 14px;
+    padding: 4px 28px 14px;
   }
 
   .bloom-ri-card-item {
-    width: 360px;
-    height: 460px;
+    width: 340px;
+    height: 420px;
   }
 }
 
@@ -553,7 +577,6 @@
   .bloom-ri-card-img,
   .bloom-ri-card-label,
   .bloom-ri-card-label-text,
-  .bloom-ri-card-circle-bg,
   .bloom-ri-btn,
   .bloom-ri-btn-text,
   .bloom-ri-circle-bg {
