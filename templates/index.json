@@ -182,7 +182,7 @@
         "enable_tilt": true,
         "enable_hover_zoom": true,
         "background_color": "#ffffff",
-        "container_max_width": 1400,
+        "container_max_width": 1800,
         "padding_inline_desktop": 44,
         "card_height_desktop": 500,
         "card_height_mobile": 420,
