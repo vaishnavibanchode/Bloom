@@ -545,6 +545,69 @@
         "enable_benefits_row": true,
         "enable_ask_share": true
       }
+    },
+    "bloom_room_inspiration_AnXeBx": {
+      "type": "bloom-room-inspiration",
+      "blocks": {
+        "room_card_tBy3GV": {
+          "type": "room_card",
+          "settings": {
+            "title": "LIVING ROOM PLANTS",
+            "collection": "",
+            "custom_link": "/collections/living-room-plants"
+          }
+        },
+        "room_card_GRKmX3": {
+          "type": "room_card",
+          "settings": {
+            "title": "OFFICE PLANTS",
+            "collection": "",
+            "custom_link": "/collections/office-plants"
+          }
+        },
+        "room_card_rHHAh9": {
+          "type": "room_card",
+          "settings": {
+            "title": "BEDROOM PLANTS",
+            "collection": "",
+            "custom_link": "/collections/bedroom-plants"
+          }
+        },
+        "room_card_mzc8Mi": {
+          "type": "room_card",
+          "settings": {
+            "title": "BATHROOM PLANTS",
+            "collection": "",
+            "custom_link": "/collections/bathroom-plants"
+          }
+        }
+      },
+      "block_order": [
+        "room_card_tBy3GV",
+        "room_card_GRKmX3",
+        "room_card_rHHAh9",
+        "room_card_mzc8Mi"
+      ],
+      "name": "Bloom Room Inspiration",
+      "settings": {
+        "enable_section": true,
+        "enable_sticky_scroll": true,
+        "enable_tilt_effect": true,
+        "heading": "Room",
+        "italic_heading": "Inspiration",
+        "subtitle": "Decorate every room with plants",
+        "button_label": "SHOP NOW",
+        "button_link": "",
+        "background_color": "#EFEFE0",
+        "heading_color": "#234332",
+        "text_color": "#234332",
+        "button_border_color": "#234332",
+        "button_text_color": "#234332",
+        "card_radius": 20,
+        "card_gap": 28,
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
     }
   },
   "order": [
@@ -555,6 +618,7 @@
     "bloom_plants_lifestyle_ktL8db",
     "bloom_paired_plant_sets",
     "bloom_trending_plants_N7nQ4X",
-    "bloom_planti_product_RMbdBj"
+    "bloom_planti_product_RMbdBj",
+    "bloom_room_inspiration_AnXeBx"
   ]
 }
