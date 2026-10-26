@@ -728,6 +728,75 @@
         "padding_bottom_mobile": 0
       }
     },
+    "bloom_scroll_hero_stack_dNNDHh": {
+      "type": "bloom-scroll-hero-stack",
+      "blocks": {
+        "banner_Gwcp8c": {
+          "type": "banner",
+          "settings": {
+            "image_focal_point": "center center",
+            "heading": "Bring Nature",
+            "italic_heading": "Inside",
+            "subtitle": "Beautiful, easy-care plants delivered to your door.",
+            "button_label": "SHOP NOW",
+            "button_link": "/collections/all",
+            "content_position": "center-start",
+            "overlay_opacity_override": 0
+          }
+        },
+        "banner_ykJt8M": {
+          "type": "banner",
+          "settings": {
+            "image_focal_point": "center center",
+            "heading": "Grow Beauty",
+            "italic_heading": "At Home",
+            "subtitle": "Low-maintenance plants designed for modern living.",
+            "button_label": "SHOP NOW",
+            "button_link": "/collections/all",
+            "content_position": "center-start",
+            "overlay_opacity_override": 0
+          }
+        },
+        "banner_NTqg4z": {
+          "type": "banner",
+          "settings": {
+            "image_focal_point": "center center",
+            "heading": "Create Your",
+            "italic_heading": "Green Corner",
+            "subtitle": "Fresh, hand-picked plants to brighten every space in your home.",
+            "button_label": "SHOP NOW",
+            "button_link": "/collections/all",
+            "content_position": "center-start",
+            "overlay_opacity_override": 0
+          }
+        }
+      },
+      "block_order": [
+        "banner_Gwcp8c",
+        "banner_ykJt8M",
+        "banner_NTqg4z"
+      ],
+      "name": "Bloom Scroll Hero Stack",
+      "settings": {
+        "enable_section": true,
+        "enable_scroll_animation": true,
+        "enable_image_parallax": true,
+        "scroll_distance_multiplier": 100,
+        "section_bg_color": "#ffffff",
+        "container_max_width": 1440,
+        "desktop_height": 75,
+        "mobile_height": 65,
+        "card_radius": 28,
+        "card_gap": 30,
+        "overlay_opacity": 25,
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 32,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30
+      }
+    },
     "why_plant_lovers_choose_us_a8YKiD": {
       "type": "why-plant-lovers-choose-us",
       "blocks": {
@@ -820,75 +889,6 @@
         "card_text_size_mobile": 13,
         "columns_desktop": "4",
         "columns_mobile": "2"
-      }
-    },
-    "bloom_scroll_hero_stack_dNNDHh": {
-      "type": "bloom-scroll-hero-stack",
-      "blocks": {
-        "banner_Gwcp8c": {
-          "type": "banner",
-          "settings": {
-            "image_focal_point": "center center",
-            "heading": "Bring Nature",
-            "italic_heading": "Inside",
-            "subtitle": "Beautiful, easy-care plants delivered to your door.",
-            "button_label": "SHOP NOW",
-            "button_link": "/collections/all",
-            "content_position": "center-start",
-            "overlay_opacity_override": 0
-          }
-        },
-        "banner_ykJt8M": {
-          "type": "banner",
-          "settings": {
-            "image_focal_point": "center center",
-            "heading": "Grow Beauty",
-            "italic_heading": "At Home",
-            "subtitle": "Low-maintenance plants designed for modern living.",
-            "button_label": "SHOP NOW",
-            "button_link": "/collections/all",
-            "content_position": "center-start",
-            "overlay_opacity_override": 0
-          }
-        },
-        "banner_NTqg4z": {
-          "type": "banner",
-          "settings": {
-            "image_focal_point": "center center",
-            "heading": "Create Your",
-            "italic_heading": "Green Corner",
-            "subtitle": "Fresh, hand-picked plants to brighten every space in your home.",
-            "button_label": "SHOP NOW",
-            "button_link": "/collections/all",
-            "content_position": "center-start",
-            "overlay_opacity_override": 0
-          }
-        }
-      },
-      "block_order": [
-        "banner_Gwcp8c",
-        "banner_ykJt8M",
-        "banner_NTqg4z"
-      ],
-      "name": "Bloom Scroll Hero Stack",
-      "settings": {
-        "enable_section": true,
-        "enable_scroll_animation": true,
-        "enable_image_parallax": true,
-        "scroll_distance_multiplier": 100,
-        "section_bg_color": "#ffffff",
-        "container_max_width": 1440,
-        "desktop_height": 75,
-        "mobile_height": 65,
-        "card_radius": 28,
-        "card_gap": 30,
-        "overlay_opacity": 25,
-        "heading_size_desktop": 56,
-        "heading_size_mobile": 32,
-        "padding_top_desktop": 60,
-        "padding_bottom_desktop": 60,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30
       }
     },
     "bloom_image_hotspots_WAxRqf": {
