@@ -6,24 +6,6 @@
   assign blocks_count = section.blocks.size
   assign heading_text = section_st.heading | default: 'Room'
   assign italic_text = section_st.italic_heading | default: 'Inspiration'
-
-  assign desktop_aspect = 'auto'
-  if section_st.card_aspect_ratio_desktop == '1/1'
-    assign desktop_aspect = '1 / 1'
-  elsif section_st.card_aspect_ratio_desktop == '4/5'
-    assign desktop_aspect = '4 / 5'
-  elsif section_st.card_aspect_ratio_desktop == '3/4'
-    assign desktop_aspect = '3 / 4'
-  endif
-
-  assign mobile_aspect = 'auto'
-  if section_st.card_aspect_ratio_mobile == '1/1'
-    assign mobile_aspect = '1 / 1'
-  elsif section_st.card_aspect_ratio_mobile == '4/5'
-    assign mobile_aspect = '4 / 5'
-  elsif section_st.card_aspect_ratio_mobile == '3/4'
-    assign mobile_aspect = '3 / 4'
-  endif
 -%}
 
 {%- if section_st.enable_section and blocks_count > 0 -%}
@@ -35,37 +17,18 @@
       --bri-bg: {{ section_st.background_color | default: '#EFEFE0' }};
       --bri-heading-color: {{ section_st.heading_color | default: '#234332' }};
       --bri-text-color: {{ section_st.text_color | default: '#234332' }};
-      --bri-card-w-desktop: {{ section_st.card_width_desktop | default: 480 }}px;
-      --bri-card-h-desktop: {{ section_st.card_height_desktop | default: 560 }}px;
-      --bri-card-aspect-desktop: {{ desktop_aspect }};
-      --bri-card-gap-desktop: {{ section_st.card_gap_desktop | default: section_st.card_gap | default: 28 }}px;
-      --bri-card-w-mobile: {{ section_st.card_width_mobile | default: 290 }}px;
-      --bri-card-h-mobile: {{ section_st.card_height_mobile | default: 360 }}px;
-      --bri-card-aspect-mobile: {{ mobile_aspect }};
-      --bri-card-gap-mobile: {{ section_st.card_gap_mobile | default: 16 }}px;
-      --bri-card-radius: {{ section_st.card_radius | default: 24 }}px;
-      --bri-img-fit: {{ section_st.image_fit | default: 'cover' }};
-      --bri-img-pos: {{ section_st.image_position | default: 'center center' }};
-      --bri-pt-desktop: {{ section_st.padding_top_desktop | default: section_st.padding_top | default: 32 }}px;
-      --bri-pb-desktop: {{ section_st.padding_bottom_desktop | default: section_st.padding_bottom | default: 32 }}px;
-      --bri-pt-mobile: {{ section_st.padding_top_mobile | default: 24 }}px;
-      --bri-pb-mobile: {{ section_st.padding_bottom_mobile | default: 24 }}px;
       --bri-btn-border: {{ section_st.button_border_color | default: '#234332' }};
       --bri-btn-text: {{ section_st.button_text_color | default: '#234332' }};
-      --bri-btn-hover-bg: {{ section_st.button_hover_bg_color | default: section_st.heading_color | default: '#234332' }};
-      --bri-btn-hover-text: {{ section_st.button_hover_text_color | default: '#ffffff' }};
-      --bri-cat-btn-bg: {{ section_st.category_btn_bg | default: '#ffffff' }};
-      --bri-cat-btn-text: {{ section_st.category_btn_text | default: '#234332' }};
-      --bri-cat-btn-hover-bg: {{ section_st.category_btn_hover_bg | default: '#2e6444' }};
-      --bri-cat-btn-hover-text: {{ section_st.category_btn_hover_text | default: '#ffffff' }};
-      --bri-btn-transition: {{ section_st.category_btn_transition | default: 250 }}ms;
+      --bri-card-radius: {{ section_st.card_radius | default: 20 }}px;
+      --bri-card-gap: {{ section_st.card_gap | default: 28 }}px;
+      --bri-pt: {{ section_st.padding_top | default: 32 }}px;
+      --bri-pb: {{ section_st.padding_bottom | default: 32 }}px;
     "
   >
     <bloom-room-inspiration
       class="bloom-ri-wrapper"
       data-total-items="{{ blocks_count }}"
       data-sticky="{{ section_st.enable_sticky_scroll }}"
-      data-mobile-scroll="{{ section_st.enable_mobile_scroll }}"
       data-tilt="{{ section_st.enable_tilt_effect }}"
     >
       <div class="bloom-ri-sticky-viewport">
@@ -88,10 +51,8 @@
                   <a
                     href="{{ section_st.button_link | default: '/collections' }}"
                     class="bloom-ri-btn"
-                    aria-label="{{ section_st.button_label | escape }}"
                   >
-                    <span class="bloom-ri-btn-text">{{ section_st.button_label }}</span>
-                    <span class="bloom-ri-circle-bg" aria-hidden="true"></span>
+                    <span>{{ section_st.button_label }}</span>
                   </a>
                 {%- endif -%}
               </div>
@@ -177,9 +138,7 @@
                           {%- endif -%}
                         </div>
                         <div class="bloom-ri-card-label-wrap">
-                          <span class="bloom-ri-card-label" tabindex="0" role="button">
-                            <span class="bloom-ri-card-label-text">{{ card_title }}</span>
-                          </span>
+                          <span class="bloom-ri-card-label">{{ card_title }}</span>
                         </div>
                       </a>
                     </div>
@@ -202,10 +161,6 @@
   "class": "section-bloom-room-inspiration",
   "settings": [
     {
-      "type": "header",
-      "content": "Section Visibility & Behavior"
-    },
-    {
       "type": "checkbox",
       "id": "enable_section",
       "label": "Enable Section",
@@ -214,15 +169,8 @@
     {
       "type": "checkbox",
       "id": "enable_sticky_scroll",
-      "label": "Enable Desktop Sticky Scroll",
+      "label": "Enable Sticky Desktop Scroll",
       "info": "Vertical page scroll drives horizontal card movement on desktop",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_mobile_scroll",
-      "label": "Enable Mobile Horizontal Swipe",
-      "info": "Allows smooth touch swiping through cards on mobile",
       "default": true
     },
     {
@@ -266,179 +214,12 @@
     },
     {
       "type": "header",
-      "content": "Desktop Card Dimensions"
-    },
-    {
-      "type": "range",
-      "id": "card_width_desktop",
-      "min": 320,
-      "max": 650,
-      "step": 10,
-      "unit": "px",
-      "label": "Desktop Card Width",
-      "default": 480
-    },
-    {
-      "type": "range",
-      "id": "card_height_desktop",
-      "min": 380,
-      "max": 750,
-      "step": 10,
-      "unit": "px",
-      "label": "Desktop Card Height",
-      "default": 560
-    },
-    {
-      "type": "select",
-      "id": "card_aspect_ratio_desktop",
-      "label": "Desktop Card Aspect Ratio",
-      "options": [
-        { "value": "auto", "label": "Custom (Use Width & Height)" },
-        { "value": "1/1", "label": "Square (1:1)" },
-        { "value": "4/5", "label": "Portrait (4:5)" },
-        { "value": "3/4", "label": "Classic (3:4)" }
-      ],
-      "default": "auto"
-    },
-    {
-      "type": "range",
-      "id": "card_gap_desktop",
-      "min": 12,
-      "max": 60,
-      "step": 2,
-      "unit": "px",
-      "label": "Desktop Card Gap",
-      "default": 28
-    },
-    {
-      "type": "header",
-      "content": "Mobile Card Dimensions"
-    },
-    {
-      "type": "range",
-      "id": "card_width_mobile",
-      "min": 220,
-      "max": 380,
-      "step": 5,
-      "unit": "px",
-      "label": "Mobile Card Width",
-      "default": 290
-    },
-    {
-      "type": "range",
-      "id": "card_height_mobile",
-      "min": 260,
-      "max": 520,
-      "step": 5,
-      "unit": "px",
-      "label": "Mobile Card Height",
-      "default": 360
-    },
-    {
-      "type": "select",
-      "id": "card_aspect_ratio_mobile",
-      "label": "Mobile Card Aspect Ratio",
-      "options": [
-        { "value": "auto", "label": "Custom (Use Width & Height)" },
-        { "value": "1/1", "label": "Square (1:1)" },
-        { "value": "4/5", "label": "Portrait (4:5)" },
-        { "value": "3/4", "label": "Classic (3:4)" }
-      ],
-      "default": "auto"
-    },
-    {
-      "type": "range",
-      "id": "card_gap_mobile",
-      "min": 8,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Mobile Card Gap",
-      "default": 16
-    },
-    {
-      "type": "header",
-      "content": "Card Styling & Image Fit"
-    },
-    {
-      "type": "range",
-      "id": "card_radius",
-      "min": 0,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Card Corner Radius",
-      "default": 24
-    },
-    {
-      "type": "select",
-      "id": "image_fit",
-      "label": "Image Fit",
-      "options": [
-        { "value": "cover", "label": "Cover (Fill card)" },
-        { "value": "contain", "label": "Contain (Fit inside)" }
-      ],
-      "default": "cover"
-    },
-    {
-      "type": "select",
-      "id": "image_position",
-      "label": "Image Focal Point",
-      "options": [
-        { "value": "center center", "label": "Center" },
-        { "value": "top center", "label": "Top Center" },
-        { "value": "bottom center", "label": "Bottom Center" },
-        { "value": "center left", "label": "Center Left" },
-        { "value": "center right", "label": "Center Right" }
-      ],
-      "default": "center center"
-    },
-    {
-      "type": "header",
-      "content": "Category Buttons (Screenshot 2 Hover)"
-    },
-    {
-      "type": "color",
-      "id": "category_btn_bg",
-      "label": "Button Background",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "category_btn_text",
-      "label": "Button Text Color",
-      "default": "#234332"
-    },
-    {
-      "type": "color",
-      "id": "category_btn_hover_bg",
-      "label": "Button Hover Background (Botanical Green)",
-      "default": "#2e6444"
-    },
-    {
-      "type": "color",
-      "id": "category_btn_hover_text",
-      "label": "Button Hover Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "category_btn_transition",
-      "min": 100,
-      "max": 600,
-      "step": 25,
-      "unit": "ms",
-      "label": "Hover Transition Speed",
-      "default": 250
-    },
-    {
-      "type": "header",
-      "content": "Colors & Section Spacing"
+      "content": "Colors & Layout"
     },
     {
       "type": "color",
       "id": "background_color",
-      "label": "Section Background",
+      "label": "Background Color",
       "default": "#EFEFE0"
     },
     {
@@ -450,72 +231,60 @@
     {
       "type": "color",
       "id": "text_color",
-      "label": "Subtitle Color",
+      "label": "Text Color",
       "default": "#234332"
     },
     {
       "type": "color",
       "id": "button_border_color",
-      "label": "Shop Now Button Border",
+      "label": "Button Border Color",
       "default": "#234332"
     },
     {
       "type": "color",
       "id": "button_text_color",
-      "label": "Shop Now Button Text",
+      "label": "Button Text Color",
       "default": "#234332"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_bg_color",
-      "label": "Shop Now Button Hover Bg",
-      "default": "#234332"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_text_color",
-      "label": "Shop Now Button Hover Text",
-      "default": "#ffffff"
     },
     {
       "type": "range",
-      "id": "padding_top_desktop",
+      "id": "card_radius",
       "min": 0,
-      "max": 120,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Border Radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 12,
+      "max": 60,
       "step": 4,
       "unit": "px",
-      "label": "Desktop Padding Top",
+      "label": "Gap Between Cards",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
       "default": 32
     },
     {
       "type": "range",
-      "id": "padding_bottom_desktop",
+      "id": "padding_bottom",
       "min": 0,
-      "max": 120,
+      "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Desktop Padding Bottom",
+      "label": "Padding Bottom",
       "default": 32
-    },
-    {
-      "type": "range",
-      "id": "padding_top_mobile",
-      "min": 0,
-      "max": 80,
-      "step": 4,
-      "unit": "px",
-      "label": "Mobile Padding Top",
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom_mobile",
-      "min": 0,
-      "max": 80,
-      "step": 4,
-      "unit": "px",
-      "label": "Mobile Padding Bottom",
-      "default": 24
     }
   ],
   "blocks": [
