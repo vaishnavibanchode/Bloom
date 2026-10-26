@@ -974,7 +974,7 @@
       "name": "Image Hotspots",
       "settings": {
         "enable_section": true,
-        "desktop_height": 86,
+        "desktop_height": 100,
         "tablet_height": 76,
         "mobile_height": 74,
         "image_focal_point": "center center",
