@@ -514,6 +514,38 @@
         "padding_horizontal_mobile": 20
       }
     },
+    "bloom_planti_product_RMbdBj": {
+      "type": "bloom-planti-product",
+      "name": "Planti Product Showcase",
+      "settings": {
+        "background_color": "#fafaf0",
+        "panel_bg_color": "#ffffff",
+        "container_max_width": 1440,
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "heading_color": "#234332",
+        "accent_color": "#386d50",
+        "enable_sticky_gallery": true,
+        "enable_lens_zoom": true,
+        "enable_gallery_nav_pill": true,
+        "enable_badge": true,
+        "badge_text": "GREEN MOMENTS",
+        "badge_bg_color": "#df7143",
+        "enable_promo_card": true,
+        "promo_title": "Don't miss the deal",
+        "promo_code": "SALE30%",
+        "promo_end_date": "2028-12-31T23:59:59",
+        "enable_stock_bar": true,
+        "stock_count": 24,
+        "enable_pickup": true,
+        "pickup_store_name": "Planti United States Store",
+        "pickup_time": "Usually ready in 24 hours",
+        "pickup_address": "742 Southwest Evergreen Terrace, Portland OR 97205",
+        "pickup_phone": "+1 503 555 2847",
+        "enable_benefits_row": true,
+        "enable_ask_share": true
+      }
+    },
     "collection_list_VmEYkJ": {
       "type": "collection-list",
       "blocks": {
@@ -1538,38 +1570,6 @@
         "padding_horizontal_desktop": 40,
         "padding_horizontal_mobile": 20
       }
-    },
-    "bloom_planti_product_RMbdBj": {
-      "type": "bloom-planti-product",
-      "name": "Planti Product Showcase",
-      "settings": {
-        "background_color": "#fafaf0",
-        "panel_bg_color": "#ffffff",
-        "container_max_width": 1440,
-        "padding_top": 40,
-        "padding_bottom": 60,
-        "heading_color": "#234332",
-        "accent_color": "#386d50",
-        "enable_sticky_gallery": true,
-        "enable_lens_zoom": true,
-        "enable_gallery_nav_pill": true,
-        "enable_badge": true,
-        "badge_text": "GREEN MOMENTS",
-        "badge_bg_color": "#df7143",
-        "enable_promo_card": true,
-        "promo_title": "Don't miss the deal",
-        "promo_code": "SALE30%",
-        "promo_end_date": "2028-12-31T23:59:59",
-        "enable_stock_bar": true,
-        "stock_count": 24,
-        "enable_pickup": true,
-        "pickup_store_name": "Planti United States Store",
-        "pickup_time": "Usually ready in 24 hours",
-        "pickup_address": "742 Southwest Evergreen Terrace, Portland OR 97205",
-        "pickup_phone": "+1 503 555 2847",
-        "enable_benefits_row": true,
-        "enable_ask_share": true
-      }
     }
   },
   "order": [
@@ -1580,6 +1580,7 @@
     "bloom_plants_lifestyle_ktL8db",
     "bloom_paired_plant_sets",
     "bloom_trending_plants_N7nQ4X",
+    "bloom_planti_product_RMbdBj",
     "collection_list_VmEYkJ",
     "interactive_hotspots_athora",
     "before_after_slider_athora",
@@ -1596,7 +1597,6 @@
     "icon_box_TRwJBD",
     "plant_story_grid_KRziDb",
     "interactive_image_hotspots_9YW3Ap",
-    "bloom_paired_plant_sets_hqDgaa",
-    "bloom_planti_product_RMbdBj"
+    "bloom_paired_plant_sets_hqDgaa"
   ]
 }
