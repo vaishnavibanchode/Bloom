@@ -1,0 +1,542 @@
+{{ 'bloom-compare-table.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bloom-compare-table.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign section_st = section.settings
+  assign heading_text = section_st.heading | default: 'Compare the'
+  assign italic_text = section_st.italic_heading | default: 'Best to the Rest'
+  assign brand_title = section_st.brand_name | default: 'BLOOM'
+  assign comp1_title = section_st.competitor_1_name | default: 'Green Corner'
+  assign comp2_title = section_st.competitor_2_name | default: 'Urban Jungle'
+-%}
+
+{%- if section_st.enable_section and section.blocks.size > 0 -%}
+  <bloom-compare-table
+    id="bloom-compare-{{ section.id }}"
+    class="bloom-compare-section"
+    data-section-id="{{ section.id }}"
+    data-reveal="{{ section_st.enable_scroll_reveal }}"
+    data-sticky-col="{{ section_st.sticky_feature_column_mobile }}"
+    style="
+      --bct-sec-bg: {{ section_st.section_bg_color | default: '#FAF9F0' }};
+      --bct-table-bg: {{ section_st.table_bg_color | default: '#FFFFFF' }};
+      --bct-highlight-bg: {{ section_st.highlight_column_bg | default: '#234332' }};
+      --bct-highlight-text: {{ section_st.highlight_column_text | default: '#FFFFFF' }};
+      --bct-text-color: {{ section_st.text_color | default: '#234332' }};
+      --bct-heading-color: {{ section_st.heading_color | default: '#234332' }};
+      --bct-border-outer: {{ section_st.border_color | default: '#E5E5DC' }};
+      --bct-border-row: {{ section_st.row_border_color | default: 'rgba(35, 67, 50, 0.08)' }};
+      --bct-border-col: {{ section_st.row_border_color | default: 'rgba(35, 67, 50, 0.08)' }};
+      --bct-radius: {{ section_st.table_radius | default: 28 }}px;
+      --bct-max-width: {{ section_st.max_table_width | default: 1240 }}px;
+      --bct-cell-py: {{ section_st.cell_padding_y_desktop | default: 20 }}px;
+      --bct-cell-px: {{ section_st.cell_padding_x_desktop | default: 24 }}px;
+      --bct-cell-py-mb: {{ section_st.cell_padding_y_mobile | default: 14 }}px;
+      --bct-cell-px-mb: {{ section_st.cell_padding_x_mobile | default: 14 }}px;
+      --bct-font-heading-desktop: {{ section_st.heading_font_size_desktop | default: 48 }}px;
+      --bct-font-heading-mobile: {{ section_st.heading_font_size_mobile | default: 32 }}px;
+      --bct-heading-mb: {{ section_st.heading_spacing_bottom | default: 14 }}px;
+      --bct-subtitle-mb: {{ section_st.subtitle_spacing_bottom | default: 48 }}px;
+      --bct-pt-desktop: {{ section_st.padding_top_desktop | default: 70 }}px;
+      --bct-pb-desktop: {{ section_st.padding_bottom_desktop | default: 80 }}px;
+      --bct-pt-mobile: {{ section_st.padding_top_mobile | default: 40 }}px;
+      --bct-pb-mobile: {{ section_st.padding_bottom_mobile | default: 50 }}px;
+      --bct-brand-logo-w: {{ section_st.brand_logo_width | default: 130 }}px;
+    "
+  >
+    <div class="bloom-compare__container">
+      
+      <!-- Heading & Subtitle Area -->
+      <div class="bloom-compare__header">
+        <h2 class="bloom-compare__heading">
+          <span class="bloom-compare__heading-main">{{ heading_text }}</span>
+          {%- if italic_text != blank -%}
+            <em class="bloom-compare__heading-italic">{{ italic_text }}</em>
+          {%- endif -%}
+        </h2>
+        {%- if section_st.subtitle != blank -%}
+          <p class="bloom-compare__subtitle">{{ section_st.subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Main Comparison Table Card -->
+      <div class="bloom-compare__table-card">
+        <div class="bloom-compare__scroll-viewport">
+          <table class="bloom-compare__table" role="table">
+            <colgroup>
+              <col class="bloom-compare__col bloom-compare__col--feature">
+              <col class="bloom-compare__col bloom-compare__col--brand">
+              <col class="bloom-compare__col bloom-compare__col--comp1">
+              <col class="bloom-compare__col bloom-compare__col--comp2">
+            </colgroup>
+            <thead>
+              <tr class="bloom-compare__row bloom-compare__row--header">
+                <!-- Column 1: Feature label header (empty) -->
+                <th class="bloom-compare__th bloom-compare__th--feature" scope="col">
+                  <span class="visually-hidden">{{ section_st.feature_column_label | default: 'Features' }}</span>
+                </th>
+
+                <!-- Column 2: Highlighted Store Brand (Bloom) -->
+                <th class="bloom-compare__th bloom-compare__th--brand" scope="col">
+                  {%- if section_st.brand_logo != blank -%}
+                    {{ section_st.brand_logo | image_url: width: 300 | image_tag: class: 'bloom-compare__brand-logo', alt: brand_title }}
+                  {%- else -%}
+                    <span class="bloom-compare__brand-title">{{ brand_title }}</span>
+                  {%- endif -%}
+                </th>
+
+                <!-- Column 3: Competitor 1 -->
+                <th class="bloom-compare__th bloom-compare__th--comp" scope="col">
+                  <span class="bloom-compare__comp-title">{{ comp1_title }}</span>
+                </th>
+
+                <!-- Column 4: Competitor 2 -->
+                <th class="bloom-compare__th bloom-compare__th--comp" scope="col">
+                  <span class="bloom-compare__comp-title">{{ comp2_title }}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for block in section.blocks -%}
+                <tr class="bloom-compare__row bloom-compare__row--body{% if block.settings.highlight_row %} bloom-compare__row--highlight{% endif %}" {{ block.shopify_attributes }}>
+                  <!-- Feature Name -->
+                  <th class="bloom-compare__td bloom-compare__td--feature" scope="row">
+                    <span class="bloom-compare__feature-name">{{ block.settings.feature_name }}</span>
+                  </th>
+
+                  <!-- Bloom Highlighted Value -->
+                  <td class="bloom-compare__td bloom-compare__td--brand">
+                    <div class="bloom-comp__cell-content">
+                      {{ block.settings.brand_value }}
+                    </div>
+                  </td>
+
+                  <!-- Competitor 1 Value -->
+                  <td class="bloom-compare__td bloom-compare__td--comp">
+                    <div class="bloom-comp__cell-content">
+                      {{ block.settings.competitor_1_value }}
+                    </div>
+                  </td>
+
+                  <!-- Competitor 2 Value -->
+                  <td class="bloom-compare__td bloom-compare__td--comp">
+                    <div class="bloom-comp__cell-content">
+                      {{ block.settings.competitor_2_value }}
+                    </div>
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </bloom-compare-table>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bloom Comparison Table",
+  "tag": "section",
+  "class": "section-bloom-compare-table",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Visibility & Behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_reveal",
+      "label": "Enable Smooth Scroll Reveal",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_feature_column_mobile",
+      "label": "Sticky Feature Column on Mobile",
+      "info": "Keeps the feature names visible on the left side during horizontal mobile swiping",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Heading & Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Compare the"
+    },
+    {
+      "type": "text",
+      "id": "italic_heading",
+      "label": "Italic Phrase",
+      "default": "Best to the Rest"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Tell us about your space and we'll match you with plants that will thrive."
+    },
+    {
+      "type": "header",
+      "content": "Column Headings"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Highlighted Brand Heading",
+      "default": "BLOOM",
+      "info": "Displays large serif wordmark in the dark green column. Set to PLANTI if desired."
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_logo",
+      "label": "Brand Logo (Optional)",
+      "info": "Replaces the brand text with a logo image"
+    },
+    {
+      "type": "range",
+      "id": "brand_logo_width",
+      "min": 60,
+      "max": 220,
+      "step": 5,
+      "unit": "px",
+      "label": "Brand Logo Width",
+      "default": 130
+    },
+    {
+      "type": "text",
+      "id": "competitor_1_name",
+      "label": "Second Column Heading",
+      "default": "Green Corner"
+    },
+    {
+      "type": "text",
+      "id": "competitor_2_name",
+      "label": "Third Column Heading",
+      "default": "Urban Jungle"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background",
+      "default": "#FAF9F0"
+    },
+    {
+      "type": "color",
+      "id": "table_bg_color",
+      "label": "Table Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "highlight_column_bg",
+      "label": "Highlighted Column Background",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "highlight_column_text",
+      "label": "Highlighted Column Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Regular Text Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#234332"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Table Outer Border Color",
+      "default": "#E5E5DC"
+    },
+    {
+      "type": "color",
+      "id": "row_border_color",
+      "label": "Row Divider Color",
+      "default": "rgba(35, 67, 50, 0.08)"
+    },
+    {
+      "type": "header",
+      "content": "Dimensions & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_table_width",
+      "min": 800,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "label": "Table Maximum Width",
+      "default": 1240
+    },
+    {
+      "type": "range",
+      "id": "table_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Table Corner Radius",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_y_desktop",
+      "min": 10,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Cell Vertical Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_x_desktop",
+      "min": 10,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Cell Horizontal Padding",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_y_mobile",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Cell Vertical Padding",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_x_mobile",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Cell Horizontal Padding",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Heading Size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 24,
+      "max": 42,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Heading Size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing_bottom",
+      "min": 6,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Spacing Below Heading",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "subtitle_spacing_bottom",
+      "min": 16,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "label": "Spacing Above Table",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Padding Top",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Padding Bottom",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_name",
+          "label": "Feature Name",
+          "default": "Quality"
+        },
+        {
+          "type": "text",
+          "id": "brand_value",
+          "label": "Bloom Value",
+          "default": "Premium, hand-selected 🌱"
+        },
+        {
+          "type": "text",
+          "id": "competitor_1_value",
+          "label": "Green Corner Value",
+          "default": "Standard quality"
+        },
+        {
+          "type": "text",
+          "id": "competitor_2_value",
+          "label": "Urban Jungle Value",
+          "default": "Good but mass-produced"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_row",
+          "label": "Subtle Row Highlight",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bloom Comparison Table",
+      "settings": {
+        "heading": "Compare the",
+        "italic_heading": "Best to the Rest",
+        "subtitle": "Tell us about your space and we'll match you with plants that will thrive.",
+        "brand_name": "BLOOM",
+        "competitor_1_name": "Green Corner",
+        "competitor_2_name": "Urban Jungle"
+      },
+      "blocks": [
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Quality",
+            "brand_value": "Premium, hand-selected 🌱",
+            "competitor_1_value": "Standard quality",
+            "competitor_2_value": "Good but mass-produced"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Aesthetic & Branding",
+            "brand_value": "Modern, trendy 💚",
+            "competitor_1_value": "Simple",
+            "competitor_2_value": "Basic"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Care Guidance",
+            "brand_value": "✅ Included",
+            "competitor_1_value": "❌ Not included",
+            "competitor_2_value": "❌ Not included"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Packaging",
+            "brand_value": "Standard packaging",
+            "competitor_1_value": "Basic wrapping",
+            "competitor_2_value": "Standard packaging"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Customer Experience",
+            "brand_value": "😊 Fast response",
+            "competitor_1_value": "😊 Average service",
+            "competitor_2_value": "🙂 Slower response"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Unique Plants",
+            "brand_value": "Curated & limited collections 🌿",
+            "competitor_1_value": "Mostly common plants",
+            "competitor_2_value": "Some rare plants"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_name": "Online Shopping",
+            "brand_value": "😊 Fast response",
+            "competitor_1_value": "Social media orders only 😊",
+            "competitor_2_value": "Basic website"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
