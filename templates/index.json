@@ -727,6 +727,74 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0
       }
+    },
+    "bloom_scroll_hero_stack": {
+      "type": "bloom-scroll-hero-stack",
+      "blocks": {
+        "banner_1": {
+          "type": "banner",
+          "settings": {
+            "image_focal_point": "center center",
+            "heading": "Bring Nature",
+            "italic_heading": "Inside",
+            "subtitle": "Beautiful, easy-care plants delivered to your door.",
+            "button_label": "SHOP NOW",
+            "button_link": "/collections/all",
+            "content_position": "center-start",
+            "overlay_opacity_override": 0
+          }
+        },
+        "banner_2": {
+          "type": "banner",
+          "settings": {
+            "image_focal_point": "center center",
+            "heading": "Grow Beauty",
+            "italic_heading": "At Home",
+            "subtitle": "Low-maintenance plants designed for modern living.",
+            "button_label": "SHOP NOW",
+            "button_link": "/collections/all",
+            "content_position": "center-start",
+            "overlay_opacity_override": 0
+          }
+        },
+        "banner_3": {
+          "type": "banner",
+          "settings": {
+            "image_focal_point": "center center",
+            "heading": "Create Your",
+            "italic_heading": "Green Corner",
+            "subtitle": "Fresh, hand-picked plants to brighten every space in your home.",
+            "button_label": "SHOP NOW",
+            "button_link": "/collections/all",
+            "content_position": "center-start",
+            "overlay_opacity_override": 0
+          }
+        }
+      },
+      "block_order": [
+        "banner_1",
+        "banner_2",
+        "banner_3"
+      ],
+      "settings": {
+        "enable_section": true,
+        "enable_scroll_animation": true,
+        "enable_image_parallax": true,
+        "scroll_distance_multiplier": 100,
+        "section_bg_color": "#FAF9F0",
+        "container_max_width": 1440,
+        "desktop_height": 75,
+        "mobile_height": 65,
+        "card_radius": 28,
+        "card_gap": 30,
+        "overlay_opacity": 25,
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 32,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30
+      }
     }
   },
   "order": [
@@ -738,6 +806,7 @@
     "bloom_paired_plant_sets",
     "bloom_trending_plants_N7nQ4X",
     "bloom_planti_product_RMbdBj",
+    "bloom_scroll_hero_stack",
     "bloom_room_inspiration_AnXeBx",
     "bloom_compare_table_K6YEjH"
   ]

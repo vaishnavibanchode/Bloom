@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..700;1,300..700&display=swap');
+
+/* ==========================================================================
+   Bloom Scroll-Driven Hero Stack Banner Sequence
+   Reproducing Athora Planti Hero Scroll Stack
+   ========================================================================== */
+
+.bloom-shs-section {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: var(--bshs-bg, #FAF9F0);
+  padding-top: var(--bshs-pt-desktop, 60px);
+  padding-bottom: var(--bshs-pb-desktop, 60px);
+  box-sizing: border-box;
+}
+
+.bloom-shs__container {
+  width: calc(100% - 48px);
+  max-width: var(--bshs-max-w, 1440px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Track: dictates total scroll duration
+   -------------------------------------------------------------------------- */
+.bloom-shs__track {
+  position: relative;
+  width: 100%;
+  height: var(--bshs-track-height, 300vh);
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Sticky Viewport Window
+   -------------------------------------------------------------------------- */
+.bloom-shs__sticky-viewport {
+  position: sticky;
+  top: var(--bshs-sticky-top, 40px);
+  width: 100%;
+  height: var(--bshs-item-h-desktop, 75vh);
+  min-height: 540px;
+  max-height: 820px;
+  border-radius: var(--bshs-radius, 28px);
+  overflow: hidden;
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  will-change: transform;
+  box-shadow: 0 16px 40px -12px rgba(35, 67, 50, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Horizontal Slides Row / Group Track
+   -------------------------------------------------------------------------- */
+.bloom-shs__slides-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
+  column-gap: var(--bshs-gap, 30px);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+}
+
+/* --------------------------------------------------------------------------
+   Individual Banner Card Slide
+   -------------------------------------------------------------------------- */
+.bloom-shs__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: #234332;
+  will-change: transform;
+}
+
+/* Media Layer */
+.bloom-shs__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+}
+
+.bloom-shs__img {
+  position: absolute;
+  top: 0;
+  left: -12.5%;
+  width: 125%;
+  min-width: 125%;
+  max-width: 125%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--bshs-focal, center center);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.05s linear;
+}
+
+/* Subtle Gradient Overlay for enhanced text readability */
+.bloom-shs__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(18, 33, 25, 0.48) 0%,
+    rgba(18, 33, 25, 0.28) 45%,
+    rgba(18, 33, 25, 0.08) 75%,
+    rgba(18, 33, 25, 0) 100%
+  );
+  opacity: var(--bshs-overlay-opacity, 0.28);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Content Overlay Layer (Heading, Subtitle, Shop Now Button)
+   -------------------------------------------------------------------------- */
+.bloom-shs__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: clamp(32px, 6vw, 80px) clamp(28px, 6vw, 90px);
+  pointer-events: none;
+}
+
+/* Vertical and Horizontal Alignment Options */
+.bloom-shs__content--center-start {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.bloom-shs__content--top-start {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.bloom-shs__content--bottom-start {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.bloom-shs__content--center-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.bloom-shs__text-wrapper {
+  max-width: var(--bshs-content-mw, 620px);
+  pointer-events: auto;
+}
+
+/* Heading: Elegant Serif with Italic Phrase */
+.bloom-shs__heading {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-size: var(--bshs-heading-sz, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #FFFFFF;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.015em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+  display: block;
+}
+
+.bloom-shs__heading-regular {
+  font-style: normal;
+  display: inline;
+}
+
+.bloom-shs__heading-italic {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  margin-left: 6px;
+  display: inline;
+}
+
+/* Subtitle: Clean Sans-Serif */
+.bloom-shs__subtitle {
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #FFFFFF;
+  opacity: 0.92;
+  margin: 0 0 28px 0;
+  max-width: 520px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.16);
+}
+
+/* --------------------------------------------------------------------------
+   Shop Now Pill Button
+   Matching Athora Planti outlined pill with smooth hover effect
+   -------------------------------------------------------------------------- */
+.bloom-shs__btn-wrap {
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.bloom-shs__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 34px;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-decoration: none;
+  background-color: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 9999px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, transform 0.25s ease;
+  z-index: 1;
+}
+
+/* Button ripple / background fill on hover */
+.bloom-shs__btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  border-radius: inherit;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.bloom-shs__btn:hover {
+  color: #234332;
+  border-color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.bloom-shs__btn:hover::before {
+  transform: scaleY(1);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile and Tablet Responsiveness
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 1023px) {
+  .bloom-shs-section {
+    padding-top: var(--bshs-pt-mobile, 36px);
+    padding-bottom: var(--bshs-pb-mobile, 36px);
+  }
+
+  .bloom-shs__container {
+    width: calc(100% - 32px);
+  }
+
+  .bloom-shs__sticky-viewport {
+    height: var(--bshs-item-h-mobile, 65vh);
+    min-height: 460px;
+    border-radius: calc(var(--bshs-radius, 28px) * 0.75);
+  }
+
+  .bloom-shs__content {
+    padding: 36px 30px;
+  }
+
+  .bloom-shs__heading {
+    font-size: var(--bshs-heading-sz-mb, 36px);
+    margin-bottom: 12px;
+  }
+
+  .bloom-shs__subtitle {
+    font-size: 14.5px;
+    margin-bottom: 22px;
+  }
+
+  .bloom-shs__btn {
+    padding: 11px 26px;
+    font-size: 11.5px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .bloom-shs__container {
+    width: calc(100% - 24px);
+  }
+
+  .bloom-shs__sticky-viewport {
+    top: 20px;
+    height: var(--bshs-item-h-mobile, 62vh);
+    min-height: 420px;
+    border-radius: 20px;
+  }
+
+  .bloom-shs__content {
+    padding: 28px 22px;
+  }
+
+  .bloom-shs__heading {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .bloom-shs__subtitle {
+    font-size: 13.5px;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+
+  .bloom-shs__btn {
+    padding: 10px 24px;
+    font-size: 11px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .bloom-shs__track {
+    height: auto !important;
+  }
+
+  .bloom-shs__sticky-viewport {
+    position: relative !important;
+    top: 0 !important;
+    height: auto !important;
+    min-height: unset !important;
+    overflow: visible !important;
+  }
+
+  .bloom-shs__slides-row {
+    flex-direction: column !important;
+    row-gap: 24px !important;
+    transform: none !important;
+  }
+
+  .bloom-shs__slide {
+    height: 520px !important;
+    border-radius: var(--bshs-radius, 28px) !important;
+  }
+
+  .bloom-shs__img {
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    transform: none !important;
+  }
+}
