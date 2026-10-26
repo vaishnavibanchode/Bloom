@@ -520,7 +520,7 @@
       "settings": {
         "background_color": "#ffffff",
         "panel_bg_color": "#ffffff",
-        "container_max_width": 1440,
+        "container_max_width": 1435,
         "padding_top": 28,
         "padding_bottom": 0,
         "heading_color": "#234332",
