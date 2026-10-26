@@ -796,6 +796,83 @@
         "padding_top_mobile": 30,
         "padding_bottom_mobile": 30
       }
+    },
+    "why_plant_lovers_choose_us": {
+      "type": "why-plant-lovers-choose-us",
+      "blocks": {
+        "benefit_card_1": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "box",
+            "title": "Shipped Direct\nfrom the Nursery"
+          }
+        },
+        "benefit_card_2": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "medal",
+            "title": "30 Day Happiness Guarantee"
+          }
+        },
+        "benefit_card_3": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "support",
+            "title": "Expert Customer Support"
+          }
+        },
+        "benefit_card_4": {
+          "type": "benefit_card",
+          "settings": {
+            "icon": "leaves",
+            "title": "Care Instructions Provided"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_card_1",
+        "benefit_card_2",
+        "benefit_card_3",
+        "benefit_card_4"
+      ],
+      "settings": {
+        "enable_section": true,
+        "heading": "Why Plant",
+        "italic_heading": "Lovers Choose Us",
+        "subtitle": "Shop indoor plants online with confidence.",
+        "heading_alignment": "center",
+        "page_bg_color": "#FAFAF0",
+        "section_bg_color": "#F0F0E1",
+        "card_bg_color": "#E8EBDD",
+        "card_border_color": "#D3D9C9",
+        "heading_color": "#234638",
+        "subtitle_color": "#183A30",
+        "card_text_color": "#294B3E",
+        "icon_color": "#234638",
+        "container_max_width": 1440,
+        "padding_top_desktop": 30,
+        "padding_bottom_desktop": 30,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "outer_radius": 24,
+        "outer_radius_mobile": 18,
+        "card_radius": 12,
+        "card_border_thickness": 1,
+        "card_gap_desktop": 32,
+        "card_gap_mobile": 12,
+        "card_min_height_desktop": 188,
+        "card_min_height_mobile": 150,
+        "heading_size_desktop": 50,
+        "heading_size_mobile": 32,
+        "subtitle_size_desktop": 16,
+        "subtitle_size_mobile": 14,
+        "icon_size_desktop": 46,
+        "icon_size_mobile": 38,
+        "card_text_size_desktop": 15,
+        "card_text_size_mobile": 13,
+        "columns_desktop": "4",
+        "columns_mobile": "2"
+      }
     }
   },
   "order": [
@@ -809,6 +886,7 @@
     "bloom_planti_product_RMbdBj",
     "bloom_room_inspiration_AnXeBx",
     "bloom_compare_table_K6YEjH",
+    "why_plant_lovers_choose_us",
     "bloom_scroll_hero_stack_dNNDHh"
   ]
 }
