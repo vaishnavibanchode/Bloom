@@ -623,6 +623,94 @@
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 24
       }
+    },
+    "bloom_compare_table": {
+      "type": "bloom-compare-table",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Quality",
+            "brand_value": "Premium, hand-selected 🌱",
+            "competitor_1_value": "Standard quality",
+            "competitor_2_value": "Good but mass-produced"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Aesthetic & Branding",
+            "brand_value": "Modern, trendy 💚",
+            "competitor_1_value": "Simple",
+            "competitor_2_value": "Basic"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Care Guidance",
+            "brand_value": "✅ Included",
+            "competitor_1_value": "❌ Not included",
+            "competitor_2_value": "❌ Not included"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Packaging",
+            "brand_value": "Standard packaging",
+            "competitor_1_value": "Basic wrapping",
+            "competitor_2_value": "Standard packaging"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Customer Experience",
+            "brand_value": "😊 Fast response",
+            "competitor_1_value": "😊 Average service",
+            "competitor_2_value": "🙂 Slower response"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Unique Plants",
+            "brand_value": "Curated & limited collections 🌿",
+            "competitor_1_value": "Mostly common plants",
+            "competitor_2_value": "Some rare plants"
+          }
+        },
+        "row_7": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Online Shopping",
+            "brand_value": "😊 Fast response",
+            "competitor_1_value": "Social media orders only 😊",
+            "competitor_2_value": "Basic website"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "row_7"
+      ],
+      "settings": {
+        "enable_section": true,
+        "enable_scroll_reveal": true,
+        "sticky_feature_column_mobile": true,
+        "heading": "Compare the",
+        "italic_heading": "Best to the Rest",
+        "subtitle": "Tell us about your space and we'll match you with plants that will thrive.",
+        "brand_name": "BLOOM",
+        "competitor_1_name": "Green Corner",
+        "competitor_2_name": "Urban Jungle"
+      }
     }
   },
   "order": [
@@ -634,6 +722,7 @@
     "bloom_paired_plant_sets",
     "bloom_trending_plants_N7nQ4X",
     "bloom_planti_product_RMbdBj",
-    "bloom_room_inspiration_AnXeBx"
+    "bloom_room_inspiration_AnXeBx",
+    "bloom_compare_table"
   ]
 }

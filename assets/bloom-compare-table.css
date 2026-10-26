@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..700;1,300..700&display=swap');
+
+/* ==========================================================================
+   Bloom "Compare the Best to the Rest" Comparison Table Section
+   ========================================================================== */
+
+.bloom-compare-section {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: var(--bct-sec-bg, #FAF9F0);
+  padding-top: var(--bct-pt-desktop, 70px);
+  padding-bottom: var(--bct-pb-desktop, 80px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.bloom-compare__container {
+  width: calc(100% - 48px);
+  max-width: var(--bct-max-width, 1240px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Heading & Subtitle Area
+   -------------------------------------------------------------------------- */
+.bloom-compare__header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.bloom-compare__heading {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-size: var(--bct-font-heading-desktop, 48px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--bct-heading-color, #234332);
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--bct-heading-mb, 14px) 0;
+  display: block;
+}
+
+.bloom-compare__heading-main {
+  font-style: normal;
+  display: inline;
+}
+
+.bloom-compare__heading-italic {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  margin-left: 6px;
+  display: inline;
+}
+
+.bloom-compare__subtitle {
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bct-text-color, #234332);
+  opacity: 0.85;
+  margin: 0 auto var(--bct-subtitle-mb, 48px) auto;
+  max-width: 600px;
+}
+
+/* --------------------------------------------------------------------------
+   Table Outer Wrapper & Frame
+   -------------------------------------------------------------------------- */
+.bloom-compare__table-card {
+  position: relative;
+  width: 100%;
+  border-radius: var(--bct-radius, 28px);
+  border: 1px solid var(--bct-border-outer, #E5E5DC);
+  background-color: var(--bct-table-bg, #FFFFFF);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly horizontal scroll wrapper */
+.bloom-compare__scroll-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  position: relative;
+}
+
+.bloom-compare__scroll-viewport::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Visual shadow cue when table is scrolled on mobile */
+.bloom-compare__table-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 28px;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(35, 67, 50, 0.08));
+  opacity: var(--bct-scroll-cue-opacity, 0);
+  transition: opacity 0.3s ease;
+  z-index: 4;
+}
+
+/* --------------------------------------------------------------------------
+   Comparison Table Structure
+   -------------------------------------------------------------------------- */
+.bloom-compare__table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+  table-layout: fixed;
+  box-sizing: border-box;
+}
+
+/* Column Proportions matching reference screenshot */
+.bloom-compare__col--feature {
+  width: 22%;
+}
+
+.bloom-compare__col--brand {
+  width: 28%;
+}
+
+.bloom-compare__col--comp1 {
+  width: 25%;
+}
+
+.bloom-compare__col--comp2 {
+  width: 25%;
+}
+
+/* --------------------------------------------------------------------------
+   Header Row Cells
+   -------------------------------------------------------------------------- */
+.bloom-compare__th {
+  padding: var(--bct-cell-py, 26px) var(--bct-cell-px, 24px);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--bct-border-row, rgba(35, 67, 50, 0.08));
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Feature header cell: clean empty cell */
+.bloom-compare__th--feature {
+  background-color: var(--bct-table-bg, #FFFFFF);
+  border-bottom: 1px solid var(--bct-border-row, rgba(35, 67, 50, 0.08));
+}
+
+/* Brand header cell: Deep botanical green */
+.bloom-compare__th--brand {
+  background-color: var(--bct-highlight-bg, #234332);
+  color: var(--bct-highlight-text, #FFFFFF);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: calc(var(--bct-cell-py, 26px) + 8px) var(--bct-cell-px, 24px);
+}
+
+.bloom-compare__brand-title {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--bct-highlight-text, #FFFFFF);
+  display: inline-block;
+}
+
+.bloom-compare__brand-logo {
+  max-width: var(--bct-brand-logo-w, 130px);
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Competitor header cells */
+.bloom-compare__th--comp {
+  background-color: var(--bct-table-bg, #FFFFFF);
+  border-left: 1px solid var(--bct-border-col, rgba(35, 67, 50, 0.08));
+  border-bottom: 1px solid var(--bct-border-row, rgba(35, 67, 50, 0.08));
+}
+
+.bloom-compare__comp-title {
+  font-family: var(--planti-serif-font, 'Instrument Serif', Georgia, serif);
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 400;
+  color: var(--bct-heading-color, #234332);
+  letter-spacing: -0.01em;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+/* --------------------------------------------------------------------------
+   Body Row Cells
+   -------------------------------------------------------------------------- */
+.bloom-compare__row--body:last-child .bloom-compare__td {
+  border-bottom: none;
+}
+
+.bloom-compare__td {
+  padding: var(--bct-cell-py, 20px) var(--bct-cell-px, 24px);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--bct-border-row, rgba(35, 67, 50, 0.08));
+  box-sizing: border-box;
+}
+
+/* Feature cell (leftmost column) */
+.bloom-compare__td--feature {
+  background-color: var(--bct-table-bg, #FFFFFF);
+  text-align: left;
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bct-text-color, #234332);
+  letter-spacing: 0.01em;
+  padding-left: clamp(20px, 2.5vw, 36px);
+}
+
+.bloom-compare__feature-name {
+  display: block;
+  line-height: 1.4;
+}
+
+/* Highlighted Brand column (Bloom) */
+.bloom-compare__td--brand {
+  background-color: var(--bct-highlight-bg, #234332);
+  color: var(--bct-highlight-text, #FFFFFF);
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.bloom-compare__cell-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Competitor cells */
+.bloom-compare__td--comp {
+  background-color: var(--bct-table-bg, #FFFFFF);
+  text-align: center;
+  border-left: 1px solid var(--bct-border-col, rgba(35, 67, 50, 0.08));
+  font-family: var(--planti-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--bct-text-color, #234332);
+  opacity: 0.88;
+  line-height: 1.45;
+}
+
+/* Row-level subtle highlight option */
+.bloom-compare__row--highlight .bloom-compare__td--feature,
+.bloom-compare__row--highlight .bloom-compare__td--comp {
+  background-color: rgba(35, 67, 50, 0.02);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Reveal Animation
+   -------------------------------------------------------------------------- */
+.bloom-compare-section[data-reveal="true"] .bloom-compare__header,
+.bloom-compare-section[data-reveal="true"] .bloom-compare__table-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.bloom-compare-section[data-reveal="true"] .bloom-compare__table-card {
+  transition-delay: 0.12s;
+}
+
+.bloom-compare-section[data-reveal="true"].is-visible .bloom-compare__header,
+.bloom-compare-section[data-reveal="true"].is-visible .bloom-compare__table-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile & Tablet Responsiveness
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 1023px) {
+  .bloom-compare-section {
+    padding-top: var(--bct-pt-mobile, 40px);
+    padding-bottom: var(--bct-pb-mobile, 50px);
+  }
+
+  .bloom-compare__container {
+    width: calc(100% - 32px);
+  }
+
+  .bloom-compare__heading {
+    font-size: var(--bct-font-heading-mobile, 32px);
+    margin-bottom: 10px;
+  }
+
+  .bloom-compare__subtitle {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .bloom-compare__table {
+    min-width: 660px;
+  }
+
+  .bloom-compare__th {
+    padding: calc(var(--bct-cell-py-mb, 14px) + 6px) var(--bct-cell-px-mb, 14px);
+  }
+
+  .bloom-compare__td {
+    padding: var(--bct-cell-py-mb, 14px) var(--bct-cell-px-mb, 14px);
+    font-size: 13.5px;
+  }
+
+  .bloom-compare__td--feature {
+    padding-left: 18px;
+    font-size: 13.5px;
+  }
+}
+
+/* Mobile Sticky Feature Column Mode (Sticky on horizontal swipe) */
+@media screen and (max-width: 767px) {
+  .bloom-compare-section[data-sticky-col="true"] .bloom-compare__th--feature,
+  .bloom-compare-section[data-sticky-col="true"] .bloom-compare__td--feature {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background-color: var(--bct-table-bg, #FFFFFF);
+    box-shadow: 2px 0 8px rgba(35, 67, 50, 0.06);
+  }
+
+  .bloom-compare__brand-title {
+    font-size: 28px;
+  }
+
+  .bloom-compare__comp-title {
+    font-size: 18px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .bloom-compare-section[data-reveal="true"] .bloom-compare__header,
+  .bloom-compare-section[data-reveal="true"] .bloom-compare__table-card {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
