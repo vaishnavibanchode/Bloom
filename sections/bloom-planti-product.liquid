@@ -190,8 +190,10 @@
             </svg>
           </button>
 
-          <!-- Interactive Blue Grid Loupe Lens Box -->
-          <div class="bloom-planti__zoom-lens" aria-hidden="true"></div>
+          <!-- Interactive Blue Grid Loupe Lens Box (Only active when enabled) -->
+          {%- if section_st.enable_lens_zoom -%}
+            <div class="bloom-planti__zoom-lens" aria-hidden="true"></div>
+          {%- endif -%}
         </div>
       </div>
 
@@ -201,14 +203,16 @@
       <div class="bloom-planti__info-col">
         <div class="bloom-planti__info-card">
           
-          <!-- High-Resolution Magnified Loupe Viewport (Overlays Details Card on Hover) -->
-          <div class="bloom-planti__zoom-viewer" aria-hidden="true">
-            <img
-              class="bloom-planti__zoom-viewer-img"
-              src="{% if has_real_media %}{{ cur_product.media.first | image_url: width: 2200 }}{% else %}{{ default_img_1 }}{% endif %}"
-              alt="Zoomed detailed botanical view"
-            >
-          </div>
+          <!-- High-Resolution Magnified Loupe Viewport (Overlays Upper Area of Details Card ONLY on active hover) -->
+          {%- if section_st.enable_lens_zoom -%}
+            <div class="bloom-planti__zoom-viewer" aria-hidden="true">
+              <img
+                class="bloom-planti__zoom-viewer-img"
+                src="{% if has_real_media %}{{ cur_product.media.first | image_url: width: 2200 }}{% else %}{{ default_img_1 }}{% endif %}"
+                alt="Zoomed detailed botanical view"
+              >
+            </div>
+          {%- endif -%}
 
           <!-- Vendor / Category Pill Tag -->
           <span class="bloom-planti__vendor-pill">{{ display_vendor }}</span>

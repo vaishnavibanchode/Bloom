@@ -97,9 +97,18 @@
 
       // 3. Desktop Interactive Loupe Lens Zoom
       if (this.mediaWrap && this.zoomLens && this.zoomViewer) {
-        this.mediaWrap.addEventListener('mouseenter', () => this.onZoomEnter());
-        this.mediaWrap.addEventListener('mousemove', (e) => this.onZoomMove(e));
-        this.mediaWrap.addEventListener('mouseleave', () => this.onZoomLeave());
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        if (!isTouch) {
+          this.mediaWrap.addEventListener('mouseenter', () => this.onZoomEnter());
+          this.mediaWrap.addEventListener('mousemove', (e) => this.onZoomMove(e));
+          this.mediaWrap.addEventListener('mouseleave', () => this.onZoomLeave());
+          this.mediaWrap.addEventListener('pointerleave', () => this.onZoomLeave());
+
+          // Defensive listeners to ensure zoom viewer resets cleanly
+          window.addEventListener('scroll', () => this.onZoomLeave(), { passive: true });
+          window.addEventListener('blur', () => this.onZoomLeave());
+          document.addEventListener('mouseleave', () => this.onZoomLeave());
+        }
       }
 
       // 4. Lightbox Click
@@ -213,6 +222,7 @@
        ------------------------------------------------------------------------ */
     switchImage(index) {
       if (index < 0 || index >= this.thumbs.length) return;
+      this.onZoomLeave();
       this.currentIndex = index;
 
       // Update active thumbnail outline
@@ -267,27 +277,35 @@
        ------------------------------------------------------------------------ */
     onZoomEnter() {
       if (window.innerWidth < 992) return;
+      if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0)) return;
+      if (!this.zoomLens || !this.zoomViewer) return;
+
       this.isZooming = true;
-      if (this.zoomLens) this.zoomLens.classList.add('is-visible');
-      if (this.zoomViewer) {
-        this.zoomViewer.classList.add('is-active');
-        // Ensure zoom viewer image matches current main image
-        if (this.zoomViewerImg && this.mainImg) {
-          this.zoomViewerImg.src = this.mainImg.src;
-        }
+      this.zoomLens.classList.add('is-visible');
+      this.zoomViewer.classList.add('is-active');
+
+      // Ensure zoom viewer image matches current main image
+      if (this.zoomViewerImg && this.mainImg) {
+        this.zoomViewerImg.src = this.mainImg.src;
       }
     }
 
     onZoomMove(e) {
       if (!this.isZooming || window.innerWidth < 992) return;
+      if (!this.zoomLens || !this.zoomViewer) return;
 
       const rect = this.mediaWrap.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Mouse left media boundary
+      if (mouseX < 0 || mouseY < 0 || mouseX > rect.width || mouseY > rect.height) {
+        this.onZoomLeave();
+        return;
+      }
+
       const lensWidth = this.zoomLens.offsetWidth || 190;
       const lensHeight = this.zoomLens.offsetHeight || 190;
-
-      // Mouse position relative to main media container
-      let mouseX = e.clientX - rect.left;
-      let mouseY = e.clientY - rect.top;
 
       // Clamp lens position within main media container
       let lensLeft = mouseX - lensWidth / 2;
@@ -310,8 +328,8 @@
 
       // Position high-res zoomed image in viewer
       if (this.zoomViewer && this.zoomViewerImg) {
-        const viewerWidth = this.zoomViewer.offsetWidth;
-        const viewerHeight = this.zoomViewer.offsetHeight;
+        const viewerWidth = this.zoomViewer.offsetWidth || 400;
+        const viewerHeight = this.zoomViewer.offsetHeight || 360;
 
         // Magnification factor 2.4x
         const zoomScale = 2.4;
@@ -330,14 +348,19 @@
 
     onZoomLeave() {
       this.isZooming = false;
-      if (this.zoomLens) this.zoomLens.classList.remove('is-visible');
-      if (this.zoomViewer) this.zoomViewer.classList.remove('is-active');
+      if (this.zoomLens) {
+        this.zoomLens.classList.remove('is-visible');
+      }
+      if (this.zoomViewer) {
+        this.zoomViewer.classList.remove('is-active');
+      }
     }
 
     /* ------------------------------------------------------------------------
        Fullscreen Lightbox
        ------------------------------------------------------------------------ */
     openLightbox() {
+      this.onZoomLeave();
       if (!this.lightbox || !this.lightboxImg || !this.mainImg) return;
       this.updateLightboxImage();
       this.lightbox.classList.add('is-open');
