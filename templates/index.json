@@ -942,49 +942,6 @@
         "subtitle_size_mobile": 14
       }
     },
-    "bloom_newsletter_signup_7Hj6mf": {
-      "type": "bloom-newsletter-signup",
-      "name": "Planti Newsletter Signup",
-      "settings": {
-        "heading": "Subscribe to <em>our emails</em>",
-        "italic_text": "our emails",
-        "subtitle": "Get sleep tips, new product drops and exclusive offers.",
-        "email_placeholder": "Enter your email",
-        "button_label": "SUBSCRIBE",
-        "success_message": "Thank you for subscribing! Check your inbox for updates.",
-        "section_width": "full_width",
-        "fixed_container_width": 1200,
-        "content_max_width": 680,
-        "background_full_bleed": false,
-        "background_color": "#fafaf0",
-        "heading_color": "#294b3d",
-        "subtitle_color": "#294b3d",
-        "input_bg_color": "#ffffff",
-        "input_text_color": "#294b3d",
-        "placeholder_color": "#94a69a",
-        "input_border_color": "#e8ece7",
-        "button_bg_color": "#234638",
-        "button_text_color": "#ffffff",
-        "button_hover_bg_color": "#193629",
-        "heading_size_desktop": 50,
-        "heading_size_mobile": 34,
-        "subtitle_size_desktop": 22,
-        "subtitle_size_mobile": 16,
-        "button_text_size": 13,
-        "content_alignment": "center",
-        "padding_top_desktop": 100,
-        "padding_bottom_desktop": 100,
-        "padding_top_mobile": 60,
-        "padding_bottom_mobile": 60,
-        "gap_heading_subtitle": 16,
-        "gap_subtitle_form": 36,
-        "form_max_width": 555,
-        "form_height": 72,
-        "button_height": 56,
-        "form_border_radius": 50,
-        "outer_border_radius": 24
-      }
-    },
     "bloom_testimonials_stack_xfUaJy": {
       "type": "bloom-testimonials-stack",
       "blocks": {
@@ -1042,16 +999,16 @@
         "fixed_container_width": 1800,
         "content_max_width": 1600,
         "background_full_bleed": false,
-        "outer_background_color": "#FAFAF0",
-        "card_background_color": "#F0F0E1",
-        "text_color": "#294B3D",
-        "quote_color": "#C7CEBE",
-        "star_color": "#FF982D",
-        "verified_color": "#29965A",
-        "nav_bg_color": "#FFFFFF",
-        "nav_icon_color": "#294B3D",
-        "progress_track_color": "#E8ECE8",
-        "progress_bar_color": "#294B3D",
+        "outer_background_color": "#fafaf0",
+        "card_background_color": "#f0f0e1",
+        "text_color": "#294b3d",
+        "quote_color": "#c7cebe",
+        "star_color": "#ff982d",
+        "verified_color": "#29965a",
+        "nav_bg_color": "#ffffff",
+        "nav_icon_color": "#294b3d",
+        "progress_track_color": "#e8ece8",
+        "progress_bar_color": "#294b3d",
         "show_quote_mark": true,
         "show_star_rating": true,
         "review_font_size_desktop": 25,
@@ -1078,43 +1035,57 @@
         "image_1": {
           "type": "image",
           "settings": {
-            "image_alt": "Woman holding potted rosemary plant in flower shop"
+            "image_alt": "Woman holding potted rosemary plant in flower shop",
+            "link": "",
+            "focal_point": "center"
           }
         },
         "image_2": {
           "type": "image",
           "settings": {
-            "image_alt": "Carefully repotting peace lily plant into white pot"
+            "image_alt": "Carefully repotting peace lily plant into white pot",
+            "link": "",
+            "focal_point": "center"
           }
         },
         "image_3": {
           "type": "image",
           "settings": {
-            "image_alt": "Woman wearing blue gloves holding potted zebra bromeliad"
+            "image_alt": "Woman wearing blue gloves holding potted zebra bromeliad",
+            "link": "",
+            "focal_point": "center"
           }
         },
         "image_4": {
           "type": "image",
           "settings": {
-            "image_alt": "Bird's nest fern foliage with fresh glistening water droplets"
+            "image_alt": "Bird's nest fern foliage with fresh glistening water droplets",
+            "link": "",
+            "focal_point": "center"
           }
         },
         "image_5": {
           "type": "image",
           "settings": {
-            "image_alt": "Potted cactus and succulent arrangement"
+            "image_alt": "Potted cactus and succulent arrangement",
+            "link": "",
+            "focal_point": "center"
           }
         },
         "image_6": {
           "type": "image",
           "settings": {
-            "image_alt": "Gardener holding potted desert plant"
+            "image_alt": "Gardener holding potted desert plant",
+            "link": "",
+            "focal_point": "center"
           }
         },
         "image_7": {
           "type": "image",
           "settings": {
-            "image_alt": "Rubber plant in artisanal ceramic pot"
+            "image_alt": "Rubber plant in artisanal ceramic pot",
+            "link": "",
+            "focal_point": "center"
           }
         }
       },
@@ -1161,6 +1132,166 @@
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 50,
         "padding_bottom_mobile": 50,
+        "background_color": "#fafaf0",
+        "heading_color": "#294b3d",
+        "subtitle_color": "#294b3d",
+        "button_border_color": "#294b3d",
+        "button_text_color": "#294b3d",
+        "button_bg_color": "rgba(0,0,0,0)",
+        "button_hover_bg_color": "#294b3d",
+        "button_hover_text_color": "#ffffff",
+        "pause_bg_color": "#ffffff",
+        "pause_border_color": "#d6dcd3",
+        "pause_icon_color": "#294b3d"
+      }
+    },
+    "bloom_newsletter_signup_7Hj6mf": {
+      "type": "bloom-newsletter-signup",
+      "name": "Planti Newsletter Signup",
+      "settings": {
+        "heading": "Subscribe to <em>our emails</em>",
+        "italic_text": "our emails",
+        "subtitle": "Get sleep tips, new product drops and exclusive offers.",
+        "email_placeholder": "Enter your email",
+        "button_label": "SUBSCRIBE",
+        "success_message": "Thank you for subscribing! Check your inbox for updates.",
+        "section_width": "full_width",
+        "fixed_container_width": 1200,
+        "content_max_width": 680,
+        "background_full_bleed": false,
+        "background_color": "#fafaf0",
+        "heading_color": "#294b3d",
+        "subtitle_color": "#294b3d",
+        "input_bg_color": "#ffffff",
+        "input_text_color": "#294b3d",
+        "placeholder_color": "#94a69a",
+        "input_border_color": "#e8ece7",
+        "button_bg_color": "#234638",
+        "button_text_color": "#ffffff",
+        "button_hover_bg_color": "#193629",
+        "heading_size_desktop": 50,
+        "heading_size_mobile": 34,
+        "subtitle_size_desktop": 22,
+        "subtitle_size_mobile": 16,
+        "button_text_size": 13,
+        "content_alignment": "center",
+        "padding_top_desktop": 100,
+        "padding_bottom_desktop": 100,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60,
+        "gap_heading_subtitle": 16,
+        "gap_subtitle_form": 36,
+        "form_max_width": 555,
+        "form_height": 72,
+        "button_height": 56,
+        "form_border_radius": 50,
+        "outer_border_radius": 24
+      }
+    },
+    "bloom_social_gallery_7k9d4q": {
+      "type": "bloom-social-gallery",
+      "blocks": {
+        "image_jk6BBr": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Woman holding potted rosemary plant in flower shop",
+            "link": "",
+            "focal_point": "center"
+          }
+        },
+        "image_gJ3Wej": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Carefully repotting peace lily plant into white pot",
+            "link": "",
+            "focal_point": "center"
+          }
+        },
+        "image_jKiCGG": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Woman wearing blue gloves holding potted zebra bromeliad",
+            "link": "",
+            "focal_point": "center"
+          }
+        },
+        "image_XXnm63": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Bird's nest fern foliage with fresh glistening water droplets",
+            "link": "",
+            "focal_point": "center"
+          }
+        },
+        "image_Mqf8qi": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Potted cactus and succulent arrangement",
+            "link": "",
+            "focal_point": "center"
+          }
+        },
+        "image_PnaVfQ": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Gardener holding potted desert plant",
+            "link": "",
+            "focal_point": "center"
+          }
+        },
+        "image_AEtbL9": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Rubber plant in artisanal ceramic pot",
+            "link": "",
+            "focal_point": "center"
+          }
+        }
+      },
+      "block_order": [
+        "image_jk6BBr",
+        "image_gJ3Wej",
+        "image_jKiCGG",
+        "image_XXnm63",
+        "image_Mqf8qi",
+        "image_PnaVfQ",
+        "image_AEtbL9"
+      ],
+      "name": "Planti Social Gallery",
+      "settings": {
+        "section_width": "full_width",
+        "fixed_container_width": 1400,
+        "content_max_width": 1440,
+        "heading": "Follow us <em>on instagram</em>",
+        "italic_text": "on instagram",
+        "subtitle": "Forward to seeing you on our social networks",
+        "heading_size_desktop": 44,
+        "heading_size_mobile": 32,
+        "subtitle_size_desktop": 18,
+        "subtitle_size_mobile": 16,
+        "header_bottom_gap": 36,
+        "show_instagram": true,
+        "instagram_label": "INSTAGRAM",
+        "instagram_url": "",
+        "show_tiktok": true,
+        "tiktok_label": "TIKTOK",
+        "tiktok_url": "",
+        "card_width_desktop": 420,
+        "card_height_desktop": 420,
+        "card_width_mobile": 280,
+        "card_height_mobile": 280,
+        "card_corner_radius": 12,
+        "card_gap_desktop": 32,
+        "card_gap_mobile": 16,
+        "enable_autoscroll": true,
+        "scroll_speed": 35,
+        "scroll_direction": "left",
+        "pause_on_hover": true,
+        "show_pause_control": true,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 50,
         "background_color": "#FAFAF0",
         "heading_color": "#294B3D",
         "subtitle_color": "#294B3D",
@@ -1191,6 +1322,7 @@
     "bloom_image_hotspots_WAxRqf",
     "bloom_testimonials_stack_xfUaJy",
     "bloom_social_gallery",
-    "bloom_newsletter_signup_7Hj6mf"
+    "bloom_newsletter_signup_7Hj6mf",
+    "bloom_social_gallery_7k9d4q"
   ]
 }
