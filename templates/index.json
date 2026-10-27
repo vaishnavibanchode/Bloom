@@ -942,92 +942,6 @@
         "subtitle_size_mobile": 14
       }
     },
-    "bloom_testimonials_stack": {
-      "type": "bloom-testimonials-stack",
-      "blocks": {
-        "testimonial_1": {
-          "type": "testimonial",
-          "settings": {
-            "custom_rotation_override": false,
-            "rotation": 5,
-            "rating": 5,
-            "quote": "These plants completely transformed my workspace. They’re low-maintenance, healthy, and beautifully styled. I love how they add a calm, natural vibe without requiring too much care from my busy schedule.",
-            "author_name": "Daniel R.",
-            "show_verified": true,
-            "product": "",
-            "custom_product_title": "Echeveria miranda",
-            "custom_product_url": ""
-          }
-        },
-        "testimonial_2": {
-          "type": "testimonial",
-          "settings": {
-            "custom_rotation_override": false,
-            "rotation": 0,
-            "rating": 5,
-            "quote": "I never thought ordering plants online could be this easy! They arrived fresh, carefully packaged, and ready to display. The quality is incredible, and they instantly made my living room feel brighter and more inviting",
-            "author_name": "Anna M.",
-            "show_verified": true,
-            "product": "",
-            "custom_product_title": "Ficus tineke",
-            "custom_product_url": ""
-          }
-        },
-        "testimonial_3": {
-          "type": "testimonial",
-          "settings": {
-            "custom_rotation_override": false,
-            "rotation": -5,
-            "rating": 5,
-            "quote": "Absolutely obsessed with my new plant collection! The pots are modern, the plants look lush and vibrant, and everything was delivered in perfect condition. I’ve already received so many compliments from friends.",
-            "author_name": "Sophia L",
-            "show_verified": true,
-            "product": "",
-            "custom_product_title": "Elephant bush",
-            "custom_product_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_1",
-        "testimonial_2",
-        "testimonial_3"
-      ],
-      "settings": {
-        "section_width": "default",
-        "fixed_container_width": 1400,
-        "content_max_width": 1320,
-        "background_full_bleed": false,
-        "outer_background_color": "#fafaf0",
-        "card_background_color": "#f0f0e1",
-        "text_color": "#294b3d",
-        "quote_color": "#c7cebe",
-        "star_color": "#ff982d",
-        "verified_color": "#29965a",
-        "nav_bg_color": "#ffffff",
-        "nav_icon_color": "#294b3d",
-        "progress_track_color": "#e8ece8",
-        "progress_bar_color": "#294b3d",
-        "show_quote_mark": true,
-        "show_star_rating": true,
-        "review_font_size_desktop": 30,
-        "review_font_size_mobile": 20,
-        "review_line_height": 150,
-        "purchased_label": "Purchased items:",
-        "stack_width_desktop": 420,
-        "column_gap_desktop": 70,
-        "card_corner_radius": 16,
-        "container_corner_radius": 24,
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50,
-        "enable_card_animation": true,
-        "animation_duration": 400,
-        "enable_autoplay": false,
-        "autoplay_interval": 6
-      }
-    },
     "bloom_newsletter_signup_7Hj6mf": {
       "type": "bloom-newsletter-signup",
       "name": "Planti Newsletter Signup",
@@ -1173,7 +1087,6 @@
     "bloom_scroll_hero_stack_dNNDHh",
     "why_plant_lovers_choose_us_a8YKiD",
     "bloom_image_hotspots_WAxRqf",
-    "bloom_testimonials_stack",
     "bloom_newsletter_signup_7Hj6mf",
     "bloom_testimonials_stack_xfUaJy"
   ]
