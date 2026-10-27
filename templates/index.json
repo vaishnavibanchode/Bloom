@@ -942,14 +942,16 @@
         "subtitle_size_mobile": 14
       }
     },
-    "bloom_newsletter_signup": {
+    "bloom_newsletter_signup_7Hj6mf": {
       "type": "bloom-newsletter-signup",
+      "name": "Planti Newsletter Signup",
       "settings": {
         "heading": "Subscribe to <em>our emails</em>",
         "italic_text": "our emails",
         "subtitle": "Get sleep tips, new product drops and exclusive offers.",
         "email_placeholder": "Enter your email",
         "button_label": "SUBSCRIBE",
+        "success_message": "Thank you for subscribing! Check your inbox for updates.",
         "section_width": "full_width",
         "fixed_container_width": 1200,
         "content_max_width": 680,
@@ -998,6 +1000,6 @@
     "bloom_scroll_hero_stack_dNNDHh",
     "why_plant_lovers_choose_us_a8YKiD",
     "bloom_image_hotspots_WAxRqf",
-    "bloom_newsletter_signup"
+    "bloom_newsletter_signup_7Hj6mf"
   ]
 }
