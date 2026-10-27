@@ -1125,9 +1125,9 @@
       "name": "Planti Testimonials Stack",
       "settings": {
         "section_width": "fixed_width",
-        "fixed_container_width": 1400,
+        "fixed_container_width": 1600,
         "content_max_width": 1600,
-        "background_full_bleed": false,
+        "background_full_bleed": true,
         "outer_background_color": "#FAFAF0",
         "card_background_color": "#F0F0E1",
         "text_color": "#294B3D",
