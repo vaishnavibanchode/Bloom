@@ -1,0 +1,1336 @@
+{%- comment -%}
+  Bloom Theme - Planti Social Gallery Section
+  Faithful recreation of the Athora Planti signature Instagram & TikTok continuous auto-scrolling gallery
+{%- endcomment -%}
+
+{%- liquid
+  assign section_st = section.settings
+  assign section_width = section_st.section_width | default: 'full_width'
+  assign total_blocks = section.blocks.size
+
+  assign heading_content = section_st.heading
+  if heading_content == blank
+    assign heading_content = 'Follow us <em>on instagram</em>'
+  endif
+
+  if section_st.italic_text != blank
+    unless heading_content contains '<em>' or heading_content contains '<i>' or heading_content contains '<em '
+      if heading_content contains section_st.italic_text
+        assign italic_tag = '<em>' | append: section_st.italic_text | append: '</em>'
+        assign heading_content = heading_content | replace: section_st.italic_text, italic_tag
+      endif
+    endunless
+  endif
+-%}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+  #shopify-section-{{ section.id }} {
+    --bloom-sg-bg: {{ section_st.background_color | default: '#FAFAF0' }};
+    --bloom-sg-heading-color: {{ section_st.heading_color | default: '#294B3D' }};
+    --bloom-sg-sub-color: {{ section_st.subtitle_color | default: '#294B3D' }};
+
+    --bloom-sg-btn-border: {{ section_st.button_border_color | default: '#294B3D' }};
+    --bloom-sg-btn-text: {{ section_st.button_text_color | default: '#294B3D' }};
+    --bloom-sg-btn-bg: {{ section_st.button_bg_color | default: 'transparent' }};
+    --bloom-sg-btn-hover-bg: {{ section_st.button_hover_bg_color | default: '#294B3D' }};
+    --bloom-sg-btn-hover-text: {{ section_st.button_hover_text_color | default: '#FFFFFF' }};
+
+    --bloom-sg-pause-bg: {{ section_st.pause_bg_color | default: '#FFFFFF' }};
+    --bloom-sg-pause-border: {{ section_st.pause_border_color | default: '#D6DCD3' }};
+    --bloom-sg-pause-icon: {{ section_st.pause_icon_color | default: '#294B3D' }};
+
+    --bloom-sg-pt-dk: {{ section_st.padding_top_desktop | default: 80 }}px;
+    --bloom-sg-pb-dk: {{ section_st.padding_bottom_desktop | default: 80 }}px;
+    --bloom-sg-pt-mb: {{ section_st.padding_top_mobile | default: 50 }}px;
+    --bloom-sg-pb-mb: {{ section_st.padding_bottom_mobile | default: 50 }}px;
+
+    --bloom-sg-h-sz-dk: {{ section_st.heading_size_desktop | default: 44 }}px;
+    --bloom-sg-h-sz-mb: {{ section_st.heading_size_mobile | default: 32 }}px;
+    --bloom-sg-sub-sz-dk: {{ section_st.subtitle_size_desktop | default: 18 }}px;
+    --bloom-sg-sub-sz-mb: {{ section_st.subtitle_size_mobile | default: 16 }}px;
+    --bloom-sg-header-gap: {{ section_st.header_bottom_gap | default: 36 }}px;
+
+    --bloom-sg-card-w-dk: {{ section_st.card_width_desktop | default: 420 }}px;
+    --bloom-sg-card-h-dk: {{ section_st.card_height_desktop | default: 420 }}px;
+    --bloom-sg-card-w-mb: {{ section_st.card_width_mobile | default: 280 }}px;
+    --bloom-sg-card-h-mb: {{ section_st.card_height_mobile | default: 280 }}px;
+    --bloom-sg-card-radius: {{ section_st.card_corner_radius | default: 12 }}px;
+    --bloom-sg-gap-dk: {{ section_st.card_gap_desktop | default: 32 }}px;
+    --bloom-sg-gap-mb: {{ section_st.card_gap_mobile | default: 16 }}px;
+
+    --bloom-sg-fixed-w: {{ section_st.fixed_container_width | default: 1400 }}px;
+    --bloom-sg-content-mw: {{ section_st.content_max_width | default: 1440 }}px;
+    --bloom-sg-speed: {{ section_st.scroll_speed | default: 35 }}s;
+  }
+
+  /* Base Section Container */
+  .bloom-sg-section-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: clip;
+    background-color: var(--bloom-sg-bg);
+    padding-top: var(--bloom-sg-pt-dk);
+    padding-bottom: var(--bloom-sg-pb-dk);
+  }
+
+  /* -------------------------------------------------------------
+     Section Width Option 1: Full width
+     ------------------------------------------------------------- */
+  .bloom-sg-section-{{ section.id }}.bloom-sg--full_width {
+    width: 100%;
+  }
+  .bloom-sg-section-{{ section.id }}.bloom-sg--full_width .bloom-sg__header-container {
+    width: 100%;
+    max-width: var(--bloom-sg-content-mw);
+    margin-inline: auto;
+    padding-inline: clamp(20px, 4vw, 60px);
+    box-sizing: border-box;
+  }
+  .bloom-sg-section-{{ section.id }}.bloom-sg--full_width .bloom-sg__gallery-wrap {
+    width: 100%;
+  }
+
+  /* -------------------------------------------------------------
+     Section Width Option 2: Default (Bloom standard container)
+     ------------------------------------------------------------- */
+  .bloom-sg-section-{{ section.id }}.bloom-sg--default .bloom-sg__header-container {
+    width: 100%;
+    max-width: calc(var(--page-width, 1200px) + var(--bs-gutter-x, 15px) * 2);
+    margin-inline: auto;
+    padding-inline: var(--bs-gutter-x, 15px);
+    box-sizing: border-box;
+  }
+  .bloom-sg-section-{{ section.id }}.bloom-sg--default .bloom-sg__gallery-wrap {
+    width: 100%;
+    max-width: calc(var(--page-width, 1200px) + var(--bs-gutter-x, 15px) * 2);
+    margin-inline: auto;
+    padding-inline: var(--bs-gutter-x, 15px);
+    box-sizing: border-box;
+  }
+
+  /* -------------------------------------------------------------
+     Section Width Option 3: Fluid container
+     ------------------------------------------------------------- */
+  .bloom-sg-section-{{ section.id }}.bloom-sg--fluid_container .bloom-sg__header-container {
+    width: 95%;
+    max-width: calc(var(--fluid-container-width, 1440px) + var(--bs-gutter-x, 15px) * 2);
+    margin-inline: auto;
+    padding-inline: var(--bs-gutter-x, 15px);
+    box-sizing: border-box;
+  }
+  .bloom-sg-section-{{ section.id }}.bloom-sg--fluid_container .bloom-sg__gallery-wrap {
+    width: 95%;
+    max-width: calc(var(--fluid-container-width, 1440px) + var(--bs-gutter-x, 15px) * 2);
+    margin-inline: auto;
+    padding-inline: var(--bs-gutter-x, 15px);
+    box-sizing: border-box;
+  }
+
+  /* -------------------------------------------------------------
+     Section Width Option 4: Fixed width
+     ------------------------------------------------------------- */
+  .bloom-sg-section-{{ section.id }}.bloom-sg--fixed_width .bloom-sg__header-container {
+    width: 100%;
+    max-width: min(calc(100% - 32px), var(--bloom-sg-fixed-w));
+    margin-inline: auto;
+    padding-inline: var(--bs-gutter-x, 15px);
+    box-sizing: border-box;
+  }
+  .bloom-sg-section-{{ section.id }}.bloom-sg--fixed_width .bloom-sg__gallery-wrap {
+    width: 100%;
+    max-width: min(calc(100% - 32px), var(--bloom-sg-fixed-w));
+    margin-inline: auto;
+    padding-inline: var(--bs-gutter-x, 15px);
+    box-sizing: border-box;
+  }
+
+  /* Header Row: Heading on left, Social buttons on right */
+  .bloom-sg__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: var(--bloom-sg-header-gap);
+  }
+
+  .bloom-sg__title-col {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .bloom-sg__heading {
+    font-family: var(--heading-font, "Instrument Serif", Georgia, serif);
+    font-size: var(--bloom-sg-h-sz-dk);
+    line-height: 1.15;
+    font-weight: 400;
+    color: var(--bloom-sg-heading-color);
+    margin: 0 0 10px 0;
+    letter-spacing: -0.01em;
+  }
+  .bloom-sg__heading em,
+  .bloom-sg__heading i {
+    font-family: var(--heading-font, "Instrument Serif", Georgia, serif);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .bloom-sg__subtitle {
+    font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+    font-size: var(--bloom-sg-sub-sz-dk);
+    line-height: 1.45;
+    font-weight: 400;
+    color: var(--bloom-sg-sub-color);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Social Buttons Row */
+  .bloom-sg__social-btns {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .bloom-sg__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 28px;
+    height: 50px;
+    border-radius: 9999px;
+    border: 1px solid var(--bloom-sg-btn-border);
+    background-color: var(--bloom-sg-btn-bg);
+    color: var(--bloom-sg-btn-text);
+    font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  }
+  .bloom-sg__btn:hover {
+    background-color: var(--bloom-sg-btn-hover-bg);
+    color: var(--bloom-sg-btn-hover-text);
+    border-color: var(--bloom-sg-btn-hover-bg);
+    transform: translateY(-1px);
+  }
+  .bloom-sg__btn:active {
+    transform: translateY(0);
+  }
+
+  .bloom-sg__btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  .bloom-sg__btn-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  /* Top Control Bar: Pause/Play button positioned above gallery right */
+  .bloom-sg__controls-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .bloom-sg--full_width .bloom-sg__controls-bar {
+    padding-inline: clamp(20px, 4vw, 60px);
+  }
+
+  .bloom-sg__pause-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--bloom-sg-pause-border);
+    background-color: var(--bloom-sg-pause-bg);
+    color: var(--bloom-sg-pause-icon);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(41, 75, 61, 0.06);
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    z-index: 5;
+  }
+  .bloom-sg__pause-btn:hover {
+    transform: scale(1.08);
+    background-color: #FFFFFF;
+    border-color: var(--bloom-sg-pause-icon);
+  }
+  .bloom-sg__pause-btn:active {
+    transform: scale(0.95);
+  }
+  .bloom-sg__pause-btn:focus-visible {
+    outline: 2px solid var(--bloom-sg-heading-color);
+    outline-offset: 2px;
+  }
+  .bloom-sg__pause-btn svg {
+    width: 10px;
+    height: 11px;
+    fill: currentColor;
+  }
+  .bloom-sg__pause-btn .bloom-sg__icon-play {
+    display: none;
+    margin-left: 2px;
+  }
+  .bloom-sg__pause-btn.is-paused .bloom-sg__icon-pause {
+    display: none;
+  }
+  .bloom-sg__pause-btn.is-paused .bloom-sg__icon-play {
+    display: inline-block;
+  }
+
+  /* -------------------------------------------------------------
+     Marquee Continuous Horizontal Scrolling Gallery
+     ------------------------------------------------------------- */
+  .bloom-sg__marquee-viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    user-select: none;
+    cursor: grab;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bloom-sg__marquee-viewport:active {
+    cursor: grabbing;
+  }
+
+  .bloom-sg__marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: bloomMarqueeScroll var(--bloom-sg-speed) linear infinite;
+  }
+
+  .bloom-sg-section-{{ section.id }}[data-direction="right"] .bloom-sg__marquee-track {
+    animation-name: bloomMarqueeScrollRight;
+  }
+
+  .bloom-sg__marquee-track.is-paused,
+  .bloom-sg-section-{{ section.id }}.is-manual-paused .bloom-sg__marquee-track {
+    animation-play-state: paused !important;
+  }
+
+  {%- if section_st.pause_on_hover -%}
+    .bloom-sg__marquee-viewport:hover .bloom-sg__marquee-track {
+      animation-play-state: paused;
+    }
+  {%- endif -%}
+
+  @keyframes bloomMarqueeScroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes bloomMarqueeScrollRight {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .bloom-sg__marquee-group {
+    display: flex;
+    align-items: center;
+    gap: var(--bloom-sg-gap-dk);
+    padding-right: var(--bloom-sg-gap-dk);
+    flex-shrink: 0;
+  }
+
+  /* Individual Card */
+  .bloom-sg__card {
+    position: relative;
+    flex: 0 0 var(--bloom-sg-card-w-dk);
+    width: var(--bloom-sg-card-w-dk);
+    height: var(--bloom-sg-card-h-dk);
+    border-radius: var(--bloom-sg-card-radius);
+    overflow: hidden;
+    background-color: #E8ECE8;
+    box-sizing: border-box;
+    transform: translateZ(0);
+    box-shadow: 0 6px 20px rgba(41, 75, 61, 0.05);
+  }
+
+  .bloom-sg__card-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bloom-sg__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+  }
+
+  .bloom-sg__card:hover .bloom-sg__card-img {
+    transform: scale(1.04);
+  }
+
+  /* Overlay highlight on hover */
+  .bloom-sg__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(41,75,61,0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .bloom-sg__card:hover .bloom-sg__card-overlay {
+    opacity: 1;
+  }
+
+  /* Responsive Breakpoints */
+  @media screen and (max-width: 1024px) {
+    .bloom-sg__heading {
+      font-size: clamp(32px, 4vw, 40px);
+    }
+    .bloom-sg__card {
+      flex: 0 0 clamp(320px, 32vw, 380px);
+      width: clamp(320px, 32vw, 380px);
+      height: clamp(320px, 32vw, 380px);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .bloom-sg-section-{{ section.id }} {
+      padding-top: var(--bloom-sg-pt-mb);
+      padding-bottom: var(--bloom-sg-pb-mb);
+    }
+
+    .bloom-sg-section-{{ section.id }}.bloom-sg--full_width .bloom-sg__header-container,
+    .bloom-sg-section-{{ section.id }}.bloom-sg--full_width .bloom-sg__controls-bar {
+      padding-inline: 18px;
+    }
+
+    .bloom-sg__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .bloom-sg__heading {
+      font-size: var(--bloom-sg-h-sz-mb);
+      margin-bottom: 6px;
+    }
+
+    .bloom-sg__subtitle {
+      font-size: var(--bloom-sg-sub-sz-mb);
+      line-height: 1.4;
+    }
+
+    .bloom-sg__social-btns {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .bloom-sg__btn {
+      width: 100%;
+      min-width: 0;
+      padding: 10px 8px;
+      height: 42px;
+      font-size: 11.5px;
+      gap: 7px;
+      white-space: nowrap;
+      justify-content: center;
+    }
+    .bloom-sg__btn-icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .bloom-sg__controls-bar {
+      margin-bottom: 12px;
+    }
+    .bloom-sg__pause-btn {
+      width: 34px;
+      height: 34px;
+    }
+
+    .bloom-sg__marquee-group {
+      gap: var(--bloom-sg-gap-mb);
+      padding-right: var(--bloom-sg-gap-mb);
+    }
+
+    .bloom-sg__card {
+      flex: 0 0 var(--bloom-sg-card-w-mb);
+      width: var(--bloom-sg-card-w-mb);
+      height: var(--bloom-sg-card-h-mb);
+      border-radius: max(8px, calc(var(--bloom-sg-card-radius) * 0.8));
+    }
+  }
+
+  @media screen and (max-width: 350px) {
+    .bloom-sg--full_width .bloom-sg__header-container,
+    .bloom-sg--full_width .bloom-sg__controls-bar {
+      padding-inline: 14px;
+    }
+    .bloom-sg__btn {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bloom-sg__marquee-track {
+      animation: none !important;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    .bloom-sg__card {
+      scroll-snap-align: start;
+    }
+    .bloom-sg__pause-btn {
+      display: none !important;
+    }
+  }
+</style>
+
+<section
+  id="bloom-social-gallery-{{ section.id }}"
+  class="bloom-sg-section-{{ section.id }} bloom-sg--{{ section_width }}"
+  data-direction="{{ section_st.scroll_direction | default: 'left' }}"
+  aria-label="Social Media Photo Gallery"
+>
+  <!-- Header Container -->
+  <div class="bloom-sg__header-container">
+    <div class="bloom-sg__header">
+      <!-- Title & Subtitle -->
+      <div class="bloom-sg__title-col">
+        <h2 class="bloom-sg__heading">
+          {{ heading_content }}
+        </h2>
+        {%- if section_st.subtitle != blank -%}
+          <p class="bloom-sg__subtitle">
+            {{ section_st.subtitle | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <!-- Social Profile Buttons -->
+      {%- if section_st.show_instagram or section_st.show_tiktok -%}
+        <div class="bloom-sg__social-btns">
+          {%- if section_st.show_instagram -%}
+            <a
+              href="{{ section_st.instagram_url | default: 'https://instagram.com/shopify' }}"
+              class="bloom-sg__btn bloom-sg__btn--instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="{{ section_st.instagram_label | default: 'INSTAGRAM' }} (opens in new window)"
+            >
+              <span class="bloom-sg__btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M13.5 0H4.5C2.016 0 0 2.016 0 4.5V13.5C0 15.984 2.016 18 4.5 18H13.5C15.984 18 18 15.984 18 13.5V4.5C18 2.016 15.984 0 13.5 0ZM9 13.5C6.516 13.5 4.5 11.484 4.5 9C4.5 6.516 6.516 4.5 9 4.5C11.484 4.5 13.5 6.516 13.5 9C13.5 11.484 11.484 13.5 9 13.5ZM13.815 5.058C13.32 5.058 12.915 4.653 12.915 4.158C12.915 3.663 13.32 3.258 13.815 3.258C14.31 3.258 14.715 3.663 14.715 4.158C14.715 4.653 14.31 5.058 13.815 5.058Z"/>
+                  <path fill="currentColor" d="M9 11.7C10.4912 11.7 11.7 10.4912 11.7 9C11.7 7.50883 10.4912 6.3 9 6.3C7.50883 6.3 6.3 7.50883 6.3 9C6.3 10.4912 7.50883 11.7 9 11.7Z"/>
+                </svg>
+              </span>
+              <span>{{ section_st.instagram_label | default: 'INSTAGRAM' }}</span>
+            </a>
+          {%- endif -%}
+
+          {%- if section_st.show_tiktok -%}
+            <a
+              href="{{ section_st.tiktok_url | default: 'https://tiktok.com/@shopify' }}"
+              class="bloom-sg__btn bloom-sg__btn--tiktok"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="{{ section_st.tiktok_label | default: 'TIKTOK' }} (opens in new window)"
+            >
+              <span class="bloom-sg__btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M14.0075 3.84954C13.8829 3.78676 13.7616 3.71792 13.644 3.6433C13.3022 3.42299 12.9889 3.16339 12.7107 2.8701C12.0145 2.09352 11.7546 1.30568 11.6588 0.754085H11.6627C11.5827 0.296234 11.6158 0 11.6208 0H8.45033V11.9537C8.45033 12.1141 8.45033 12.2728 8.44341 12.4295C8.44341 12.449 8.44149 12.4669 8.44034 12.488C8.44034 12.4966 8.44034 12.5055 8.43842 12.5146C8.43842 12.5169 8.43842 12.5191 8.43842 12.5214C8.405 12.9502 8.26399 13.3646 8.0278 13.7279C7.79162 14.0912 7.46749 14.3923 7.08393 14.6047C6.68419 14.8265 6.23206 14.9428 5.77215 14.9423C4.29499 14.9423 3.09781 13.7678 3.09781 12.3174C3.09781 10.8669 4.29499 9.69249 5.77215 9.69249C6.05177 9.69224 6.32966 9.73514 6.59552 9.81961L6.59937 6.67202C5.79228 6.57037 4.97236 6.63291 4.19129 6.85571C3.41024 7.0785 2.68502 7.4567 2.06137 7.96645C1.51491 8.42941 1.0555 8.98179 0.703816 9.59874C0.569986 9.82374 0.0650368 10.7278 0.00388886 12.1951C-0.0345692 13.0279 0.221943 13.8908 0.344239 14.2473V14.2548C0.421149 14.4648 0.719198 15.1815 1.20492 15.7855C1.59659 16.2702 2.05933 16.6958 2.57825 17.0488V17.0413L2.58594 17.0488C4.12078 18.0658 5.82253 17.9991 5.82253 17.9991C6.11711 17.9874 7.10393 17.9991 8.22458 17.4812C9.46753 16.9071 10.1752 16.0518 10.1752 16.0518C10.6272 15.5407 10.9867 14.9583 11.2381 14.3295C11.525 13.5941 11.6208 12.7122 11.6208 12.3597V6.01806C11.6593 6.04056 12.1715 6.37091 12.1715 6.37091C12.1715 6.37091 12.9095 6.83214 14.0609 7.1325C14.887 7.34624 16 7.39123 16 7.39123V4.3224C15.61 4.36364 14.8182 4.24366 14.0075 3.84954Z"/>
+                </svg>
+              </span>
+              <span>{{ section_st.tiktok_label | default: 'TIKTOK' }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Pause/Play control bar positioned directly above gallery -->
+    {%- if section_st.show_pause_control -%}
+      <div class="bloom-sg__controls-bar">
+        <button
+          type="button"
+          class="bloom-sg__pause-btn"
+          id="BloomSgPause-{{ section.id }}"
+          aria-label="Pause automatic gallery scrolling"
+          aria-pressed="false"
+          title="Pause gallery"
+        >
+          <span class="bloom-sg__icon-pause" aria-hidden="true">
+            <svg viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M3 0H1C0.447715 0 0 0.447715 0 1V11C0 11.5523 0.447715 12 1 12H3C3.55228 12 4 11.5523 4 11V1C4 0.447715 3.55228 0 3 0ZM9 0H7C6.44772 0 6 0.447715 6 1V11C6 11.5523 6.44772 12 7 12H9C9.55228 12 10 11.5523 10 11V1C10 0.447715 9.55228 0 9 0Z"/>
+            </svg>
+          </span>
+          <span class="bloom-sg__icon-play" aria-hidden="true">
+            <svg viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M1.5 0.5C0.67 0.02 0 0.4 0 1.35V10.65C0 11.6 0.67 11.98 1.5 11.5L9.5 6.85C10.33 6.37 10.33 5.63 9.5 5.15L1.5 0.5Z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Gallery Horizontal Auto-scroll Viewport -->
+  <div class="bloom-sg__gallery-wrap">
+    <div
+      class="bloom-sg__marquee-viewport"
+      id="BloomSgViewport-{{ section.id }}"
+      tabindex="0"
+      aria-label="Continuous botanical gallery"
+    >
+      <div class="bloom-sg__marquee-track" id="BloomSgTrack-{{ section.id }}">
+        
+        <!-- Primary Group A -->
+        <div class="bloom-sg__marquee-group">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign card_img = block.settings.image
+              assign card_alt = block.settings.image_alt | default: 'Botanical photography'
+              assign focal_pos = block.settings.focal_point | default: 'center'
+              assign sample_fallback = 'bloom-gallery-' | append: forloop.index | append: '.jpg'
+            -%}
+            <div class="bloom-sg__card" {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="bloom-sg__card-link" aria-label="{{ card_alt | escape }}">
+              {%- else -%}
+                <div class="bloom-sg__card-link">
+              {%- endif -%}
+
+                {%- if card_img != blank -%}
+                  <img
+                    src="{{ card_img | image_url: width: 800 }}"
+                    alt="{{ card_alt | escape }}"
+                    class="bloom-sg__card-img"
+                    loading="lazy"
+                    width="800"
+                    height="800"
+                    style="object-position: {{ focal_pos }};"
+                  >
+                {%- else -%}
+                  <img
+                    src="{{ sample_fallback | asset_url }}"
+                    alt="{{ card_alt | escape }}"
+                    class="bloom-sg__card-img"
+                    loading="lazy"
+                    width="800"
+                    height="800"
+                    style="object-position: {{ focal_pos }};"
+                  >
+                {%- endif -%}
+
+                <span class="bloom-sg__card-overlay" aria-hidden="true"></span>
+
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Duplicated Group B for Seamless Loop (aria-hidden) -->
+        <div class="bloom-sg__marquee-group" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign card_img = block.settings.image
+              assign card_alt = block.settings.image_alt | default: 'Botanical photography'
+              assign focal_pos = block.settings.focal_point | default: 'center'
+              assign sample_fallback = 'bloom-gallery-' | append: forloop.index | append: '.jpg'
+            -%}
+            <div class="bloom-sg__card">
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="bloom-sg__card-link" tabindex="-1" aria-hidden="true">
+              {%- else -%}
+                <div class="bloom-sg__card-link">
+              {%- endif -%}
+
+                {%- if card_img != blank -%}
+                  <img
+                    src="{{ card_img | image_url: width: 800 }}"
+                    alt="{{ card_alt | escape }}"
+                    class="bloom-sg__card-img"
+                    loading="lazy"
+                    width="800"
+                    height="800"
+                    style="object-position: {{ focal_pos }};"
+                  >
+                {%- else -%}
+                  <img
+                    src="{{ sample_fallback | asset_url }}"
+                    alt="{{ card_alt | escape }}"
+                    class="bloom-sg__card-img"
+                    loading="lazy"
+                    width="800"
+                    height="800"
+                    style="object-position: {{ focal_pos }};"
+                  >
+                {%- endif -%}
+
+                <span class="bloom-sg__card-overlay" aria-hidden="true"></span>
+
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    function initSocialGallery() {
+      const sectionEl = document.getElementById('bloom-social-gallery-{{ section.id }}');
+      if (!sectionEl || sectionEl.dataset.initialized === 'true') return;
+      sectionEl.dataset.initialized = 'true';
+
+      const pauseBtn = document.getElementById('BloomSgPause-{{ section.id }}');
+      const trackEl = document.getElementById('BloomSgTrack-{{ section.id }}');
+      const viewportEl = document.getElementById('BloomSgViewport-{{ section.id }}');
+      if (!trackEl) return;
+
+      let isPaused = false;
+      const isAutoscroll = {{ section_st.enable_autoscroll | default: true }};
+
+      if (!isAutoscroll) {
+        isPaused = true;
+        trackEl.classList.add('is-paused');
+        if (pauseBtn) {
+          pauseBtn.classList.add('is-paused');
+          pauseBtn.setAttribute('aria-pressed', 'true');
+          pauseBtn.setAttribute('aria-label', 'Play automatic gallery scrolling');
+          pauseBtn.title = 'Play gallery';
+        }
+      }
+
+      function togglePlayPause() {
+        isPaused = !isPaused;
+        if (isPaused) {
+          trackEl.classList.add('is-paused');
+          sectionEl.classList.add('is-manual-paused');
+          if (pauseBtn) {
+            pauseBtn.classList.add('is-paused');
+            pauseBtn.setAttribute('aria-pressed', 'true');
+            pauseBtn.setAttribute('aria-label', 'Play automatic gallery scrolling');
+            pauseBtn.title = 'Play gallery';
+          }
+        } else {
+          trackEl.classList.remove('is-paused');
+          sectionEl.classList.remove('is-manual-paused');
+          if (pauseBtn) {
+            pauseBtn.classList.remove('is-paused');
+            pauseBtn.setAttribute('aria-pressed', 'false');
+            pauseBtn.setAttribute('aria-label', 'Pause automatic gallery scrolling');
+            pauseBtn.title = 'Pause gallery';
+          }
+        }
+      }
+
+      if (pauseBtn) {
+        pauseBtn.addEventListener('click', togglePlayPause);
+      }
+
+      // Keyboard space / enter on pause button
+      if (pauseBtn) {
+        pauseBtn.addEventListener('keydown', function(e) {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            togglePlayPause();
+          }
+        });
+      }
+
+      // Touch drag / swipe interaction support
+      if (viewportEl) {
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+
+        viewportEl.addEventListener('mousedown', function(e) {
+          if (e.button !== 0) return;
+          isDown = true;
+          startX = e.pageX - viewportEl.offsetLeft;
+          scrollLeft = viewportEl.scrollLeft;
+        });
+
+        window.addEventListener('mouseup', function() {
+          isDown = false;
+        });
+
+        viewportEl.addEventListener('mousemove', function(e) {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - viewportEl.offsetLeft;
+          const walk = (x - startX) * 1.5;
+          viewportEl.scrollLeft = scrollLeft - walk;
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSocialGallery);
+    } else {
+      initSocialGallery();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+        initSocialGallery();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Planti Social Gallery",
+  "tag": "section",
+  "class": "section-bloom-social-gallery",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Width & Container"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "default": "full_width",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "fluid_container",
+          "label": "Fluid container"
+        },
+        {
+          "value": "fixed_width",
+          "label": "Fixed width"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "fixed_container_width",
+      "label": "Fixed container width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "default": 1400,
+      "unit": "px",
+      "info": "Active when 'Fixed width' is selected."
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content maximum width",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "default": 1440,
+      "unit": "px",
+      "info": "Maximum width for the header in Full width mode."
+    },
+    {
+      "type": "header",
+      "content": "Header Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Follow us <em>on instagram</em>"
+    },
+    {
+      "type": "text",
+      "id": "italic_text",
+      "label": "Italic text phrase",
+      "default": "on instagram",
+      "info": "Words in the heading to automatically render in italic serif typography."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Forward to seeing you on our social networks"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size on desktop",
+      "min": 28,
+      "max": 60,
+      "step": 2,
+      "default": 44,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size on mobile",
+      "min": 22,
+      "max": 40,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "label": "Subtitle size on desktop",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "label": "Subtitle size on mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "header_bottom_gap",
+      "label": "Header-to-gallery gap",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "default": 36,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Social Media Buttons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_instagram",
+      "label": "Show Instagram button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "instagram_label",
+      "label": "Instagram button label",
+      "default": "INSTAGRAM"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tiktok",
+      "label": "Show TikTok button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tiktok_label",
+      "label": "TikTok button label",
+      "default": "TIKTOK"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "header",
+      "content": "Gallery Cards & Auto-Scroll"
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "label": "Card width on desktop",
+      "min": 280,
+      "max": 550,
+      "step": 10,
+      "default": 420,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_height_desktop",
+      "label": "Card height on desktop",
+      "min": 280,
+      "max": 550,
+      "step": 10,
+      "default": 420,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Card width on mobile",
+      "min": 200,
+      "max": 360,
+      "step": 10,
+      "default": 280,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Card height on mobile",
+      "min": 200,
+      "max": 360,
+      "step": 10,
+      "default": 280,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_corner_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card gap on desktop",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card gap on mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoscroll",
+      "label": "Enable automatic continuous scrolling",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll loop duration (lower = faster)",
+      "min": 15,
+      "max": 80,
+      "step": 5,
+      "default": 35,
+      "unit": "s"
+    },
+    {
+      "type": "select",
+      "id": "scroll_direction",
+      "label": "Scroll direction",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Right to Left"
+        },
+        {
+          "value": "right",
+          "label": "Left to Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause scrolling when hovered",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pause_control",
+      "label": "Show pause/play control button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop top padding",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop bottom padding",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 50,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 50,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FAFAF0"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button hover background",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button hover text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pause_bg_color",
+      "label": "Pause button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pause_border_color",
+      "label": "Pause button border",
+      "default": "#D6DCD3"
+    },
+    {
+      "type": "color",
+      "id": "pause_icon_color",
+      "label": "Pause/Play icon",
+      "default": "#294B3D"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Gallery image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Optional mobile image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "default": "Botanical and plant lifestyle photograph"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image link URL"
+        },
+        {
+          "type": "select",
+          "id": "focal_point",
+          "label": "Image focal point",
+          "default": "center",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Planti Social Gallery",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Woman holding potted rosemary plant in flower shop"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Carefully repotting peace lily plant into white pot"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Woman wearing blue gloves holding potted zebra bromeliad"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Bird's nest fern foliage with fresh glistening water droplets"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Potted cactus and succulent arrangement"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Gardener holding potted desert plant"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image_alt": "Rubber plant in artisanal ceramic pot"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

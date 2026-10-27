@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athora Planti Social Gallery Preview - Bloom Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --heading-font: 'Instrument Serif', Georgia, serif;
+      --body-font: 'Plus Jakarta Sans', sans-serif;
+      --page-width: 1200px;
+      --fluid-container-width: 1440px;
+      --bs-gutter-x: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background-color: #EFEFE5;
+      color: #294B3D;
+      overflow-x: hidden;
+    }
+
+    /* Top Preview Control Bar */
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #234638;
+      color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    .preview-title {
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .preview-badge {
+      background: #397A5C;
+      color: #E8ECE7;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+    .preview-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .ctrl-group label {
+      opacity: 0.8;
+      font-size: 12px;
+    }
+    .ctrl-group select, .ctrl-group button {
+      background: #193629;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .preview-bar {
+        display: none !important;
+      }
+    }
+
+    /* Viewport Resizer Wrap */
+    .viewport-frame {
+      width: 100%;
+      margin: 0 auto;
+      transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      background-color: #FAFAF0;
+      min-height: 100vh;
+      box-shadow: 0 0 50px rgba(0,0,0,0.1);
+    }
+
+    /* Dummy Surrounding Sections */
+    .dummy-hero {
+      padding: 30px 16px;
+      text-align: center;
+      background: #E8E8D8;
+      border-bottom: 1px solid #D8D8C8;
+      overflow: hidden;
+    }
+    .dummy-hero h1 {
+      font-family: var(--heading-font);
+      font-size: clamp(20px, 5vw, 32px);
+      font-weight: 400;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preview Toolbar -->
+  <header class="preview-bar">
+    <div class="preview-title">
+      🌿 Athora Planti Social Gallery
+      <span class="preview-badge">Live Storefront Replica</span>
+    </div>
+
+    <div class="preview-controls">
+      <!-- Section Width Selector -->
+      <div class="ctrl-group">
+        <label for="widthSelect">Section Width:</label>
+        <select id="widthSelect">
+          <option value="full_width" selected>1. Full width (100vw)</option>
+          <option value="default">2. Default (1200px container)</option>
+          <option value="fluid_container">3. Fluid container (95vw)</option>
+          <option value="fixed_width">4. Fixed width (1400px)</option>
+        </select>
+      </div>
+
+      <!-- Device Viewport Width Selector -->
+      <div class="ctrl-group">
+        <label for="deviceSelect">Viewport:</label>
+        <select id="deviceSelect">
+          <option value="100%">Desktop (100% / 1440px)</option>
+          <option value="1200px">Desktop Default (1200px)</option>
+          <option value="1024px">Desktop Small / Tablet (1024px)</option>
+          <option value="768px">Tablet (768px)</option>
+          <option value="430px">Mobile Max (430px)</option>
+          <option value="390px">Mobile iPhone (390px)</option>
+          <option value="375px">Mobile Standard (375px)</option>
+          <option value="320px">Mobile Small (320px)</option>
+        </select>
+      </div>
+
+      <!-- Quick Speed Control -->
+      <div class="ctrl-group">
+        <label for="speedSelect">Speed:</label>
+        <select id="speedSelect">
+          <option value="15s">Fast (15s)</option>
+          <option value="35s" selected>Normal (35s)</option>
+          <option value="60s">Gentle (60s)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <div class="viewport-frame" id="viewportFrame">
+    <!-- Dummy Preceding Section -->
+    <div class="dummy-hero">
+      <h1>Customer Testimonials</h1>
+      <p style="font-size: 14px; opacity: 0.7; margin-top: 4px;">Testing natural transition into Social Gallery section</p>
+    </div>
+
+    <!-- RECREATED SECTION INJECTED HERE -->
+    <div id="sectionContainer">
+      <section
+        id="bloom-social-gallery-preview"
+        class="bloom-sg-section-preview bloom-sg--full_width"
+        data-direction="left"
+        aria-label="Social Media Photo Gallery"
+      >
+        <style>
+          .bloom-sg-section-preview {
+            --bloom-sg-bg: #FAFAF0;
+            --bloom-sg-heading-color: #294B3D;
+            --bloom-sg-sub-color: #294B3D;
+
+            --bloom-sg-btn-border: #294B3D;
+            --bloom-sg-btn-text: #294B3D;
+            --bloom-sg-btn-bg: transparent;
+            --bloom-sg-btn-hover-bg: #294B3D;
+            --bloom-sg-btn-hover-text: #FFFFFF;
+
+            --bloom-sg-pause-bg: #FFFFFF;
+            --bloom-sg-pause-border: #D6DCD3;
+            --bloom-sg-pause-icon: #294B3D;
+
+            --bloom-sg-pt-dk: 80px;
+            --bloom-sg-pb-dk: 80px;
+            --bloom-sg-pt-mb: 50px;
+            --bloom-sg-pb-mb: 50px;
+
+            --bloom-sg-h-sz-dk: 44px;
+            --bloom-sg-h-sz-mb: 32px;
+            --bloom-sg-sub-sz-dk: 18px;
+            --bloom-sg-sub-sz-mb: 16px;
+            --bloom-sg-header-gap: 36px;
+
+            --bloom-sg-card-w-dk: 420px;
+            --bloom-sg-card-h-dk: 420px;
+            --bloom-sg-card-w-mb: 280px;
+            --bloom-sg-card-h-mb: 280px;
+            --bloom-sg-card-radius: 12px;
+            --bloom-sg-gap-dk: 32px;
+            --bloom-sg-gap-mb: 16px;
+
+            --bloom-sg-fixed-w: 1400px;
+            --bloom-sg-content-mw: 1440px;
+            --bloom-sg-speed: 35s;
+
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: clip;
+            background-color: var(--bloom-sg-bg);
+            padding-top: var(--bloom-sg-pt-dk);
+            padding-bottom: var(--bloom-sg-pb-dk);
+          }
+
+          /* Width Option 1: Full width */
+          .bloom-sg-section-preview.bloom-sg--full_width {
+            width: 100%;
+          }
+          .bloom-sg-section-preview.bloom-sg--full_width .bloom-sg__header-container {
+            width: 100%;
+            max-width: var(--bloom-sg-content-mw);
+            margin-inline: auto;
+            padding-inline: clamp(20px, 4vw, 60px);
+            box-sizing: border-box;
+          }
+          .bloom-sg-section-preview.bloom-sg--full_width .bloom-sg__gallery-wrap {
+            width: 100%;
+          }
+
+          /* Width Option 2: Default */
+          .bloom-sg-section-preview.bloom-sg--default .bloom-sg__header-container {
+            width: 100%;
+            max-width: calc(var(--page-width, 1200px) + var(--bs-gutter-x, 20px) * 2);
+            margin-inline: auto;
+            padding-inline: var(--bs-gutter-x, 20px);
+            box-sizing: border-box;
+          }
+          .bloom-sg-section-preview.bloom-sg--default .bloom-sg__gallery-wrap {
+            width: 100%;
+            max-width: calc(var(--page-width, 1200px) + var(--bs-gutter-x, 20px) * 2);
+            margin-inline: auto;
+            padding-inline: var(--bs-gutter-x, 20px);
+            box-sizing: border-box;
+          }
+
+          /* Width Option 3: Fluid container */
+          .bloom-sg-section-preview.bloom-sg--fluid_container .bloom-sg__header-container {
+            width: 95%;
+            max-width: calc(var(--fluid-container-width, 1440px) + var(--bs-gutter-x, 20px) * 2);
+            margin-inline: auto;
+            padding-inline: var(--bs-gutter-x, 20px);
+            box-sizing: border-box;
+          }
+          .bloom-sg-section-preview.bloom-sg--fluid_container .bloom-sg__gallery-wrap {
+            width: 95%;
+            max-width: calc(var(--fluid-container-width, 1440px) + var(--bs-gutter-x, 20px) * 2);
+            margin-inline: auto;
+            padding-inline: var(--bs-gutter-x, 20px);
+            box-sizing: border-box;
+          }
+
+          /* Width Option 4: Fixed width */
+          .bloom-sg-section-preview.bloom-sg--fixed_width .bloom-sg__header-container {
+            width: 100%;
+            max-width: min(calc(100% - 32px), var(--bloom-sg-fixed-w));
+            margin-inline: auto;
+            padding-inline: var(--bs-gutter-x, 20px);
+            box-sizing: border-box;
+          }
+          .bloom-sg-section-preview.bloom-sg--fixed_width .bloom-sg__gallery-wrap {
+            width: 100%;
+            max-width: min(calc(100% - 32px), var(--bloom-sg-fixed-w));
+            margin-inline: auto;
+            padding-inline: var(--bs-gutter-x, 20px);
+            box-sizing: border-box;
+          }
+
+          /* Header Row */
+          .bloom-sg__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: var(--bloom-sg-header-gap);
+          }
+
+          .bloom-sg__title-col {
+            flex: 1 1 auto;
+            min-width: 0;
+          }
+
+          .bloom-sg__heading {
+            font-family: var(--heading-font, "Instrument Serif", Georgia, serif);
+            font-size: var(--bloom-sg-h-sz-dk);
+            line-height: 1.15;
+            font-weight: 400;
+            color: var(--bloom-sg-heading-color);
+            margin: 0 0 10px 0;
+            letter-spacing: -0.01em;
+          }
+          .bloom-sg__heading em,
+          .bloom-sg__heading i {
+            font-family: var(--heading-font, "Instrument Serif", Georgia, serif);
+            font-style: italic;
+            font-weight: 400;
+          }
+
+          .bloom-sg__subtitle {
+            font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+            font-size: var(--bloom-sg-sub-sz-dk);
+            line-height: 1.45;
+            font-weight: 400;
+            color: var(--bloom-sg-sub-color);
+            margin: 0;
+            letter-spacing: -0.01em;
+          }
+
+          /* Social Buttons */
+          .bloom-sg__social-btns {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+          }
+
+          .bloom-sg__btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 28px;
+            height: 50px;
+            border-radius: 9999px;
+            border: 1px solid var(--bloom-sg-btn-border);
+            background-color: var(--bloom-sg-btn-bg);
+            color: var(--bloom-sg-btn-text);
+            font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+          }
+          .bloom-sg__btn:hover {
+            background-color: var(--bloom-sg-btn-hover-bg);
+            color: var(--bloom-sg-btn-hover-text);
+            border-color: var(--bloom-sg-btn-hover-bg);
+            transform: translateY(-1px);
+          }
+          .bloom-sg__btn:active {
+            transform: translateY(0);
+          }
+
+          .bloom-sg__btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+          }
+          .bloom-sg__btn-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+          }
+
+          /* Pause Button Bar */
+          .bloom-sg__controls-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 16px;
+          }
+          .bloom-sg--full_width .bloom-sg__controls-bar {
+            padding-inline: clamp(20px, 4vw, 60px);
+          }
+
+          .bloom-sg__pause-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--bloom-sg-pause-border);
+            background-color: var(--bloom-sg-pause-bg);
+            color: var(--bloom-sg-pause-icon);
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            box-shadow: 0 2px 8px rgba(41, 75, 61, 0.06);
+            transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+            z-index: 5;
+          }
+          .bloom-sg__pause-btn:hover {
+            transform: scale(1.08);
+            background-color: #FFFFFF;
+            border-color: var(--bloom-sg-pause-icon);
+          }
+          .bloom-sg__pause-btn:active {
+            transform: scale(0.95);
+          }
+          .bloom-sg__pause-btn svg {
+            width: 10px;
+            height: 11px;
+            fill: currentColor;
+          }
+          .bloom-sg__pause-btn .bloom-sg__icon-play {
+            display: none;
+            margin-left: 2px;
+          }
+          .bloom-sg__pause-btn.is-paused .bloom-sg__icon-pause {
+            display: none;
+          }
+          .bloom-sg__pause-btn.is-paused .bloom-sg__icon-play {
+            display: inline-block;
+          }
+
+          /* Marquee Viewport & Track */
+          .bloom-sg__marquee-viewport {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            user-select: none;
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+          }
+          .bloom-sg__marquee-viewport:active {
+            cursor: grabbing;
+          }
+
+          .bloom-sg__marquee-track {
+            display: flex;
+            width: max-content;
+            will-change: transform;
+            animation: bloomMarqueeScroll var(--bloom-sg-speed) linear infinite;
+          }
+
+          .bloom-sg-section-preview[data-direction="right"] .bloom-sg__marquee-track {
+            animation-name: bloomMarqueeScrollRight;
+          }
+
+          .bloom-sg__marquee-track.is-paused,
+          .bloom-sg-section-preview.is-manual-paused .bloom-sg__marquee-track {
+            animation-play-state: paused !important;
+          }
+
+          .bloom-sg__marquee-viewport:hover .bloom-sg__marquee-track {
+            animation-play-state: paused;
+          }
+
+          @keyframes bloomMarqueeScroll {
+            0% {
+              transform: translate3d(0, 0, 0);
+            }
+            100% {
+              transform: translate3d(-50%, 0, 0);
+            }
+          }
+
+          @keyframes bloomMarqueeScrollRight {
+            0% {
+              transform: translate3d(-50%, 0, 0);
+            }
+            100% {
+              transform: translate3d(0, 0, 0);
+            }
+          }
+
+          .bloom-sg__marquee-group {
+            display: flex;
+            align-items: center;
+            gap: var(--bloom-sg-gap-dk);
+            padding-right: var(--bloom-sg-gap-dk);
+            flex-shrink: 0;
+          }
+
+          /* Individual Card */
+          .bloom-sg__card {
+            position: relative;
+            flex: 0 0 var(--bloom-sg-card-w-dk);
+            width: var(--bloom-sg-card-w-dk);
+            height: var(--bloom-sg-card-h-dk);
+            border-radius: var(--bloom-sg-card-radius);
+            overflow: hidden;
+            background-color: #E8ECE8;
+            box-sizing: border-box;
+            transform: translateZ(0);
+            box-shadow: 0 6px 20px rgba(41, 75, 61, 0.05);
+          }
+
+          .bloom-sg__card-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .bloom-sg__card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+          }
+
+          .bloom-sg__card:hover .bloom-sg__card-img {
+            transform: scale(1.04);
+          }
+
+          .bloom-sg__card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(41,75,61,0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+          }
+          .bloom-sg__card:hover .bloom-sg__card-overlay {
+            opacity: 1;
+          }
+
+          /* Responsive Breakpoints */
+          @media screen and (max-width: 1024px) {
+            .bloom-sg__heading {
+              font-size: clamp(32px, 4vw, 40px);
+            }
+            .bloom-sg__card {
+              flex: 0 0 clamp(320px, 32vw, 380px);
+              width: clamp(320px, 32vw, 380px);
+              height: clamp(320px, 32vw, 380px);
+            }
+          }
+
+          @media screen and (max-width: 768px) {
+            .bloom-sg-section-preview {
+              padding-top: var(--bloom-sg-pt-mb);
+              padding-bottom: var(--bloom-sg-pb-mb);
+            }
+
+            .bloom-sg-section-preview.bloom-sg--full_width .bloom-sg__header-container,
+            .bloom-sg-section-preview.bloom-sg--full_width .bloom-sg__controls-bar {
+              padding-inline: 18px;
+            }
+
+            .bloom-sg__header {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 18px;
+              margin-bottom: 20px;
+            }
+
+            .bloom-sg__heading {
+              font-size: var(--bloom-sg-h-sz-mb);
+              margin-bottom: 6px;
+            }
+
+            .bloom-sg__subtitle {
+              font-size: var(--bloom-sg-sub-sz-mb);
+              line-height: 1.4;
+            }
+
+            .bloom-sg__social-btns {
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 10px;
+            }
+
+            .bloom-sg__btn {
+              width: 100%;
+              min-width: 0;
+              padding: 10px 8px;
+              height: 42px;
+              font-size: 11.5px;
+              gap: 7px;
+              white-space: nowrap;
+              justify-content: center;
+            }
+            .bloom-sg__btn-icon {
+              width: 15px;
+              height: 15px;
+            }
+
+            .bloom-sg__controls-bar {
+              margin-bottom: 12px;
+            }
+            .bloom-sg__pause-btn {
+              width: 34px;
+              height: 34px;
+            }
+
+            .bloom-sg__marquee-group {
+              gap: var(--bloom-sg-gap-mb);
+              padding-right: var(--bloom-sg-gap-mb);
+            }
+
+            .bloom-sg__card {
+              flex: 0 0 var(--bloom-sg-card-w-mb);
+              width: var(--bloom-sg-card-w-mb);
+              height: var(--bloom-sg-card-h-mb);
+              border-radius: max(8px, calc(var(--bloom-sg-card-radius) * 0.8));
+            }
+          }
+
+          @media screen and (max-width: 350px) {
+            .bloom-sg--full_width .bloom-sg__header-container,
+            .bloom-sg--full_width .bloom-sg__controls-bar {
+              padding-inline: 14px;
+            }
+            .bloom-sg__btn {
+              flex: 1 1 100%;
+            }
+          }
+        </style>
+
+        <div class="bloom-sg__header-container">
+          <div class="bloom-sg__header">
+            <!-- Left: Heading & Subtitle -->
+            <div class="bloom-sg__title-col">
+              <h2 class="bloom-sg__heading">
+                Follow us <em>on instagram</em>
+              </h2>
+              <p class="bloom-sg__subtitle">
+                Forward to seeing you on our social networks
+              </p>
+            </div>
+
+            <!-- Right: Instagram & TikTok Buttons -->
+            <div class="bloom-sg__social-btns">
+              <a href="https://instagram.com/shopify" target="_blank" rel="noopener noreferrer" class="bloom-sg__btn bloom-sg__btn--instagram" aria-label="INSTAGRAM">
+                <span class="bloom-sg__btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="currentColor" d="M13.5 0H4.5C2.016 0 0 2.016 0 4.5V13.5C0 15.984 2.016 18 4.5 18H13.5C15.984 18 18 15.984 18 13.5V4.5C18 2.016 15.984 0 13.5 0ZM9 13.5C6.516 13.5 4.5 11.484 4.5 9C4.5 6.516 6.516 4.5 9 4.5C11.484 4.5 13.5 6.516 13.5 9C13.5 11.484 11.484 13.5 9 13.5ZM13.815 5.058C13.32 5.058 12.915 4.653 12.915 4.158C12.915 3.663 13.32 3.258 13.815 3.258C14.31 3.258 14.715 3.663 14.715 4.158C14.715 4.653 14.31 5.058 13.815 5.058Z"/>
+                    <path fill="currentColor" d="M9 11.7C10.4912 11.7 11.7 10.4912 11.7 9C11.7 7.50883 10.4912 6.3 9 6.3C7.50883 6.3 6.3 7.50883 6.3 9C6.3 10.4912 7.50883 11.7 9 11.7Z"/>
+                  </svg>
+                </span>
+                <span>INSTAGRAM</span>
+              </a>
+
+              <a href="https://tiktok.com/@shopify" target="_blank" rel="noopener noreferrer" class="bloom-sg__btn bloom-sg__btn--tiktok" aria-label="TIKTOK">
+                <span class="bloom-sg__btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="currentColor" d="M14.0075 3.84954C13.8829 3.78676 13.7616 3.71792 13.644 3.6433C13.3022 3.42299 12.9889 3.16339 12.7107 2.8701C12.0145 2.09352 11.7546 1.30568 11.6588 0.754085H11.6627C11.5827 0.296234 11.6158 0 11.6208 0H8.45033V11.9537C8.45033 12.1141 8.45033 12.2728 8.44341 12.4295C8.44341 12.449 8.44149 12.4669 8.44034 12.488C8.44034 12.4966 8.44034 12.5055 8.43842 12.5146C8.43842 12.5169 8.43842 12.5191 8.43842 12.5214C8.405 12.9502 8.26399 13.3646 8.0278 13.7279C7.79162 14.0912 7.46749 14.3923 7.08393 14.6047C6.68419 14.8265 6.23206 14.9428 5.77215 14.9423C4.29499 14.9423 3.09781 13.7678 3.09781 12.3174C3.09781 10.8669 4.29499 9.69249 5.77215 9.69249C6.05177 9.69224 6.32966 9.73514 6.59552 9.81961L6.59937 6.67202C5.79228 6.57037 4.97236 6.63291 4.19129 6.85571C3.41024 7.0785 2.68502 7.4567 2.06137 7.96645C1.51491 8.42941 1.0555 8.98179 0.703816 9.59874C0.569986 9.82374 0.0650368 10.7278 0.00388886 12.1951C-0.0345692 13.0279 0.221943 13.8908 0.344239 14.2473V14.2548C0.421149 14.4648 0.719198 15.1815 1.20492 15.7855C1.59659 16.2702 2.05933 16.6958 2.57825 17.0488V17.0413L2.58594 17.0488C4.12078 18.0658 5.82253 17.9991 5.82253 17.9991C6.11711 17.9874 7.10393 17.9991 8.22458 17.4812C9.46753 16.9071 10.1752 16.0518 10.1752 16.0518C10.6272 15.5407 10.9867 14.9583 11.2381 14.3295C11.525 13.5941 11.6208 12.7122 11.6208 12.3597V6.01806C11.6593 6.04056 12.1715 6.37091 12.1715 6.37091C12.1715 6.37091 12.9095 6.83214 14.0609 7.1325C14.887 7.34624 16 7.39123 16 7.39123V4.3224C15.61 4.36364 14.8182 4.24366 14.0075 3.84954Z"/>
+                  </svg>
+                </span>
+                <span>TIKTOK</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Pause/Play button bar positioned above gallery -->
+          <div class="bloom-sg__controls-bar">
+            <button
+              type="button"
+              class="bloom-sg__pause-btn"
+              id="BloomSgPausePreview"
+              aria-label="Pause automatic gallery scrolling"
+              aria-pressed="false"
+              title="Pause gallery"
+            >
+              <span class="bloom-sg__icon-pause" aria-hidden="true">
+                <svg viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M3 0H1C0.447715 0 0 0.447715 0 1V11C0 11.5523 0.447715 12 1 12H3C3.55228 12 4 11.5523 4 11V1C4 0.447715 3.55228 0 3 0ZM9 0H7C6.44772 0 6 0.447715 6 1V11C6 11.5523 6.44772 12 7 12H9C9.55228 12 10 11.5523 10 11V1C10 0.447715 9.55228 0 9 0Z"/>
+                </svg>
+              </span>
+              <span class="bloom-sg__icon-play" aria-hidden="true">
+                <svg viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M1.5 0.5C0.67 0.02 0 0.4 0 1.35V10.65C0 11.6 0.67 11.98 1.5 11.5L9.5 6.85C10.33 6.37 10.33 5.63 9.5 5.15L1.5 0.5Z"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Marquee Auto-scrolling Gallery -->
+        <div class="bloom-sg__gallery-wrap">
+          <div class="bloom-sg__marquee-viewport" id="BloomSgViewportPreview">
+            <div class="bloom-sg__marquee-track" id="BloomSgTrackPreview">
+              
+              <!-- Group A -->
+              <div class="bloom-sg__marquee-group">
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-1.jpg" alt="Woman holding potted rosemary plant in flower shop" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-2.jpg" alt="Carefully repotting peace lily plant into white pot" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-3.jpg" alt="Woman wearing blue gloves holding potted zebra bromeliad" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-4.jpg" alt="Bird's nest fern foliage with fresh glistening water droplets" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-5.jpg" alt="Potted cactus and succulent arrangement" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-6.jpg" alt="Gardener holding potted desert plant" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-7.jpg" alt="Rubber plant in artisanal ceramic pot" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Group B (Seamless duplicate for infinite loop) -->
+              <div class="bloom-sg__marquee-group" aria-hidden="true">
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-1.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-2.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-3.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-4.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-5.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-6.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+                <div class="bloom-sg__card">
+                  <div class="bloom-sg__card-link">
+                    <img src="./assets/bloom-gallery-7.jpg" alt="" class="bloom-sg__card-img">
+                    <span class="bloom-sg__card-overlay"></span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Dummy Following Section -->
+    <div style="padding: 60px 24px; text-align: center; background: #FAFAF0; border-top: 1px solid rgba(41,75,61,0.08);">
+      <h2 style="font-family: var(--heading-font); font-size: 28px;">Subscribe to <em>our emails</em></h2>
+      <p style="font-size: 14px; opacity: 0.7; margin-top: 6px;">Bloom Botanical Newsletter</p>
+    </div>
+  </div>
+
+  <script>
+    // Preview Controls Logic
+    const sectionEl = document.getElementById('bloom-social-gallery-preview');
+    const viewportFrame = document.getElementById('viewportFrame');
+    const widthSelect = document.getElementById('widthSelect');
+    const deviceSelect = document.getElementById('deviceSelect');
+    const speedSelect = document.getElementById('speedSelect');
+    const pauseBtn = document.getElementById('BloomSgPausePreview');
+    const trackEl = document.getElementById('BloomSgTrackPreview');
+
+    // Section width mode
+    widthSelect.addEventListener('change', (e) => {
+      sectionEl.classList.remove('bloom-sg--full_width', 'bloom-sg--default', 'bloom-sg--fluid_container', 'bloom-sg--fixed_width');
+      sectionEl.classList.add('bloom-sg--' + e.target.value);
+    });
+
+    // Viewport width
+    deviceSelect.addEventListener('change', (e) => {
+      viewportFrame.style.maxWidth = e.target.value;
+    });
+
+    // Speed
+    speedSelect.addEventListener('change', (e) => {
+      sectionEl.style.setProperty('--bloom-sg-speed', e.target.value);
+    });
+
+    // Pause / Play toggle
+    let isPaused = false;
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      if (isPaused) {
+        trackEl.classList.add('is-paused');
+        sectionEl.classList.add('is-manual-paused');
+        pauseBtn.classList.add('is-paused');
+        pauseBtn.setAttribute('aria-pressed', 'true');
+        pauseBtn.setAttribute('aria-label', 'Play automatic gallery scrolling');
+        pauseBtn.title = 'Play gallery';
+      } else {
+        trackEl.classList.remove('is-paused');
+        sectionEl.classList.remove('is-manual-paused');
+        pauseBtn.classList.remove('is-paused');
+        pauseBtn.setAttribute('aria-pressed', 'false');
+        pauseBtn.setAttribute('aria-label', 'Pause automatic gallery scrolling');
+        pauseBtn.title = 'Pause gallery';
+      }
+    });
+  </script>
+</body>
+</html>

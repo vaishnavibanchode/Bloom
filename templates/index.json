@@ -1071,6 +1071,108 @@
         "enable_autoplay": false,
         "autoplay_interval": 6
       }
+    },
+    "bloom_social_gallery": {
+      "type": "bloom-social-gallery",
+      "blocks": {
+        "image_1": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Woman holding potted rosemary plant in flower shop"
+          }
+        },
+        "image_2": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Carefully repotting peace lily plant into white pot"
+          }
+        },
+        "image_3": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Woman wearing blue gloves holding potted zebra bromeliad"
+          }
+        },
+        "image_4": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Bird's nest fern foliage with fresh glistening water droplets"
+          }
+        },
+        "image_5": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Potted cactus and succulent arrangement"
+          }
+        },
+        "image_6": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Gardener holding potted desert plant"
+          }
+        },
+        "image_7": {
+          "type": "image",
+          "settings": {
+            "image_alt": "Rubber plant in artisanal ceramic pot"
+          }
+        }
+      },
+      "block_order": [
+        "image_1",
+        "image_2",
+        "image_3",
+        "image_4",
+        "image_5",
+        "image_6",
+        "image_7"
+      ],
+      "settings": {
+        "section_width": "full_width",
+        "fixed_container_width": 1400,
+        "content_max_width": 1440,
+        "heading": "Follow us <em>on instagram</em>",
+        "italic_text": "on instagram",
+        "subtitle": "Forward to seeing you on our social networks",
+        "heading_size_desktop": 44,
+        "heading_size_mobile": 32,
+        "subtitle_size_desktop": 18,
+        "subtitle_size_mobile": 16,
+        "header_bottom_gap": 36,
+        "show_instagram": true,
+        "instagram_label": "INSTAGRAM",
+        "instagram_url": "https://instagram.com/shopify",
+        "show_tiktok": true,
+        "tiktok_label": "TIKTOK",
+        "tiktok_url": "https://tiktok.com/@shopify",
+        "card_width_desktop": 420,
+        "card_height_desktop": 420,
+        "card_width_mobile": 280,
+        "card_height_mobile": 280,
+        "card_corner_radius": 12,
+        "card_gap_desktop": 32,
+        "card_gap_mobile": 16,
+        "enable_autoscroll": true,
+        "scroll_speed": 35,
+        "scroll_direction": "left",
+        "pause_on_hover": true,
+        "show_pause_control": true,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 50,
+        "background_color": "#FAFAF0",
+        "heading_color": "#294B3D",
+        "subtitle_color": "#294B3D",
+        "button_border_color": "#294B3D",
+        "button_text_color": "#294B3D",
+        "button_bg_color": "transparent",
+        "button_hover_bg_color": "#294B3D",
+        "button_hover_text_color": "#FFFFFF",
+        "pause_bg_color": "#FFFFFF",
+        "pause_border_color": "#D6DCD3",
+        "pause_icon_color": "#294B3D"
+      }
     }
   },
   "order": [
@@ -1087,7 +1189,8 @@
     "bloom_scroll_hero_stack_dNNDHh",
     "why_plant_lovers_choose_us_a8YKiD",
     "bloom_image_hotspots_WAxRqf",
-    "bloom_newsletter_signup_7Hj6mf",
-    "bloom_testimonials_stack_xfUaJy"
+    "bloom_testimonials_stack_xfUaJy",
+    "bloom_social_gallery",
+    "bloom_newsletter_signup_7Hj6mf"
   ]
 }
