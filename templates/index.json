@@ -941,6 +941,47 @@
         "subtitle_size_desktop": 18,
         "subtitle_size_mobile": 14
       }
+    },
+    "bloom_newsletter_signup": {
+      "type": "bloom-newsletter-signup",
+      "settings": {
+        "heading": "Subscribe to <em>our emails</em>",
+        "italic_text": "our emails",
+        "subtitle": "Get sleep tips, new product drops and exclusive offers.",
+        "email_placeholder": "Enter your email",
+        "button_label": "SUBSCRIBE",
+        "section_width": "full_width",
+        "fixed_container_width": 1200,
+        "content_max_width": 680,
+        "background_full_bleed": false,
+        "background_color": "#FAFAF0",
+        "heading_color": "#294B3D",
+        "subtitle_color": "#294B3D",
+        "input_bg_color": "#FFFFFF",
+        "input_text_color": "#294B3D",
+        "placeholder_color": "#94A69A",
+        "input_border_color": "#E8ECE7",
+        "button_bg_color": "#234638",
+        "button_text_color": "#FFFFFF",
+        "button_hover_bg_color": "#193629",
+        "heading_size_desktop": 50,
+        "heading_size_mobile": 34,
+        "subtitle_size_desktop": 22,
+        "subtitle_size_mobile": 16,
+        "button_text_size": 13,
+        "content_alignment": "center",
+        "padding_top_desktop": 100,
+        "padding_bottom_desktop": 100,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60,
+        "gap_heading_subtitle": 16,
+        "gap_subtitle_form": 36,
+        "form_max_width": 555,
+        "form_height": 72,
+        "button_height": 56,
+        "form_border_radius": 50,
+        "outer_border_radius": 24
+      }
     }
   },
   "order": [
@@ -956,6 +997,7 @@
     "bloom_compare_table_K6YEjH",
     "bloom_scroll_hero_stack_dNNDHh",
     "why_plant_lovers_choose_us_a8YKiD",
-    "bloom_image_hotspots_WAxRqf"
+    "bloom_image_hotspots_WAxRqf",
+    "bloom_newsletter_signup"
   ]
 }

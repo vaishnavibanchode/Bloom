@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planti Newsletter Signup Preview — Bloom Theme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bs-gutter-x: 1.5rem;
+      --page-width: 1200px;
+      --fluid-container-width: 1440px;
+      --body-font: 'Plus Jakarta Sans', sans-serif;
+      --btn-font: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--body-font);
+      background-color: #EFEFE8;
+      color: #234332;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Demo Control Bar */
+    .demo-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #1B3529;
+      color: #FFFFFF;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    @media screen and (max-width: 860px) {
+      .demo-bar {
+        display: none !important;
+      }
+      .viewport-outer {
+        padding: 0 !important;
+      }
+      .status-panel {
+        display: none !important;
+      }
+      .viewport-frame {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+    }
+    body.is-standalone .demo-bar,
+    body.is-standalone .status-panel {
+      display: none !important;
+    }
+    body.is-standalone .viewport-outer {
+      padding: 0 !important;
+    }
+    body.is-standalone .viewport-frame {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    .demo-bar__brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .demo-bar__title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 24px;
+      margin: 0;
+      color: #FAF9F0;
+      letter-spacing: -0.01em;
+    }
+    .demo-bar__badge {
+      background: rgba(250, 250, 240, 0.15);
+      color: #FAF9F0;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .demo-bar__controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .demo-btn-group {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .demo-btn {
+      background: transparent;
+      border: none;
+      color: #CBD5CD;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .demo-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .demo-btn.active {
+      background: #FFFFFF;
+      color: #1B3529;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .demo-action-btn {
+      background: #2D5B46;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .demo-action-btn:hover {
+      background: #3B755A;
+    }
+
+    /* Device frame wrapper for viewport testing */
+    .viewport-outer {
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .viewport-frame {
+      width: 100%;
+      background: #FFFFFF;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Reference Comparison Drawer */
+    .ref-drawer {
+      margin: 0 auto 30px auto;
+      max-width: 1200px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .ref-drawer__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #234332;
+    }
+    .ref-img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #E8ECE7;
+      display: block;
+    }
+
+    /* -------------------------------------------------------------
+       SECTION STYLES (MATCHES bloom-newsletter-signup.liquid EXACTLY)
+       ------------------------------------------------------------- */
+    #shopify-section-bloom_newsletter {
+      --bloom-nl-bg: #FAFAF0;
+      --bloom-nl-h-color: #294B3D;
+      --bloom-nl-sub-color: #294B3D;
+      --bloom-nl-input-bg: #FFFFFF;
+      --bloom-nl-input-color: #294B3D;
+      --bloom-nl-placeholder: #94A69A;
+      --bloom-nl-border: #E8ECE7;
+      --bloom-nl-btn-bg: #234638;
+      --bloom-nl-btn-text: #FFFFFF;
+      --bloom-nl-btn-hover-bg: #193629;
+
+      --bloom-nl-pt-dk: 100px;
+      --bloom-nl-pb-dk: 100px;
+      --bloom-nl-pt-mb: 60px;
+      --bloom-nl-pb-mb: 60px;
+
+      --bloom-nl-h-sz-dk: 50px;
+      --bloom-nl-h-sz-mb: 34px;
+      --bloom-nl-sub-sz-dk: 22px;
+      --bloom-nl-sub-sz-mb: 16px;
+      --bloom-nl-btn-font-sz: 13px;
+
+      --bloom-nl-gap-h-sub: 16px;
+      --bloom-nl-gap-sub-form: 36px;
+
+      --bloom-nl-form-mw: 555px;
+      --bloom-nl-form-h: 72px;
+      --bloom-nl-btn-h: 56px;
+      --bloom-nl-form-radius: 50px;
+      --bloom-nl-outer-radius: 24px;
+
+      --bloom-nl-fixed-w: 1200px;
+      --bloom-nl-content-mw: 680px;
+    }
+
+    .bloom-nl-section-bloom_newsletter {
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: clip;
+      margin: 0;
+    }
+
+    /* Option 1: Full width */
+    .bloom-nl-section-bloom_newsletter.bloom-nl--full_width {
+      background-color: var(--bloom-nl-bg);
+    }
+    .bloom-nl-section-bloom_newsletter.bloom-nl--full_width .bloom-nl__container {
+      width: 100%;
+      max-width: 100%;
+      padding-left: clamp(16px, 4vw, 40px);
+      padding-right: clamp(16px, 4vw, 40px);
+      margin-inline: auto;
+      box-sizing: border-box;
+      padding-top: var(--bloom-nl-pt-dk);
+      padding-bottom: var(--bloom-nl-pb-dk);
+    }
+
+    /* Option 2: Default */
+    .bloom-nl-section-bloom_newsletter.bloom-nl--default {
+      padding-left: var(--bs-gutter-x, 15px);
+      padding-right: var(--bs-gutter-x, 15px);
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .bloom-nl-section-bloom_newsletter.bloom-nl--default .bloom-nl__container {
+      width: 100%;
+      max-width: calc(var(--page-width, 1200px) + var(--bs-gutter-x, 15px) * 2);
+      margin-inline: auto;
+      background-color: var(--bloom-nl-bg);
+      border-radius: var(--bloom-nl-outer-radius);
+      box-sizing: border-box;
+      padding-left: clamp(16px, 4vw, 40px);
+      padding-right: clamp(16px, 4vw, 40px);
+      padding-top: var(--bloom-nl-pt-dk);
+      padding-bottom: var(--bloom-nl-pb-dk);
+    }
+
+    /* Option 3: Fluid container */
+    .bloom-nl-section-bloom_newsletter.bloom-nl--fluid_container {
+      padding-left: var(--bs-gutter-x, 15px);
+      padding-right: var(--bs-gutter-x, 15px);
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .bloom-nl-section-bloom_newsletter.bloom-nl--fluid_container .bloom-nl__container {
+      width: 95%;
+      max-width: calc(var(--fluid-container-width, 1440px) + var(--bs-gutter-x, 15px) * 2);
+      margin-inline: auto;
+      background-color: var(--bloom-nl-bg);
+      border-radius: var(--bloom-nl-outer-radius);
+      box-sizing: border-box;
+      padding-left: clamp(16px, 4vw, 40px);
+      padding-right: clamp(16px, 4vw, 40px);
+      padding-top: var(--bloom-nl-pt-dk);
+      padding-bottom: var(--bloom-nl-pb-dk);
+    }
+
+    /* Option 4: Fixed width */
+    .bloom-nl-section-bloom_newsletter.bloom-nl--fixed_width {
+      padding-left: var(--bs-gutter-x, 15px);
+      padding-right: var(--bs-gutter-x, 15px);
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .bloom-nl-section-bloom_newsletter.bloom-nl--fixed_width .bloom-nl__container {
+      width: 100%;
+      max-width: min(100%, var(--bloom-nl-fixed-w));
+      margin-inline: auto;
+      background-color: var(--bloom-nl-bg);
+      border-radius: var(--bloom-nl-outer-radius);
+      box-sizing: border-box;
+      padding-left: clamp(16px, 4vw, 40px);
+      padding-right: clamp(16px, 4vw, 40px);
+      padding-top: var(--bloom-nl-pt-dk);
+      padding-bottom: var(--bloom-nl-pb-dk);
+    }
+
+    /* Full bleed override */
+    .bloom-nl-section-bloom_newsletter.bloom-nl--bleed-bg {
+      background-color: var(--bloom-nl-bg) !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .bloom-nl-section-bloom_newsletter.bloom-nl--bleed-bg .bloom-nl__container {
+      background-color: transparent !important;
+      border-radius: 0 !important;
+    }
+
+    /* Centered Content Column */
+    .bloom-nl__content {
+      width: 100%;
+      max-width: var(--bloom-nl-content-mw);
+      margin-inline: auto;
+      box-sizing: border-box;
+    }
+    .bloom-nl__content.text-center {
+      text-align: center;
+    }
+    .bloom-nl__content.text-left {
+      text-align: left;
+    }
+
+    /* Heading Typography */
+    .bloom-nl__heading {
+      margin: 0 0 var(--bloom-nl-gap-h-sub) 0;
+      font-family: "Instrument Serif", "Georgia", serif;
+      font-size: var(--bloom-nl-h-sz-dk);
+      line-height: 1.15;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--bloom-nl-h-color);
+      letter-spacing: -0.015em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bloom-nl__heading em,
+    .bloom-nl__heading i {
+      font-family: "Instrument Serif", "Georgia", serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Subtitle Typography */
+    .bloom-nl__subtitle {
+      margin: 0 0 var(--bloom-nl-gap-sub-form) 0;
+      font-family: var(--body-font);
+      font-size: var(--bloom-nl-sub-sz-dk);
+      line-height: 1.45;
+      font-weight: 400;
+      color: var(--bloom-nl-sub-color);
+      letter-spacing: -0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Form & Inner Pill Wrapper */
+    .bloom-nl__form-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .text-left .bloom-nl__form-wrapper {
+      align-items: flex-start;
+    }
+
+    .bloom-nl__customer-form {
+      width: 100%;
+      max-width: var(--bloom-nl-form-mw);
+      margin: 0 auto;
+    }
+    .text-left .bloom-nl__customer-form {
+      margin: 0;
+    }
+
+    .bloom-nl__pill-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: var(--bloom-nl-form-h);
+      background-color: var(--bloom-nl-input-bg);
+      border: 1px solid var(--bloom-nl-border);
+      border-radius: var(--bloom-nl-form-radius);
+      padding: 8px 8px 8px 24px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 20px rgba(41, 75, 61, 0.04);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .bloom-nl__pill-group:focus-within {
+      border-color: rgba(35, 70, 56, 0.35);
+      box-shadow: 0 6px 24px rgba(35, 70, 56, 0.08);
+    }
+
+    /* Email Input */
+    .bloom-nl__input {
+      flex: 1 1 auto;
+      min-width: 0;
+      height: 100%;
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-family: var(--body-font);
+      font-size: 16px;
+      line-height: 1.2;
+      color: var(--bloom-nl-input-color);
+      -webkit-appearance: none;
+    }
+    .bloom-nl__input::placeholder {
+      color: var(--bloom-nl-placeholder);
+      opacity: 1;
+      font-family: var(--body-font);
+      font-size: 16px;
+      letter-spacing: normal;
+    }
+
+    /* Subscribe Button */
+    .bloom-nl__submit-btn {
+      position: relative;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--bloom-nl-btn-h);
+      min-width: 144px;
+      padding: 0 28px;
+      margin: 0;
+      background-color: var(--bloom-nl-btn-bg);
+      color: var(--bloom-nl-btn-text);
+      border: none;
+      border-radius: 9999px;
+      font-family: var(--btn-font);
+      font-size: var(--bloom-nl-btn-font-sz);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      cursor: pointer;
+      overflow: hidden;
+      text-decoration: none;
+      z-index: 1;
+      transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease, box-shadow 0.2s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bloom-nl__submit-btn:hover {
+      background-color: var(--bloom-nl-btn-hover-bg);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(35, 70, 56, 0.22);
+    }
+    .bloom-nl__submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(35, 70, 56, 0.15);
+    }
+
+    .bloom-nl__circle-bg {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease-out, height 0.5s ease-out;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .bloom-nl__submit-btn:hover .bloom-nl__circle-bg {
+      width: 320%;
+      height: 320%;
+    }
+
+    .bloom-nl__sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Success & Error State */
+    .bloom-nl__message {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: var(--bloom-nl-form-mw);
+      padding: 14px 22px;
+      border-radius: 9999px;
+      font-family: var(--body-font);
+      font-size: 15px;
+      font-weight: 500;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+      animation: bloomNlFadeIn 0.35s ease-out forwards;
+    }
+    .bloom-nl__message--success {
+      background-color: #EBF4EE;
+      color: #194C33;
+      border: 1px solid #C4DEC9;
+    }
+    .bloom-nl__message--error {
+      background-color: #FDF1F0;
+      color: #BA1A1A;
+      border: 1px solid #F5C6C6;
+    }
+    .bloom-nl__icon {
+      flex-shrink: 0;
+    }
+
+    @keyframes bloomNlFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mobile media queries */
+    @media screen and (max-width: 768px) {
+      .bloom-nl-section-bloom_newsletter.bloom-nl--full_width .bloom-nl__container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--default .bloom-nl__container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--fluid_container .bloom-nl__container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--fixed_width .bloom-nl__container {
+        padding-top: var(--bloom-nl-pt-mb);
+        padding-bottom: var(--bloom-nl-pb-mb);
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .bloom-nl__heading {
+        font-size: var(--bloom-nl-h-sz-mb);
+        line-height: 1.18;
+      }
+
+      .bloom-nl__subtitle {
+        font-size: var(--bloom-nl-sub-sz-mb);
+        line-height: 1.45;
+      }
+
+      .bloom-nl__pill-group {
+        height: 60px;
+        padding: 6px 6px 6px 18px;
+      }
+
+      .bloom-nl__input {
+        font-size: 14px;
+      }
+      .bloom-nl__input::placeholder {
+        font-size: 14px;
+      }
+
+      .bloom-nl__submit-btn {
+        height: 48px;
+        min-width: 110px;
+        padding: 0 18px;
+        font-size: 12px;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    @media screen and (max-width: 390px) {
+      .bloom-nl-section-bloom_newsletter.bloom-nl--default,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--fluid_container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--fixed_width {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .bloom-nl-section-bloom_newsletter.bloom-nl--full_width .bloom-nl__container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--default .bloom-nl__container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--fluid_container .bloom-nl__container,
+      .bloom-nl-section-bloom_newsletter.bloom-nl--fixed_width .bloom-nl__container {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .bloom-nl__pill-group {
+        height: 56px;
+        padding: 5px 5px 5px 14px;
+      }
+
+      .bloom-nl__input {
+        font-size: 13px;
+      }
+      .bloom-nl__input::placeholder {
+        font-size: 13px;
+      }
+
+      .bloom-nl__submit-btn {
+        height: 46px;
+        min-width: 96px;
+        padding: 0 14px;
+        font-size: 11px;
+      }
+    }
+
+    /* Live testing status indicator */
+    .status-panel {
+      margin-top: 20px;
+      padding: 14px 20px;
+      background: #FFFFFF;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #385E4D;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #DCE6DE;
+      max-width: 900px;
+      margin-inline: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Interactive Control Header -->
+  <header class="demo-bar">
+    <div class="demo-bar__brand">
+      <h1 class="demo-bar__title">Planti Newsletter Section</h1>
+      <span class="demo-bar__badge">Bloom Theme</span>
+    </div>
+
+    <div class="demo-bar__controls">
+      <!-- Section Width Controls -->
+      <span style="font-size: 12px; font-weight: 600; color: #A7C5B5;">Width Mode:</span>
+      <div class="demo-btn-group" id="widthControls">
+        <button class="demo-btn active" onclick="setWidthMode('full_width')">Full width</button>
+        <button class="demo-btn" onclick="setWidthMode('default')">Default (1200px)</button>
+        <button class="demo-btn" onclick="setWidthMode('fluid_container')">Fluid container</button>
+        <button class="demo-btn" onclick="setWidthMode('fixed_width')">Fixed width (1200px)</button>
+      </div>
+
+      <!-- Viewport Device Controls -->
+      <span style="font-size: 12px; font-weight: 600; color: #A7C5B5; margin-left: 8px;">Viewport:</span>
+      <div class="demo-btn-group" id="deviceControls">
+        <button class="demo-btn active" onclick="setViewport('100%')">Desktop 100%</button>
+        <button class="demo-btn" onclick="setViewport('1024px')">1024px</button>
+        <button class="demo-btn" onclick="setViewport('768px')">768px</button>
+        <button class="demo-btn" onclick="setViewport('430px')">430px</button>
+        <button class="demo-btn" onclick="setViewport('390px')">390px</button>
+        <button class="demo-btn" onclick="setViewport('375px')">375px</button>
+        <button class="demo-btn" onclick="setViewport('320px')">320px</button>
+      </div>
+
+      <!-- Form Simulation Buttons -->
+      <button class="demo-action-btn" onclick="simulateSuccess()">Simulate Success</button>
+      <button class="demo-action-btn" onclick="simulateError()">Simulate Error</button>
+      <button class="demo-action-btn" onclick="resetForm()">Reset</button>
+    </div>
+  </header>
+
+  <!-- Viewport Preview Outer Frame -->
+  <main class="viewport-outer">
+
+    <!-- Status feedback -->
+    <div class="status-panel" id="statusMessage">
+      <strong style="color: #194C33;">Active Mode:</strong>
+      <span id="activeModeText">Full width (Spans entire viewport edge-to-edge, content centered within 680px)</span>
+    </div>
+
+    <div style="height: 20px;"></div>
+
+    <div class="viewport-frame" id="viewportFrame">
+      <div id="shopify-section-bloom_newsletter">
+        <section
+          id="bloom-newsletter-bloom_newsletter"
+          class="bloom-nl-section-bloom_newsletter bloom-nl--full_width"
+          aria-label="Newsletter Subscription"
+        >
+          <div class="bloom-nl__container">
+            <div class="bloom-nl__content text-center">
+              <h2 class="bloom-nl__heading">
+                Subscribe to <em>our emails</em>
+              </h2>
+
+              <p class="bloom-nl__subtitle">
+                Get sleep tips, new product drops and exclusive offers.
+              </p>
+
+              <div class="bloom-nl__form-wrapper">
+                <form
+                  id="BloomNewsletterForm-bloom_newsletter"
+                  class="bloom-nl__customer-form"
+                  onsubmit="handleFormSubmit(event)"
+                >
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+
+                  <!-- Success message placeholder -->
+                  <div
+                    id="successMessageBlock"
+                    class="bloom-nl__message bloom-nl__message--success"
+                    style="display: none;"
+                    role="status"
+                  >
+                    <svg
+                      class="bloom-nl__icon"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M6 10.5L8.5 13L14 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Thank you for subscribing! Check your inbox for updates.</span>
+                  </div>
+
+                  <!-- Error message placeholder -->
+                  <div
+                    id="errorMessageBlock"
+                    class="bloom-nl__message bloom-nl__message--error"
+                    style="display: none;"
+                    role="alert"
+                  >
+                    <svg
+                      class="bloom-nl__icon"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+                      <line x1="10" y1="6" x2="10" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <circle cx="10" cy="14" r="1" fill="currentColor"/>
+                    </svg>
+                    <span id="errorText">Please enter a valid email address.</span>
+                  </div>
+
+                  <!-- Input & Button Pill Group -->
+                  <div class="bloom-nl__pill-group" id="pillGroup">
+                    <label for="BloomNewsletterInput" class="bloom-nl__sr-only">
+                      Enter your email
+                    </label>
+                    <input
+                      id="BloomNewsletterInput"
+                      type="email"
+                      name="contact[email]"
+                      class="bloom-nl__input"
+                      placeholder="Enter your email"
+                      aria-label="Enter your email"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      autocomplete="email"
+                      required
+                    >
+                    <button
+                      type="submit"
+                      name="commit"
+                      id="BloomNewsletterSubmit"
+                      class="bloom-nl__submit-btn"
+                      aria-label="SUBSCRIBE"
+                    >
+                      <span class="bloom-nl__btn-text">SUBSCRIBE</span>
+                      <span class="bloom-nl__circle-bg" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function setWidthMode(mode) {
+      const section = document.getElementById('bloom-newsletter-bloom_newsletter');
+      section.className = 'bloom-nl-section-bloom_newsletter bloom-nl--' + mode;
+
+      const buttons = document.querySelectorAll('#widthControls .demo-btn');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(mode)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const frame = document.getElementById('viewportFrame');
+      const outer = document.querySelector('.viewport-outer');
+      if (mode === 'full_width' && (!frame.style.width || frame.style.width === '100%')) {
+        frame.style.borderRadius = '0';
+        frame.style.boxShadow = 'none';
+        outer.style.padding = '0';
+      } else {
+        frame.style.borderRadius = '12px';
+        frame.style.boxShadow = '0 10px 40px rgba(0,0,0,0.12)';
+        outer.style.padding = '30px 15px';
+      }
+
+      const descMap = {
+        'full_width': 'Full width (Spans entire viewport edge-to-edge, background expands across 100%, content centered within 680px)',
+        'default': 'Default (Uses theme container max-width: 1200px + theme gutters, background contained with rounded corners)',
+        'fluid_container': 'Fluid container (Uses responsive fluid container 95% max 1440px + gutters, background contained)',
+        'fixed_width': 'Fixed width (Configured fixed max-width 1200px centered horizontally, mobile responsive safe)'
+      };
+      document.getElementById('activeModeText').innerText = descMap[mode] || mode;
+    }
+
+    function setViewport(width) {
+      const frame = document.getElementById('viewportFrame');
+      frame.style.width = width;
+
+      const buttons = document.querySelectorAll('#deviceControls .demo-btn');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(width)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const section = document.getElementById('bloom-newsletter-bloom_newsletter');
+      const isFull = section.classList.contains('bloom-nl--full_width');
+      const outer = document.querySelector('.viewport-outer');
+      if (isFull && width === '100%') {
+        frame.style.borderRadius = '0';
+        frame.style.boxShadow = 'none';
+        outer.style.padding = '0';
+      } else {
+        frame.style.borderRadius = '12px';
+        frame.style.boxShadow = '0 10px 40px rgba(0,0,0,0.12)';
+        outer.style.padding = '30px 15px';
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('BloomNewsletterInput');
+      if (input.value && input.checkValidity()) {
+        simulateSuccess();
+      } else {
+        simulateError();
+      }
+    }
+
+    function simulateSuccess() {
+      document.getElementById('errorMessageBlock').style.display = 'none';
+      document.getElementById('successMessageBlock').style.display = 'inline-flex';
+      document.getElementById('pillGroup').style.display = 'none';
+    }
+
+    function simulateError() {
+      document.getElementById('successMessageBlock').style.display = 'none';
+      document.getElementById('errorMessageBlock').style.display = 'inline-flex';
+      document.getElementById('pillGroup').style.display = 'flex';
+    }
+
+    function resetForm() {
+      document.getElementById('successMessageBlock').style.display = 'none';
+      document.getElementById('errorMessageBlock').style.display = 'none';
+      document.getElementById('pillGroup').style.display = 'flex';
+      document.getElementById('BloomNewsletterInput').value = '';
+    }
+
+    // Initialize from URL params if present
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get('mode');
+      const width = params.get('width');
+      const state = params.get('state');
+      if (params.get('standalone') === 'true') {
+        document.body.classList.add('is-standalone');
+      }
+
+      if (mode) setWidthMode(mode);
+      if (width) setViewport(width);
+      if (state === 'success') simulateSuccess();
+      if (state === 'error') simulateError();
+    });
+  </script>
+</body>
+</html>
