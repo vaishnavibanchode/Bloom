@@ -1,0 +1,1322 @@
+{%- comment -%}
+  Bloom Theme - Planti Animated Testimonials Section
+  Faithful recreation of the Athora Planti signature layered-photo testimonials component
+{%- endcomment -%}
+
+{%- liquid
+  assign section_st = section.settings
+  assign section_width = section_st.section_width | default: 'default'
+  assign total_blocks = section.blocks.size
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --bloom-testi-outer-bg: {{ section_st.outer_background_color | default: '#FAFAF0' }};
+    --bloom-testi-card-bg: {{ section_st.card_background_color | default: '#F0F0E1' }};
+    --bloom-testi-text-color: {{ section_st.text_color | default: '#294B3D' }};
+    --bloom-testi-quote-color: {{ section_st.quote_color | default: '#C7CEBE' }};
+    --bloom-testi-star-color: {{ section_st.star_color | default: '#FF982D' }};
+    --bloom-testi-verified-color: {{ section_st.verified_color | default: '#29965A' }};
+    --bloom-testi-nav-bg: {{ section_st.nav_bg_color | default: '#FFFFFF' }};
+    --bloom-testi-nav-icon: {{ section_st.nav_icon_color | default: '#294B3D' }};
+    --bloom-testi-progress-track: {{ section_st.progress_track_color | default: '#E8ECE8' }};
+    --bloom-testi-progress-bar: {{ section_st.progress_bar_color | default: '#294B3D' }};
+
+    --bloom-testi-pt-dk: {{ section_st.padding_top_desktop | default: 80 }}px;
+    --bloom-testi-pb-dk: {{ section_st.padding_bottom_desktop | default: 80 }}px;
+    --bloom-testi-pt-mb: {{ section_st.padding_top_mobile | default: 50 }}px;
+    --bloom-testi-pb-mb: {{ section_st.padding_bottom_mobile | default: 50 }}px;
+
+    --bloom-testi-font-sz-dk: {{ section_st.review_font_size_desktop | default: 30 }}px;
+    --bloom-testi-font-sz-mb: {{ section_st.review_font_size_mobile | default: 20 }}px;
+    --bloom-testi-line-height: {{ section_st.review_line_height | default: 150 | divided_by: 100.0 }};
+
+    --bloom-testi-stack-w: {{ section_st.stack_width_desktop | default: 420 }}px;
+    --bloom-testi-card-radius: {{ section_st.card_corner_radius | default: 16 }}px;
+    --bloom-testi-container-radius: {{ section_st.container_corner_radius | default: 24 }}px;
+    --bloom-testi-col-gap: {{ section_st.column_gap_desktop | default: 70 }}px;
+
+    --bloom-testi-fixed-w: {{ section_st.fixed_container_width | default: 1400 }}px;
+    --bloom-testi-content-mw: {{ section_st.content_max_width | default: 1320 }}px;
+    --bloom-testi-anim-dur: {{ section_st.animation_duration | default: 400 }}ms;
+  }
+
+  /* Section base */
+  .bloom-testi-section-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: clip;
+    background-color: var(--bloom-testi-outer-bg);
+    container-type: inline-size;
+  }
+
+  /* Section Width Modes */
+  .bloom-testi-section-{{ section.id }}.bloom-testi--full_width {
+    padding: 0;
+  }
+  .bloom-testi-section-{{ section.id }}.bloom-testi--full_width .bloom-testi__outer {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+  .bloom-testi-section-{{ section.id }}.bloom-testi--full_width .bloom-testi__card {
+    border-radius: 0;
+  }
+
+  .bloom-testi-section-{{ section.id }}.bloom-testi--default {
+    padding-left: var(--bs-gutter-x, 15px);
+    padding-right: var(--bs-gutter-x, 15px);
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  .bloom-testi-section-{{ section.id }}.bloom-testi--default .bloom-testi__outer {
+    width: 100%;
+    max-width: calc(var(--page-width, 1200px) + var(--bs-gutter-x, 15px) * 2);
+    margin-inline: auto;
+  }
+
+  .bloom-testi-section-{{ section.id }}.bloom-testi--fluid_container {
+    padding-left: var(--bs-gutter-x, 15px);
+    padding-right: var(--bs-gutter-x, 15px);
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  .bloom-testi-section-{{ section.id }}.bloom-testi--fluid_container .bloom-testi__outer {
+    width: 95%;
+    max-width: calc(var(--fluid-container-width, 1440px) + var(--bs-gutter-x, 15px) * 2);
+    margin-inline: auto;
+  }
+
+  .bloom-testi-section-{{ section.id }}.bloom-testi--fixed_width {
+    padding-left: var(--bs-gutter-x, 15px);
+    padding-right: var(--bs-gutter-x, 15px);
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  .bloom-testi-section-{{ section.id }}.bloom-testi--fixed_width .bloom-testi__outer {
+    width: 100%;
+    max-width: min(100%, var(--bloom-testi-fixed-w));
+    margin-inline: auto;
+  }
+
+  /* Full Bleed Background Override for contained modes */
+  .bloom-testi-section-{{ section.id }}.bloom-testi--bleed-bg {
+    background-color: var(--bloom-testi-card-bg) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .bloom-testi-section-{{ section.id }}.bloom-testi--bleed-bg .bloom-testi__card {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+  }
+
+  /* Main Card Container */
+  .bloom-testi__card {
+    position: relative;
+    width: 100%;
+    background-color: var(--bloom-testi-card-bg);
+    border-radius: var(--bloom-testi-container-radius);
+    padding-top: var(--bloom-testi-pt-dk);
+    padding-bottom: var(--bloom-testi-pb-dk);
+    padding-left: clamp(24px, 5vw, 64px);
+    padding-right: clamp(24px, 5vw, 64px);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .bloom-testi__content-wrap {
+    width: 100%;
+    max-width: var(--bloom-testi-content-mw);
+    margin-inline: auto;
+    box-sizing: border-box;
+  }
+
+  /* Two Column Grid */
+  .bloom-testi__grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bloom-testi-col-gap);
+    box-sizing: border-box;
+  }
+
+  /* Left Column: Image Stack */
+  .bloom-testi__images-col {
+    flex: 0 0 var(--bloom-testi-stack-w);
+    max-width: var(--bloom-testi-stack-w);
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .bloom-testi__stack {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    display: grid;
+  }
+
+  .bloom-testi__photo-card {
+    grid-area: 1 / -1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    will-change: transform, z-index;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: transform var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .bloom-testi__photo-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--bloom-testi-card-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(41, 75, 61, 0.08);
+    transform: rotate(var(--card-rotate, 0deg));
+    transition: transform var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1);
+    background-color: #E8ECE8;
+  }
+
+  .bloom-testi__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Right Column: Review Details */
+  .bloom-testi__content-col {
+    flex: 1 1 0%;
+    min-width: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Large Decorative Quotation Mark */
+  .bloom-testi__quote-mark {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    color: var(--bloom-testi-quote-color);
+  }
+  .bloom-testi__quote-mark svg {
+    width: 48px;
+    height: 35px;
+    fill: currentColor;
+  }
+
+  /* Slides Wrapper */
+  .bloom-testi__slides {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+  }
+
+  .bloom-testi__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-16px);
+    transition: opacity var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1),
+                transform var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0s linear var(--bloom-testi-anim-dur);
+  }
+
+  .bloom-testi__slide.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition: opacity var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1),
+                transform var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0s linear 0s;
+  }
+
+  /* Star Rating */
+  .bloom-testi__stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 18px;
+    color: var(--bloom-testi-star-color);
+  }
+  .bloom-testi__star {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .bloom-testi__star.is-empty {
+    opacity: 0.25;
+  }
+
+  /* Testimonial Quote Copy */
+  .bloom-testi__quote-text {
+    font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+    font-size: var(--bloom-testi-font-sz-dk);
+    line-height: var(--bloom-testi-line-height);
+    font-weight: 400;
+    color: var(--bloom-testi-text-color);
+    letter-spacing: -0.015em;
+    margin: 0 0 24px 0;
+  }
+
+  /* Author Name & Verified Badge */
+  .bloom-testi__author-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .bloom-testi__verified-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    color: var(--bloom-testi-verified-color);
+    flex-shrink: 0;
+  }
+
+  .bloom-testi__author-name {
+    font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bloom-testi-text-color);
+    line-height: 1.2;
+  }
+
+  /* Purchased Items */
+  .bloom-testi__purchased {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--body-font, "Plus Jakarta Sans", sans-serif);
+    font-size: 15px;
+    color: var(--bloom-testi-text-color);
+    margin-bottom: 32px;
+  }
+
+  .bloom-testi__purchased-label {
+    opacity: 0.85;
+    font-weight: 400;
+  }
+
+  .bloom-testi__product-hover-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .bloom-testi__product-link {
+    font-weight: 700;
+    color: var(--bloom-testi-text-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+  .bloom-testi__product-link:hover {
+    opacity: 0.75;
+  }
+
+  /* Product Floating Hover Tooltip */
+  .bloom-testi__product-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    width: 140px;
+    height: 150px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 12px 32px rgba(41, 75, 61, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    overflow: hidden;
+  }
+  .bloom-testi__product-tooltip img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+  .bloom-testi__product-hover-wrap:hover .bloom-testi__product-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Navigation & Progress Pill */
+  .bloom-testi__nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--bloom-testi-nav-bg);
+    padding: 6px 12px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 18px rgba(41, 75, 61, 0.06);
+    border: 1px solid rgba(41, 75, 61, 0.08);
+    width: fit-content;
+  }
+
+  .bloom-testi__btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--bloom-testi-nav-icon);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .bloom-testi__btn:hover {
+    transform: scale(1.08);
+  }
+  .bloom-testi__btn:active {
+    transform: scale(0.95);
+  }
+  .bloom-testi__btn svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+    z-index: 1;
+  }
+
+  .bloom-testi__btn-ripple {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(41, 75, 61, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.35s ease-out, height 0.35s ease-out;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bloom-testi__btn:hover .bloom-testi__btn-ripple {
+    width: 250%;
+    height: 250%;
+  }
+
+  /* Progress Track */
+  .bloom-testi__progress {
+    width: 48px;
+    height: 4px;
+    background-color: var(--bloom-testi-progress-track);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bloom-testi__progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--bloom-testi-progress-bar);
+    border-radius: 9999px;
+    transition: width var(--bloom-testi-anim-dur) cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* -------------------------------------------------------------
+     Responsive Breakpoints
+     ------------------------------------------------------------- */
+  @media screen and (max-width: 1024px) {
+    .bloom-testi__card {
+      padding-left: clamp(20px, 4vw, 40px);
+      padding-right: clamp(20px, 4vw, 40px);
+    }
+    .bloom-testi__images-col {
+      flex: 0 0 clamp(280px, 34vw, 360px);
+      max-width: clamp(280px, 34vw, 360px);
+    }
+    .bloom-testi__quote-text {
+      font-size: clamp(22px, 2.6vw, 26px);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .bloom-testi__card {
+      padding-top: var(--bloom-testi-pt-mb);
+      padding-bottom: var(--bloom-testi-pb-mb);
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .bloom-testi__grid {
+      flex-direction: column;
+      align-items: center;
+      text-align: left;
+      gap: 36px;
+    }
+
+    .bloom-testi__images-col {
+      flex: 0 0 min(100%, 300px);
+      max-width: min(100%, 300px);
+      margin: 0 auto;
+    }
+
+    .bloom-testi__content-col {
+      width: 100%;
+      align-items: flex-start;
+    }
+
+    .bloom-testi__quote-mark {
+      margin-bottom: 16px;
+    }
+    .bloom-testi__quote-mark svg {
+      width: 36px;
+      height: 26px;
+    }
+
+    .bloom-testi__quote-text {
+      font-size: var(--bloom-testi-font-sz-mb);
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .bloom-testi__slides {
+      min-height: 200px;
+    }
+
+    .bloom-testi__purchased {
+      margin-bottom: 24px;
+    }
+  }
+
+  @container (max-width: 768px) {
+    .bloom-testi__grid {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 36px !important;
+    }
+    .bloom-testi__images-col {
+      flex: 0 0 min(100%, 300px) !important;
+      max-width: min(100%, 300px) !important;
+      margin: 0 auto !important;
+    }
+    .bloom-testi__quote-text {
+      font-size: var(--bloom-testi-font-sz-mb) !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bloom-testi__photo-card,
+    .bloom-testi__photo-inner,
+    .bloom-testi__slide,
+    .bloom-testi__progress-bar {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+
+<section
+  id="bloom-testimonials-{{ section.id }}"
+  class="bloom-testi-section-{{ section.id }} bloom-testi--{{ section_width }}{% if section_st.background_full_bleed %} bloom-testi--bleed-bg{% endif %}"
+  aria-label="Customer Testimonials"
+>
+  <div class="bloom-testi__outer">
+    <div class="bloom-testi__card">
+      <div class="bloom-testi__content-wrap">
+        <div class="bloom-testi__grid">
+
+          <!-- Left Column: Layered Customer Photo Stack -->
+          <div class="bloom-testi__images-col">
+            <div class="bloom-testi__stack" id="BloomTestiStack-{{ section.id }}">
+              {%- for block in section.blocks -%}
+                {%- liquid
+                  assign default_rotations = "5,0,-5,4,-4,3,-3" | split: ","
+                  assign rot_idx = forloop.index0 | modulo: 7
+                  assign rot_val = block.settings.rotation
+                  if rot_val == 0 and block.settings.custom_rotation_override == false
+                    assign rot_val = default_rotations[rot_idx]
+                  endif
+
+                  assign z_val = total_blocks | minus: forloop.index0
+                -%}
+                <div
+                  class="bloom-testi__photo-card{% if forloop.first %} is-top{% endif %}"
+                  data-index="{{ forloop.index0 }}"
+                  data-rotate="{{ rot_val }}"
+                  style="--card-rotate: {{ rot_val }}deg; z-index: {{ z_val }};"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="bloom-testi__photo-inner">
+                    {%- if block.settings.image != blank -%}
+                      <img
+                        src="{{ block.settings.image | image_url: width: 800 }}"
+                        alt="{{ block.settings.image.alt | default: block.settings.author_name | escape }}"
+                        class="bloom-testi__img"
+                        loading="lazy"
+                        width="800"
+                        height="1000"
+                      >
+                    {%- else -%}
+                      {%- liquid
+                        assign sample_img = 'bloom-testimonial-' | append: forloop.index | append: '.jpg'
+                      -%}
+                      <img
+                        src="{{ sample_img | asset_url }}"
+                        alt="{{ block.settings.author_name | escape }}"
+                        class="bloom-testi__img"
+                        loading="lazy"
+                        width="800"
+                        height="1000"
+                      >
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Right Column: Testimonial Content & Slider -->
+          <div class="bloom-testi__content-col">
+
+            <!-- Decorative Quotation Mark -->
+            {%- if section_st.show_quote_mark -%}
+              <div class="bloom-testi__quote-mark" aria-hidden="true">
+                <svg width="41" height="30" viewBox="0 0 41 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.93555 13.877H2.46871V0H19.2188V9.50329C19.2188 19.1506 12.4876 27.5084 3.05142 29.5164C2.20631 29.6963 1.69842 29.7486 1.69842 29.7486L0 25.6106C7.50351 21.8694 7.93555 13.877 7.93555 13.877ZM29.7147 13.877H24.2479V0H41V9.50329C41 19.1506 34.2683 27.5084 24.8322 29.5164C23.9871 29.6963 23.4797 29.7486 23.4797 29.7486L21.7812 25.6106C29.2822 21.8694 29.7147 13.877 29.7147 13.877Z" fill="currentColor"/>
+                </svg>
+              </div>
+            {%- endif -%}
+
+            <!-- Slides Container -->
+            <div class="bloom-testi__slides" id="BloomTestiSlides-{{ section.id }}">
+              {%- for block in section.blocks -%}
+                {%- liquid
+                  assign product_item = block.settings.product
+                  assign product_title = block.settings.custom_product_title
+                  assign product_url = block.settings.custom_product_url
+                  assign product_img = block.settings.custom_product_image
+
+                  if product_item != blank
+                    assign product_title = product_item.title
+                    assign product_url = product_item.url
+                    if product_item.featured_image != blank
+                      assign product_img = product_item.featured_image
+                    endif
+                  endif
+                -%}
+                <div
+                  class="bloom-testi__slide{% if forloop.first %} is-active{% endif %}"
+                  data-index="{{ forloop.index0 }}"
+                  id="BloomSlide-{{ section.id }}-{{ forloop.index0 }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <!-- Star Rating -->
+                  {%- if section_st.show_star_rating -%}
+                    <div class="bloom-testi__stars" aria-label="{{ block.settings.rating | default: 5 }} out of 5 stars">
+                      {%- assign star_rate = block.settings.rating | default: 5 -%}
+                      {%- for i in (1..5) -%}
+                        <svg class="bloom-testi__star{% if i > star_rate %} is-empty{% endif %}" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10 1L12.7 6.6L19 7.4L14.4 11.7L15.6 18L10 14.9L4.4 18L5.6 11.7L1 7.4L7.3 6.6L10 1Z" fill="currentColor"/>
+                        </svg>
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+
+                  <!-- Review Text -->
+                  <div class="bloom-testi__quote-text">
+                    <p>{{ block.settings.quote | escape }}</p>
+                  </div>
+
+                  <!-- Author & Verified Customer Badge -->
+                  <div class="bloom-testi__author-wrap">
+                    {%- if block.settings.show_verified -%}
+                      <span class="bloom-testi__verified-icon" aria-hidden="true" title="Verified Customer">
+                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14 7.74857C14 8.3459 13.2662 8.83823 13.1192 9.3889C12.9675 9.95823 13.3513 10.7516 13.0632 11.2497C12.7703 11.7561 11.8895 11.8167 11.4788 12.2274C11.0682 12.6381 11.0075 13.5189 10.5012 13.8117C10.003 14.0999 9.20967 13.7161 8.64033 13.8677C8.08967 14.0147 7.59733 14.7486 7 14.7486C6.40267 14.7486 5.91033 14.0147 5.35967 13.8677C4.79033 13.7161 3.997 14.0999 3.49883 13.8117C2.9925 13.5189 2.93183 12.6381 2.52117 12.2274C2.1105 11.8167 1.22967 11.7561 0.936833 11.2497C0.648667 10.7516 1.0325 9.95823 0.880833 9.3889C0.733833 8.83823 0 8.3459 0 7.74857C0 7.15123 0.733833 6.6589 0.880833 6.10823C1.0325 5.5389 0.648667 4.74557 0.936833 4.2474C1.22967 3.74107 2.1105 3.6804 2.52117 3.26973C2.93183 2.85907 2.9925 1.97823 3.49883 1.6854C3.997 1.39723 4.79033 1.78107 5.35967 1.6294C5.91033 1.4824 6.40267 0.748566 7 0.748566C7.59733 0.748566 8.08967 1.4824 8.64033 1.6294C9.20967 1.78107 10.003 1.39723 10.5012 1.6854C11.0075 1.97823 11.0682 2.85907 11.4788 3.26973C11.8895 3.6804 12.7703 3.74107 13.0632 4.2474C13.3513 4.74557 12.9675 5.5389 13.1192 6.10823C13.2662 6.6589 14 7.15123 14 7.74857Z" fill="currentColor"/>
+                          <path d="M9.023 5.66257L6.35833 8.32723L4.977 6.94707C4.83294 6.80308 4.6376 6.7222 4.43392 6.7222C4.23024 6.7222 4.0349 6.80308 3.89083 6.94707C3.74685 7.09113 3.66597 7.28647 3.66597 7.49015C3.66597 7.69383 3.74685 7.88917 3.89083 8.03323L5.82867 9.97107C5.96889 10.1111 6.15898 10.1898 6.35717 10.1898C6.55536 10.1898 6.74545 10.1111 6.88567 9.97107L10.108 6.74873C10.252 6.60467 10.3329 6.40933 10.3329 6.20565C10.3329 6.00197 10.252 5.80663 10.108 5.66257C10.0368 5.59128 9.95221 5.53473 9.85913 5.49615C9.76604 5.45756 9.66626 5.43771 9.5655 5.43771C9.46474 5.43771 9.36496 5.45756 9.27187 5.49615C9.17879 5.53473 9.09422 5.59128 9.023 5.66257Z" fill="#FFFFFF"/>
+                        </svg>
+                      </span>
+                    {%- endif -%}
+                    <span class="bloom-testi__author-name">{{ block.settings.author_name | default: 'Verified Customer' }}</span>
+                  </div>
+
+                  <!-- Purchased Product Info -->
+                  {%- if product_title != blank -%}
+                    <div class="bloom-testi__purchased">
+                      <span class="bloom-testi__purchased-label">{{ section_st.purchased_label | default: 'Purchased items:' }}</span>
+                      <div class="bloom-testi__product-hover-wrap">
+                        {%- if product_url != blank -%}
+                          <a href="{{ product_url }}" class="bloom-testi__product-link">
+                            {{ product_title }}
+                          </a>
+                        {%- else -%}
+                          <span class="bloom-testi__product-link">
+                            {{ product_title }}
+                          </span>
+                        {%- endif -%}
+
+                        {%- if product_img != blank -%}
+                          <div class="bloom-testi__product-tooltip" aria-hidden="true">
+                            <img src="{{ product_img | image_url: width: 300 }}" alt="{{ product_title | escape }}" loading="lazy">
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                </div>
+              {%- endfor -%}
+            </div>
+
+            <!-- Navigation Controls & Progress Pill -->
+            {%- if total_blocks > 1 -%}
+              <div class="bloom-testi__nav" id="BloomTestiNav-{{ section.id }}">
+                <button
+                  type="button"
+                  class="bloom-testi__btn bloom-testi__btn--prev"
+                  aria-label="Previous testimonial"
+                >
+                  <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.166 2.478C0.059 2.587 0 2.733 0 2.886C0 3.039 0.059 3.186 0.166 3.295L2.441 5.603C2.548 5.712 2.693 5.772 2.843 5.772C2.994 5.772 3.139 5.712 3.245 5.603C3.465 5.38 3.465 5.018 3.245 4.787L1.941 3.464L7.431 3.464C7.745 3.464 8 3.205 8 2.886C8 2.567 7.745 2.309 7.431 2.309L1.941 2.309L3.245 0.986C3.465 0.763 3.465 0.401 3.245 0.17C3.025 -0.057 2.661 -0.057 2.441 0.17L0.166 2.478Z" fill="currentColor"/>
+                  </svg>
+                  <span class="bloom-testi__btn-ripple" aria-hidden="true"></span>
+                </button>
+
+                <div class="bloom-testi__progress">
+                  {%- assign initial_pct = 100.0 | divided_by: total_blocks -%}
+                  <div
+                    class="bloom-testi__progress-bar"
+                    style="width: {{ initial_pct }}%;"
+                    role="progressbar"
+                    aria-valuenow="1"
+                    aria-valuemin="1"
+                    aria-valuemax="{{ total_blocks }}"
+                  ></div>
+                </div>
+
+                <button
+                  type="button"
+                  class="bloom-testi__btn bloom-testi__btn--next"
+                  aria-label="Next testimonial"
+                >
+                  <svg width="8" height="7" viewBox="0 0 8 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.834 4.271C7.94 4.162 8 4.016 8 3.863C8 3.71 7.94 3.563 7.834 3.454L5.559 1.146C5.452 1.037 5.308 0.977 5.157 0.977C5.006 0.977 4.861 1.037 4.755 1.146C4.535 1.369 4.535 1.731 4.755 1.962L6.059 3.285L0.569 3.285C0.255 3.285 0 3.544 0 3.863C0 4.182 0.255 4.44 0.569 4.44L6.059 4.44L4.755 5.763C4.535 5.986 4.535 6.348 4.755 6.579C4.975 6.807 5.339 6.807 5.559 6.579L7.834 4.271Z" fill="currentColor"/>
+                  </svg>
+                  <span class="bloom-testi__btn-ripple" aria-hidden="true"></span>
+                </button>
+              </div>
+            {%- endif -%}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    function initTestimonialsSection() {
+      const sectionEl = document.getElementById('bloom-testimonials-{{ section.id }}');
+      if (!sectionEl || sectionEl.dataset.initialized === 'true') return;
+      sectionEl.dataset.initialized = 'true';
+
+      const stackEl = document.getElementById('BloomTestiStack-{{ section.id }}');
+      const slidesContainer = document.getElementById('BloomTestiSlides-{{ section.id }}');
+      const navEl = document.getElementById('BloomTestiNav-{{ section.id }}');
+      if (!stackEl || !slidesContainer) return;
+
+      const cards = Array.from(stackEl.querySelectorAll('.bloom-testi__photo-card'));
+      const slides = Array.from(slidesContainer.querySelectorAll('.bloom-testi__slide'));
+      const total = cards.length;
+      if (total <= 1) return;
+
+      const progressBar = navEl ? navEl.querySelector('.bloom-testi__progress-bar') : null;
+      const prevBtn = navEl ? navEl.querySelector('.bloom-testi__btn--prev') : null;
+      const nextBtn = navEl ? navEl.querySelector('.bloom-testi__btn--next') : null;
+
+      let currentIndex = 0;
+      let isAnimating = false;
+      const animDuration = parseInt('{{ section_st.animation_duration | default: 400 }}', 10) || 400;
+      const isCardAnimEnabled = {{ section_st.enable_card_animation | default: true }};
+      const isAutoplay = {{ section_st.enable_autoplay | default: false }};
+      const autoplayInterval = (parseInt('{{ section_st.autoplay_interval | default: 6 }}', 10) || 6) * 1000;
+      let autoplayTimer = null;
+
+      // Track z-indexes
+      let zMap = cards.map((_, i) => total - i);
+
+      function updateZIndexes() {
+        cards.forEach((card, i) => {
+          card.style.zIndex = zMap[i];
+          if (zMap[i] === total) {
+            card.classList.add('is-top');
+          } else {
+            card.classList.remove('is-top');
+          }
+        });
+      }
+      updateZIndexes();
+
+      function goToSlide(targetIndex, direction = 'next') {
+        if (targetIndex === currentIndex || isAnimating) return;
+        isAnimating = true;
+
+        const oldIndex = currentIndex;
+        currentIndex = targetIndex;
+
+        // 1. Animate Text Slides
+        slides[oldIndex].classList.remove('is-active');
+        slides[currentIndex].classList.add('is-active');
+
+        // 2. Animate Progress Bar
+        if (progressBar) {
+          const pct = ((currentIndex + 1) / total) * 100;
+          progressBar.style.width = pct + '%';
+          progressBar.setAttribute('aria-valuenow', currentIndex + 1);
+        }
+
+        // 3. Layered Card Shuffle Animation
+        if (isCardAnimEnabled && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+          const outgoingCard = cards[oldIndex];
+          const incomingCard = cards[currentIndex];
+          const cardWidth = outgoingCard.offsetWidth || 340;
+          const slideOffset = direction === 'next' ? (cardWidth + 40) : -(cardWidth + 40);
+
+          // Slide top card out
+          outgoingCard.style.transform = `translateX(${slideOffset}px) scale(0.96)`;
+          outgoingCard.style.opacity = '0.9';
+
+          setTimeout(() => {
+            // Re-order z-index: outgoing card goes to back (1), incoming card goes to top (total)
+            if (direction === 'next') {
+              zMap = zMap.map(z => (z < total ? z + 1 : 1));
+            } else {
+              zMap = zMap.map(z => (z > 1 ? z - 1 : total));
+            }
+            updateZIndexes();
+
+            // Slide card back in at bottom of stack
+            outgoingCard.style.transform = 'translateX(0) scale(1)';
+            outgoingCard.style.opacity = '1';
+
+            setTimeout(() => {
+              isAnimating = false;
+            }, animDuration * 0.7);
+          }, animDuration * 0.5);
+        } else {
+          // Instant change without slide
+          zMap = zMap.map((_, i) => (i === currentIndex ? total : 1));
+          updateZIndexes();
+          isAnimating = false;
+        }
+      }
+
+      function nextSlide() {
+        const nextIdx = (currentIndex + 1) % total;
+        goToSlide(nextIdx, 'next');
+      }
+
+      function prevSlide() {
+        const prevIdx = (currentIndex - 1 + total) % total;
+        goToSlide(prevIdx, 'prev');
+      }
+
+      if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+      if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+      // Keyboard navigation
+      sectionEl.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') nextSlide();
+        else if (e.key === 'ArrowLeft') prevSlide();
+      });
+
+      // Autoplay setup
+      function startAutoplay() {
+        if (!isAutoplay || autoplayTimer) return;
+        autoplayTimer = setInterval(nextSlide, autoplayInterval);
+      }
+      function stopAutoplay() {
+        if (autoplayTimer) {
+          clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+      }
+
+      if (isAutoplay) {
+        startAutoplay();
+        sectionEl.addEventListener('mouseenter', stopAutoplay);
+        sectionEl.addEventListener('mouseleave', startAutoplay);
+        sectionEl.addEventListener('focusin', stopAutoplay);
+        sectionEl.addEventListener('focusout', startAutoplay);
+      }
+
+      // Shopify Theme Editor Event Handling
+      if (window.Shopify && Shopify.designMode) {
+        document.addEventListener('shopify:block:select', function(event) {
+          if (event.detail.sectionId === '{{ section.id }}') {
+            const blockIndex = cards.findIndex(c => c.getAttribute('data-index') == event.detail.blockId || cards.indexOf(c) == event.target.dataset.index);
+            if (blockIndex !== -1) {
+              goToSlide(blockIndex, 'next');
+            }
+          }
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTestimonialsSection);
+    } else {
+      initTestimonialsSection();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+        initTestimonialsSection();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Planti Testimonials Stack",
+  "tag": "section",
+  "class": "section-bloom-testimonials",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Width & Container"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "default": "default",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "fluid_container",
+          "label": "Fluid container"
+        },
+        {
+          "value": "fixed_width",
+          "label": "Fixed width"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "fixed_container_width",
+      "label": "Fixed container width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "default": 1400,
+      "unit": "px",
+      "info": "Active when 'Fixed width' is selected."
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content maximum width",
+      "min": 800,
+      "max": 1600,
+      "step": 20,
+      "default": 1320,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "background_full_bleed",
+      "label": "Extend card background edge-to-edge for contained modes",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "outer_background_color",
+      "label": "Outer page background",
+      "default": "#FAFAF0"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Main card background",
+      "default": "#F0F0E1"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary text",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Decorative quote mark",
+      "default": "#C7CEBE"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star rating",
+      "default": "#FF982D"
+    },
+    {
+      "type": "color",
+      "id": "verified_color",
+      "label": "Verified badge",
+      "default": "#29965A"
+    },
+    {
+      "type": "color",
+      "id": "nav_bg_color",
+      "label": "Navigation pill background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "nav_icon_color",
+      "label": "Navigation arrow icon",
+      "default": "#294B3D"
+    },
+    {
+      "type": "color",
+      "id": "progress_track_color",
+      "label": "Progress track",
+      "default": "#E8ECE8"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_color",
+      "label": "Progress active bar",
+      "default": "#294B3D"
+    },
+    {
+      "type": "header",
+      "content": "Typography & Dimensions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quote_mark",
+      "label": "Show decorative quotation mark",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_star_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "review_font_size_desktop",
+      "label": "Review font size on desktop",
+      "min": 20,
+      "max": 42,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "review_font_size_mobile",
+      "label": "Review font size on mobile",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "review_line_height",
+      "label": "Review line height",
+      "min": 120,
+      "max": 200,
+      "step": 5,
+      "default": 150,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "purchased_label",
+      "label": "Purchased items prefix",
+      "default": "Purchased items:"
+    },
+    {
+      "type": "range",
+      "id": "stack_width_desktop",
+      "label": "Image stack width on desktop",
+      "min": 320,
+      "max": 550,
+      "step": 10,
+      "default": 420,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "label": "Column gap on desktop",
+      "min": 30,
+      "max": 120,
+      "step": 5,
+      "default": 70,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_corner_radius",
+      "label": "Photo card corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "container_corner_radius",
+      "label": "Container corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop top padding",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop bottom padding",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 50,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 50,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Animation & Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_animation",
+      "label": "Enable card-flip shuffle transition",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Animation duration",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "default": 400,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable automatic testimonial rotation",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "label": "Autoplay interval",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "unit": "s"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer photo"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_rotation_override",
+          "label": "Override automatic rotation angle",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "rotation",
+          "label": "Custom rotation angle",
+          "min": -15,
+          "max": 15,
+          "step": 1,
+          "default": 0,
+          "unit": "deg"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Testimonial review",
+          "default": "These plants completely transformed my workspace. They’re low-maintenance, healthy, and beautifully styled. I love how they add a calm, natural vibe without requiring too much care from my busy schedule."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Customer name",
+          "default": "Daniel R."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show verified customer badge",
+          "default": true
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Purchased product"
+        },
+        {
+          "type": "text",
+          "id": "custom_product_title",
+          "label": "Fallback product title",
+          "default": "Echeveria miranda",
+          "info": "Used if no Shopify product is selected above."
+        },
+        {
+          "type": "url",
+          "id": "custom_product_url",
+          "label": "Fallback product URL",
+          "info": "Used if no Shopify product is selected above."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_product_image",
+          "label": "Fallback product thumbnail image",
+          "info": "Appears on hovering the product title."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Planti Testimonials Stack",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rotation": 5,
+            "rating": 5,
+            "quote": "These plants completely transformed my workspace. They’re low-maintenance, healthy, and beautifully styled. I love how they add a calm, natural vibe without requiring too much care from my busy schedule.",
+            "author_name": "Daniel R.",
+            "show_verified": true,
+            "custom_product_title": "Echeveria miranda"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rotation": 0,
+            "rating": 5,
+            "quote": "I never thought ordering plants online could be this easy! They arrived fresh, carefully packaged, and ready to display. The quality is incredible, and they instantly made my living room feel brighter and more inviting",
+            "author_name": "Anna M.",
+            "show_verified": true,
+            "custom_product_title": "Ficus tineke"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rotation": -5,
+            "rating": 5,
+            "quote": "Absolutely obsessed with my new plant collection! The pots are modern, the plants look lush and vibrant, and everything was delivered in perfect condition. I’ve already received so many compliments from friends.",
+            "author_name": "Sophia L",
+            "show_verified": true,
+            "custom_product_title": "Elephant bush"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
