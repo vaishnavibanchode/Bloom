@@ -1124,7 +1124,7 @@
       ],
       "name": "Planti Testimonials Stack",
       "settings": {
-        "section_width": "fluid_container",
+        "section_width": "full_width",
         "fixed_container_width": 1400,
         "content_max_width": 1320,
         "background_full_bleed": false,
