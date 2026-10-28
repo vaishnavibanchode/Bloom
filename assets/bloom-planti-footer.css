@@ -448,15 +448,17 @@
 .bloom-footer__wordmark-wrap {
   position: relative;
   overflow: hidden;
-  margin-top: 16px;
+  margin-top: 32px;
+  padding-top: 12px;
   pointer-events: none;
   user-select: none;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  /* Natural crop: allow bottom of letters to bleed slightly beyond boundary */
-  max-height: calc(var(--bf-wordmark-size) * 0.74);
+  align-items: flex-start;
+  /* Natural crop: allow bottom of letters to bleed slightly beyond boundary,
+     while the top of the letters remains 100% visible and unclipped */
+  max-height: calc(var(--bf-wordmark-size) * 0.82);
 }
 
 .bloom-footer__wordmark {
@@ -465,7 +467,7 @@
   font-size: var(--bf-wordmark-size);
   color: var(--bf-wordmark-color);
   letter-spacing: -0.02em;
-  line-height: 0.78;
+  line-height: 0.95;
   white-space: nowrap;
   display: block;
   text-align: center;
@@ -559,6 +561,11 @@
 
   .bloom-footer__divider {
     margin-top: 36px;
+  }
+
+  .bloom-footer__wordmark-wrap {
+    margin-top: 20px;
+    padding-top: 8px;
   }
 }
 
