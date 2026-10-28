@@ -42,7 +42,7 @@
   --bf-mobile-pb:     20px;
   --bf-brand-heading-size: 36px;
   --bf-newsletter-heading-size: 40px;
-  --bf-wordmark-size: clamp(68px, 23.5vw, 340px);
+  --bf-wordmark-size: clamp(5.5rem, 28.5vw, 32rem);
 
   position: relative;
   background: var(--bf-bg);
@@ -448,8 +448,9 @@
 .bloom-footer__wordmark-wrap {
   position: relative;
   overflow: hidden;
-  margin-top: 32px;
-  padding-top: 12px;
+  margin-top: 6px;
+  padding-top: 4px;
+  padding-bottom: 0;
   pointer-events: none;
   user-select: none;
   width: 100%;
@@ -458,7 +459,7 @@
   align-items: flex-start;
   /* Natural crop: allow bottom of letters to bleed slightly beyond boundary,
      while the top of the letters remains 100% visible and unclipped */
-  max-height: calc(var(--bf-wordmark-size) * 0.82);
+  max-height: calc(var(--bf-wordmark-size) * 0.74);
 }
 
 .bloom-footer__wordmark {
@@ -466,15 +467,16 @@
   font-weight: 400;
   font-size: var(--bf-wordmark-size);
   color: var(--bf-wordmark-color);
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+  letter-spacing: -0.015em;
+  line-height: 0.88;
   white-space: nowrap;
   display: block;
   text-align: center;
   text-transform: uppercase;
-  margin: 0;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 0 16px;
   box-sizing: border-box;
+  width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -564,8 +566,8 @@
   }
 
   .bloom-footer__wordmark-wrap {
-    margin-top: 20px;
-    padding-top: 8px;
+    margin-top: 4px;
+    padding-top: 2px;
   }
 }
 

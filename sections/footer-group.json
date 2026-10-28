@@ -48,7 +48,7 @@
         "wordmark_color": "#567565",
         "serif_heading_size": 36,
         "newsletter_heading_size": 40,
-        "wordmark_size": 310,
+        "wordmark_size": 520,
         "content_max_width": 1570,
         "col_gap": 48,
         "padding_top": 64,
@@ -127,7 +127,6 @@
     }
   },
   "order": [
-    "bloom_planti_footer_aGwF8i",
-    "footer"
+    "bloom_planti_footer_aGwF8i"
   ]
 }
