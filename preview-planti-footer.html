@@ -37,7 +37,7 @@
       --bf-mobile-pb:     20px;
       --bf-brand-heading-size: 36px;
       --bf-newsletter-heading-size: 40px;
-      --bf-wordmark-size: clamp(120px, 20vw, 320px);
+      --bf-wordmark-size: clamp(68px, 23.5vw, 340px);
       position: relative;
       background: var(--bf-bg);
       color: var(--bf-text);
@@ -163,37 +163,33 @@
     .bloom-footer__payment-icon { height: 22px; width: auto; display: block; border-radius: 3px; }
 
     .bloom-footer__wordmark-wrap {
-      position: relative; overflow: hidden; line-height: 0.85;
-      margin-top: 8px; pointer-events: none; user-select: none;
-      max-height: 250px;
+      position: relative; overflow: hidden;
+      margin-top: 16px; pointer-events: none; user-select: none;
+      width: 100%; display: flex; justify-content: center; align-items: flex-end;
+      max-height: calc(var(--bf-wordmark-size) * 0.74);
     }
     .bloom-footer__wordmark {
       font-family: var(--bf-serif); font-weight: 400;
       font-size: var(--bf-wordmark-size);
       color: var(--bf-wordmark-color);
-      letter-spacing: -0.01em; white-space: nowrap;
-      display: flex; justify-content: space-between; align-items: baseline;
-      width: 100%; line-height: 0.88;
-      padding: 0 40px;
+      letter-spacing: -0.02em; line-height: 0.78;
+      white-space: nowrap; display: block;
+      text-align: center; text-transform: uppercase;
+      margin: 0; padding: 0 20px;
     }
-    .bloom-footer__wordmark-letter { display: block; }
 
     @media (max-width: 1199px) {
       .bloom-footer__inner { padding: 52px 28px 24px; }
       .bloom-footer__columns { grid-template-columns: 1fr 1fr; gap: 44px 40px; }
       .bloom-footer__col--newsletter { grid-column: 1 / -1; }
       .bloom-footer__newsletter-heading { font-size: clamp(30px,4vw,40px); }
-      .bloom-footer__wordmark { font-size: clamp(90px,15vw,240px); }
-      .bloom-footer__wordmark-wrap { max-height: 180px; }
     }
     @media (max-width: 767px) {
-      .bloom-footer { --bf-brand-heading-size: 28px; --bf-newsletter-heading-size: clamp(26px,8vw,34px); --bf-wordmark-size: clamp(70px,22vw,120px); }
+      .bloom-footer { --bf-brand-heading-size: 28px; --bf-newsletter-heading-size: clamp(26px,8vw,34px); }
       .bloom-footer__inner { padding: 48px 20px 20px; }
       .bloom-footer__columns { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
       .bloom-footer__col--brand, .bloom-footer__col--newsletter { grid-column: 1 / -1; }
       .bloom-footer__bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .bloom-footer__wordmark-wrap { max-height: 110px; }
-      .bloom-footer__wordmark { padding: 0 20px; }
     }
     @media (max-width: 479px) {
       .bloom-footer__columns { grid-template-columns: 1fr; gap: 36px; }
@@ -335,13 +331,7 @@
 
   <!-- Decorative Wordmark -->
   <div class="bloom-footer__wordmark-wrap" aria-hidden="true">
-    <div class="bloom-footer__wordmark">
-      <span class="bloom-footer__wordmark-letter">B</span>
-      <span class="bloom-footer__wordmark-letter">L</span>
-      <span class="bloom-footer__wordmark-letter">O</span>
-      <span class="bloom-footer__wordmark-letter">O</span>
-      <span class="bloom-footer__wordmark-letter">M</span>
-    </div>
+    <div class="bloom-footer__wordmark">BLOOM</div>
   </div>
 
 </footer>

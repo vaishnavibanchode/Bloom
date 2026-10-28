@@ -70,7 +70,7 @@
     --bf-mobile-pb:             {{ pb_mobile }}px;
     --bf-brand-heading-size:    {{ serif_font }}px;
     --bf-newsletter-heading-size: {{ nl_heading_size }}px;
-    --bf-wordmark-size:         clamp({{ wordmark_size | times: 0.35 | round }}px, {{ wordmark_size | times: 0.022 }}vw, {{ wordmark_size }}px);
+    --bf-wordmark-size:         clamp(68px, 23.5vw, {{ wordmark_size }}px);
   }
 {%- endstyle -%}
 
@@ -409,12 +409,7 @@
   ============================================================{%- endcomment -%}
   {%- if show_wordmark and wordmark_text != blank -%}
     <div class="bloom-footer__wordmark-wrap" aria-hidden="true">
-      <div class="bloom-footer__wordmark">
-        {%- assign wm_letters = wordmark_text | split: '' -%}
-        {%- for letter in wm_letters -%}
-          <span class="bloom-footer__wordmark-letter">{{ letter }}</span>
-        {%- endfor -%}
-      </div>
+      <div class="bloom-footer__wordmark">{{ wordmark_text | upcase }}</div>
     </div>
   {%- endif -%}
 
@@ -668,9 +663,9 @@
       "id": "wordmark_size",
       "label": "Wordmark max size (px)",
       "min": 160,
-      "max": 400,
+      "max": 450,
       "step": 10,
-      "default": 310
+      "default": 340
     },
     {
       "type": "header",
