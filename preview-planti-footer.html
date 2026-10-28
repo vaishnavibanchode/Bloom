@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Planti Footer — Preview</title>
+
+  <!-- Instrument Serif (matches Athora Planti) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: system-ui, sans-serif; background: #f0f0f0; }
+
+    /* ---- Inline the footer CSS so preview is self-contained ---- */
+    .bloom-footer .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    .bloom-footer {
+      --bf-bg:            #214735;
+      --bf-text:          #ffffff;
+      --bf-text-secondary: #F2F4EF;
+      --bf-divider:       rgba(255,255,255,0.16);
+      --bf-wordmark-color: #567565;
+      --bf-serif:         'Instrument Serif', Georgia, 'Times New Roman', serif;
+      --bf-sans:          -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bf-max-width:     1410px;
+      --bf-col-gap:       48px;
+      --bf-pt:            64px;
+      --bf-pb:            24px;
+      --bf-mobile-pt:     48px;
+      --bf-mobile-pb:     20px;
+      --bf-brand-heading-size: 36px;
+      --bf-newsletter-heading-size: 40px;
+      --bf-wordmark-size: clamp(120px, 20vw, 320px);
+      position: relative;
+      background: var(--bf-bg);
+      color: var(--bf-text);
+      font-family: var(--bf-sans);
+      overflow: hidden;
+    }
+
+    .bloom-footer__inner {
+      max-width: var(--bf-max-width);
+      margin: 0 auto;
+      padding: var(--bf-pt) 40px var(--bf-pb);
+    }
+
+    .bloom-footer__columns {
+      display: grid;
+      grid-template-columns: 1.45fr 0.85fr 0.85fr 1.35fr;
+      gap: 0 var(--bf-col-gap);
+      align-items: start;
+    }
+
+    .bloom-footer__brand-heading {
+      font-family: var(--bf-serif);
+      font-weight: 400;
+      font-size: var(--bf-brand-heading-size);
+      color: var(--bf-text);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin: 0 0 18px 0;
+      text-decoration: none;
+      display: block;
+    }
+
+    .bloom-footer__brand-desc {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--bf-text-secondary);
+      margin: 0 0 28px 0;
+      max-width: 380px;
+    }
+
+    .bloom-footer__social {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 20px; list-style: none; margin: 0 0 28px 0; padding: 0;
+    }
+
+    .bloom-footer__social-link {
+      display: flex; align-items: center; justify-content: center;
+      color: var(--bf-text); text-decoration: none;
+      transition: opacity 0.2s ease; width: 22px; height: 22px; flex-shrink: 0;
+    }
+    .bloom-footer__social-link:hover { opacity: 0.65; }
+    .bloom-footer__social-link svg { width: 100%; height: 100%; fill: currentColor; display: block; }
+
+    .bloom-footer__localization { display: flex; flex-wrap: wrap; gap: 10px; }
+    .bloom-footer__locale-select-wrap { position: relative; display: inline-flex; align-items: center; }
+    .bloom-footer__locale-select {
+      appearance: none; -webkit-appearance: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 4px; color: var(--bf-text);
+      font-size: 13px; padding: 7px 30px 7px 10px;
+      cursor: pointer; min-height: 34px; min-width: 160px;
+    }
+    .bloom-footer__locale-select option { background: #214735; color: #fff; }
+    .bloom-footer__locale-arrow {
+      position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; color: var(--bf-text);
+    }
+    .bloom-footer__locale-arrow svg { width: 10px; height: 10px; fill: currentColor; }
+
+    .bloom-footer__nav-heading {
+      font-size: 18px; font-weight: 600; color: var(--bf-text);
+      margin: 0 0 20px 0; line-height: 1.3;
+    }
+    .bloom-footer__nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+    .bloom-footer__nav-link {
+      font-size: 15px; font-weight: 400; color: var(--bf-text-secondary);
+      text-decoration: none; line-height: 1.4; transition: opacity 0.2s ease;
+    }
+    .bloom-footer__nav-link:hover { opacity: 0.65; }
+
+    .bloom-footer__newsletter-heading {
+      font-family: var(--bf-serif); font-weight: 400;
+      font-size: var(--bf-newsletter-heading-size);
+      color: var(--bf-text); line-height: 1.15;
+      letter-spacing: -0.02em; margin: 0 0 16px 0;
+    }
+    .bloom-footer__newsletter-desc { font-size: 15px; line-height: 1.75; color: var(--bf-text-secondary); margin: 0 0 26px 0; }
+
+    .bloom-footer__newsletter-form { width: 100%; max-width: 450px; }
+    .bloom-footer__newsletter-field {
+      display: flex; align-items: center;
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 50px; padding: 9px 9px 9px 22px;
+      background: transparent; gap: 8px; height: 67px;
+    }
+    .bloom-footer__newsletter-field:focus-within { border-color: rgba(255,255,255,0.85); }
+    .bloom-footer__newsletter-input {
+      flex: 1 1 auto; background: transparent; border: none; outline: none;
+      color: var(--bf-text); font-size: 15px; min-width: 0; padding: 0;
+    }
+    .bloom-footer__newsletter-input::placeholder { color: rgba(255,255,255,0.55); }
+    .bloom-footer__newsletter-btn {
+      flex-shrink: 0; background: #ffffff; color: var(--bf-bg);
+      border: none; border-radius: 50px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0 22px; height: 48px; min-width: 120px;
+      cursor: pointer; transition: opacity 0.2s ease;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .bloom-footer__newsletter-btn:hover { opacity: 0.88; }
+
+    .bloom-footer__divider { border: none; border-top: 1px solid var(--bf-divider); margin: 48px 0 0 0; }
+
+    .bloom-footer__bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px 24px; padding: 22px 0 0 0;
+    }
+    .bloom-footer__copyright { font-size: 13.5px; color: var(--bf-text-secondary); margin: 0; }
+    .bloom-footer__copyright a { color: inherit; text-decoration: none; }
+
+    .bloom-footer__payments { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
+    .bloom-footer__payment-icon { height: 22px; width: auto; display: block; border-radius: 3px; }
+
+    .bloom-footer__wordmark-wrap {
+      position: relative; overflow: hidden; line-height: 0.85;
+      margin-top: 8px; pointer-events: none; user-select: none;
+      max-height: 250px;
+    }
+    .bloom-footer__wordmark {
+      font-family: var(--bf-serif); font-weight: 400;
+      font-size: var(--bf-wordmark-size);
+      color: var(--bf-wordmark-color);
+      letter-spacing: -0.01em; white-space: nowrap;
+      display: flex; justify-content: space-between; align-items: baseline;
+      width: 100%; line-height: 0.88;
+      padding: 0 40px;
+    }
+    .bloom-footer__wordmark-letter { display: block; }
+
+    @media (max-width: 1199px) {
+      .bloom-footer__inner { padding: 52px 28px 24px; }
+      .bloom-footer__columns { grid-template-columns: 1fr 1fr; gap: 44px 40px; }
+      .bloom-footer__col--newsletter { grid-column: 1 / -1; }
+      .bloom-footer__newsletter-heading { font-size: clamp(30px,4vw,40px); }
+      .bloom-footer__wordmark { font-size: clamp(90px,15vw,240px); }
+      .bloom-footer__wordmark-wrap { max-height: 180px; }
+    }
+    @media (max-width: 767px) {
+      .bloom-footer { --bf-brand-heading-size: 28px; --bf-newsletter-heading-size: clamp(26px,8vw,34px); --bf-wordmark-size: clamp(70px,22vw,120px); }
+      .bloom-footer__inner { padding: 48px 20px 20px; }
+      .bloom-footer__columns { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+      .bloom-footer__col--brand, .bloom-footer__col--newsletter { grid-column: 1 / -1; }
+      .bloom-footer__bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .bloom-footer__wordmark-wrap { max-height: 110px; }
+      .bloom-footer__wordmark { padding: 0 20px; }
+    }
+    @media (max-width: 479px) {
+      .bloom-footer__columns { grid-template-columns: 1fr; gap: 36px; }
+    }
+    .bloom-footer, .bloom-footer__inner { max-width: 100%; overflow-x: hidden; }
+
+    /* Fake payment icons for preview */
+    .preview-payment {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 3px;
+      width: 38px; height: 24px; font-size: 8px; font-weight: bold;
+      color: rgba(255,255,255,0.8);
+    }
+  </style>
+</head>
+<body>
+
+<footer class="bloom-footer" role="contentinfo">
+  <div class="bloom-footer__inner">
+
+    <div class="bloom-footer__columns">
+
+      <!-- Column 1: Brand -->
+      <div class="bloom-footer__col bloom-footer__col--brand">
+        <a href="#" class="bloom-footer__brand-heading">BLOOM</a>
+        <p class="bloom-footer__brand-desc">Bringing nature closer to your home with carefully curated plants and gardening essentials. We believe every space deserves a touch of green.</p>
+
+        <ul class="bloom-footer__social" role="list">
+          <li>
+            <a href="#" class="bloom-footer__social-link" aria-label="Facebook">
+              <svg viewBox="0 0 320 512"><path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4.4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="bloom-footer__social-link" aria-label="Instagram">
+              <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="bloom-footer__social-link" aria-label="YouTube">
+              <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="bloom-footer__social-link" aria-label="TikTok">
+              <svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="bloom-footer__social-link" aria-label="X">
+              <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Localization selectors -->
+        <div class="bloom-footer__localization">
+          <div class="bloom-footer__locale-select-wrap">
+            <select class="bloom-footer__locale-select" aria-label="Country">
+              <option>🇺🇸 United States (USD $)</option>
+              <option>🇬🇧 United Kingdom (GBP £)</option>
+              <option>🇮🇳 India (INR ₹)</option>
+            </select>
+            <span class="bloom-footer__locale-arrow" aria-hidden="true">
+              <svg viewBox="0 0 10 6"><path fill="currentColor" d="M9.396 0.5L10 1.135 5 6 0 1.135 0.604 0.5 5 4.73 9.396 0.5Z"/></svg>
+            </span>
+          </div>
+          <div class="bloom-footer__locale-select-wrap">
+            <select class="bloom-footer__locale-select" aria-label="Language">
+              <option>English</option>
+              <option>Español</option>
+              <option>Français</option>
+            </select>
+            <span class="bloom-footer__locale-arrow" aria-hidden="true">
+              <svg viewBox="0 0 10 6"><path fill="currentColor" d="M9.396 0.5L10 1.135 5 6 0 1.135 0.604 0.5 5 4.73 9.396 0.5Z"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="bloom-footer__col bloom-footer__col--quicklinks">
+        <nav>
+          <h3 class="bloom-footer__nav-heading">Quick links</h3>
+          <ul class="bloom-footer__nav-list" role="list">
+            <li><a href="#" class="bloom-footer__nav-link">Terms of Service</a></li>
+            <li><a href="#" class="bloom-footer__nav-link">Refund Policy</a></li>
+            <li><a href="#" class="bloom-footer__nav-link">Privacy Policy</a></li>
+            <li><a href="#" class="bloom-footer__nav-link">Shipping Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Column 3: About Us -->
+      <div class="bloom-footer__col bloom-footer__col--about">
+        <nav>
+          <h3 class="bloom-footer__nav-heading">About us</h3>
+          <ul class="bloom-footer__nav-list" role="list">
+            <li><a href="#" class="bloom-footer__nav-link">FAQ's</a></li>
+            <li><a href="#" class="bloom-footer__nav-link">Our story</a></li>
+            <li><a href="#" class="bloom-footer__nav-link">Contact</a></li>
+            <li><a href="#" class="bloom-footer__nav-link">Contact with map</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Column 4: Newsletter -->
+      <div class="bloom-footer__col bloom-footer__col--newsletter">
+        <h2 class="bloom-footer__newsletter-heading">Subscribe our newsletter</h2>
+        <p class="bloom-footer__newsletter-desc">Stay in the loop, with exclusive offers and product previews.</p>
+        <div class="bloom-footer__newsletter-form">
+          <div class="bloom-footer__newsletter-field">
+            <input type="email" class="bloom-footer__newsletter-input" placeholder="Enter your email">
+            <button class="bloom-footer__newsletter-btn">SUBSCRIBE</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="bloom-footer__divider" aria-hidden="true">
+
+    <!-- Bottom Row -->
+    <div class="bloom-footer__bottom">
+      <p class="bloom-footer__copyright">
+        &copy; 2026, <a href="#">Bloom Gardening</a> &nbsp; <a href="https://www.shopify.com" target="_blank" rel="nofollow noopener">Powered by Shopify</a>
+      </p>
+      <ul class="bloom-footer__payments" role="list">
+        <li class="bloom-footer__payment-item"><span class="preview-payment">VISA</span></li>
+        <li class="bloom-footer__payment-item"><span class="preview-payment">MC</span></li>
+        <li class="bloom-footer__payment-item"><span class="preview-payment">AMEX</span></li>
+        <li class="bloom-footer__payment-item"><span class="preview-payment">PP</span></li>
+        <li class="bloom-footer__payment-item"><span class="preview-payment">DIN</span></li>
+        <li class="bloom-footer__payment-item"><span class="preview-payment">DISC</span></li>
+      </ul>
+    </div>
+
+  </div><!-- /.bloom-footer__inner -->
+
+  <!-- Decorative Wordmark -->
+  <div class="bloom-footer__wordmark-wrap" aria-hidden="true">
+    <div class="bloom-footer__wordmark">
+      <span class="bloom-footer__wordmark-letter">B</span>
+      <span class="bloom-footer__wordmark-letter">L</span>
+      <span class="bloom-footer__wordmark-letter">O</span>
+      <span class="bloom-footer__wordmark-letter">O</span>
+      <span class="bloom-footer__wordmark-letter">M</span>
+    </div>
+  </div>
+
+</footer>
+
+</body>
+</html>
+

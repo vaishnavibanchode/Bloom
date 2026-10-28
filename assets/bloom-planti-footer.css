@@ -1,0 +1,609 @@
+/* ==========================================================================
+   Bloom Planti Footer — Athora Planti Preset Design Match
+   Scoped entirely to .bloom-footer — no global side effects
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Google Fonts: Instrument Serif (matches Athora Planti "Instrument Serif")
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+/* --------------------------------------------------------------------------
+   Screen-reader utility (scoped to footer to avoid global side effects)
+   -------------------------------------------------------------------------- */
+.bloom-footer .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Root Variables (all scoped inside .bloom-footer)
+   -------------------------------------------------------------------------- */
+.bloom-footer {
+  --bf-bg:            #214735;
+  --bf-text:          #ffffff;
+  --bf-text-secondary: #F2F4EF;
+  --bf-divider:       rgba(255, 255, 255, 0.16);
+  --bf-wordmark-color: #567565;
+  --bf-serif:         'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --bf-sans:          'Instrument Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --bf-max-width:     1410px;
+  --bf-col-gap:       48px;
+  --bf-pt:            64px;
+  --bf-pb:            24px;
+  --bf-mobile-pt:     48px;
+  --bf-mobile-pb:     20px;
+  --bf-brand-heading-size: 36px;
+  --bf-newsletter-heading-size: 40px;
+  --bf-wordmark-size: clamp(120px, 20vw, 320px);
+
+  position: relative;
+  background: var(--bf-bg);
+  color: var(--bf-text);
+  font-family: var(--bf-sans);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Inner Container
+   -------------------------------------------------------------------------- */
+.bloom-footer__inner {
+  max-width: var(--bf-max-width);
+  margin: 0 auto;
+  padding: var(--bf-pt) 40px var(--bf-pb);
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Main 4-Column Grid
+   -------------------------------------------------------------------------- */
+.bloom-footer__columns {
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr 0.85fr 1.35fr;
+  gap: 0 var(--bf-col-gap);
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Column 1 — Brand
+   -------------------------------------------------------------------------- */
+.bloom-footer__brand-heading {
+  font-family: var(--bf-serif);
+  font-weight: 400;
+  font-size: var(--bf-brand-heading-size);
+  color: var(--bf-text);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0 0 18px 0;
+  text-decoration: none;
+  display: block;
+}
+
+.bloom-footer__brand-desc {
+  font-family: var(--bf-sans);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--bf-text-secondary);
+  margin: 0 0 28px 0;
+  max-width: 380px;
+}
+
+/* --------------------------------------------------------------------------
+   Social Icons
+   -------------------------------------------------------------------------- */
+.bloom-footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0 0 28px 0;
+  padding: 0;
+}
+
+.bloom-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bf-text);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.bloom-footer__social-link:hover,
+.bloom-footer__social-link:focus-visible {
+  opacity: 0.65;
+}
+
+.bloom-footer__social-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.bloom-footer__social-link svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Localization Selectors
+   -------------------------------------------------------------------------- */
+.bloom-footer__localization {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.bloom-footer__locale-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bloom-footer__locale-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.bloom-footer__locale-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 4px;
+  color: var(--bf-text);
+  font-family: var(--bf-sans);
+  font-size: 13px;
+  line-height: 1;
+  padding: 7px 30px 7px 10px;
+  cursor: pointer;
+  min-height: 34px;
+  transition: border-color 0.2s ease;
+  min-width: 130px;
+  max-width: 180px;
+}
+
+.bloom-footer__locale-select:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.bloom-footer__locale-select:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.bloom-footer__locale-select option {
+  background: #214735;
+  color: #ffffff;
+}
+
+.bloom-footer__locale-arrow {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--bf-text);
+  display: flex;
+  align-items: center;
+}
+
+.bloom-footer__locale-arrow svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+
+.bloom-footer__locale-flag {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.bloom-footer__locale-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Columns 2 & 3 — Nav Menu Columns
+   -------------------------------------------------------------------------- */
+.bloom-footer__nav-heading {
+  font-family: var(--bf-sans);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--bf-text);
+  letter-spacing: 0;
+  margin: 0 0 20px 0;
+  line-height: 1.3;
+}
+
+.bloom-footer__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.bloom-footer__nav-link {
+  font-family: var(--bf-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--bf-text-secondary);
+  text-decoration: none;
+  line-height: 1.4;
+  transition: opacity 0.2s ease;
+  display: inline-block;
+}
+
+.bloom-footer__nav-link:hover {
+  opacity: 0.65;
+}
+
+.bloom-footer__nav-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Column 4 — Newsletter
+   -------------------------------------------------------------------------- */
+.bloom-footer__newsletter-heading {
+  font-family: var(--bf-serif);
+  font-weight: 400;
+  font-size: var(--bf-newsletter-heading-size);
+  color: var(--bf-text);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px 0;
+}
+
+.bloom-footer__newsletter-desc {
+  font-family: var(--bf-sans);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--bf-text-secondary);
+  margin: 0 0 26px 0;
+}
+
+/* Newsletter form pill */
+.bloom-footer__newsletter-form {
+  width: 100%;
+  max-width: 450px;
+}
+
+.bloom-footer__newsletter-field {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50px;
+  padding: 9px 9px 9px 22px;
+  background: transparent;
+  gap: 8px;
+  height: 67px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.bloom-footer__newsletter-field:focus-within {
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.bloom-footer__newsletter-input {
+  flex: 1 1 auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--bf-text);
+  font-family: var(--bf-sans);
+  font-size: 15px;
+  line-height: 1;
+  min-width: 0;
+  padding: 0;
+}
+
+.bloom-footer__newsletter-input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.bloom-footer__newsletter-btn {
+  flex-shrink: 0;
+  background: #ffffff;
+  color: var(--bf-bg);
+  border: none;
+  border-radius: 50px;
+  font-family: var(--bf-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0 22px;
+  height: 48px;
+  min-width: 120px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bloom-footer__newsletter-btn:hover {
+  opacity: 0.88;
+}
+
+.bloom-footer__newsletter-btn:active {
+  transform: scale(0.97);
+}
+
+.bloom-footer__newsletter-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Newsletter form messages */
+.bloom-footer__newsletter-message {
+  margin-top: 12px;
+  font-family: var(--bf-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 20px;
+}
+
+.bloom-footer__newsletter-message--success {
+  color: #a8f0c0;
+}
+
+.bloom-footer__newsletter-message--error {
+  color: #ffb3ae;
+}
+
+/* --------------------------------------------------------------------------
+   Divider
+   -------------------------------------------------------------------------- */
+.bloom-footer__divider {
+  border: none;
+  border-top: 1px solid var(--bf-divider);
+  margin: 48px 0 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Bottom Row — Copyright & Payments
+   -------------------------------------------------------------------------- */
+.bloom-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  padding: 22px 0 0 0;
+}
+
+.bloom-footer__copyright {
+  font-family: var(--bf-sans);
+  font-size: 13.5px;
+  color: var(--bf-text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.bloom-footer__copyright a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.bloom-footer__copyright a:hover {
+  opacity: 0.7;
+}
+
+/* Payment icons */
+.bloom-footer__payments {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bloom-footer__payment-item {
+  display: flex;
+  align-items: center;
+}
+
+.bloom-footer__payment-icon {
+  display: block;
+  border-radius: 3px;
+  height: 22px;
+  width: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Oversized Decorative Wordmark
+   -------------------------------------------------------------------------- */
+.bloom-footer__wordmark-wrap {
+  position: relative;
+  overflow: hidden;
+  line-height: 0.85;
+  margin-top: 8px;
+  pointer-events: none;
+  user-select: none;
+  max-height: 250px; /* natural crop at bottom */
+}
+
+.bloom-footer__wordmark {
+  font-family: var(--bf-serif);
+  font-weight: 400;
+  font-size: var(--bf-wordmark-size);
+  color: var(--bf-wordmark-color);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  line-height: 0.88;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Spread individual letters via flex justify-content: space-between */
+.bloom-footer__wordmark-letter {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — Tablet (768–1199px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+  .bloom-footer__inner {
+    padding: 52px 28px var(--bf-pb);
+  }
+
+  .bloom-footer__columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 44px 40px;
+  }
+
+  /* Newsletter spans full width on tablet */
+  .bloom-footer__col--newsletter {
+    grid-column: 1 / -1;
+  }
+
+  .bloom-footer__newsletter-heading {
+    font-size: clamp(30px, 4vw, 40px);
+  }
+
+  .bloom-footer__newsletter-form,
+  .bloom-footer__newsletter-field {
+    max-width: 100%;
+  }
+
+  .bloom-footer__wordmark {
+    font-size: clamp(90px, 15vw, 240px);
+  }
+
+  .bloom-footer__wordmark-wrap {
+    max-height: 180px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — Mobile (below 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .bloom-footer {
+    --bf-brand-heading-size: 28px;
+    --bf-newsletter-heading-size: clamp(26px, 8vw, 34px);
+    --bf-wordmark-size: clamp(70px, 22vw, 120px);
+  }
+
+  .bloom-footer__inner {
+    padding: var(--bf-mobile-pt) 20px var(--bf-mobile-pb);
+  }
+
+  .bloom-footer__columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 24px;
+  }
+
+  /* Brand column spans full width on mobile */
+  .bloom-footer__col--brand {
+    grid-column: 1 / -1;
+  }
+
+  /* Newsletter spans full width on mobile */
+  .bloom-footer__col--newsletter {
+    grid-column: 1 / -1;
+  }
+
+  .bloom-footer__brand-desc {
+    max-width: 100%;
+  }
+
+  .bloom-footer__newsletter-field {
+    height: 56px;
+    padding: 7px 7px 7px 18px;
+  }
+
+  .bloom-footer__newsletter-btn {
+    height: 40px;
+    min-width: 100px;
+    font-size: 11px;
+    padding: 0 16px;
+  }
+
+  .bloom-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .bloom-footer__payments {
+    gap: 5px;
+  }
+
+  .bloom-footer__divider {
+    margin-top: 36px;
+  }
+
+  .bloom-footer__wordmark-wrap {
+    max-height: 110px;
+  }
+
+  .bloom-footer__wordmark {
+    padding: 0 20px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Very small screens (below 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 479px) {
+  .bloom-footer__columns {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .bloom-footer__social {
+    gap: 16px;
+  }
+
+  .bloom-footer__localization {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Prevent horizontal overflow anywhere in footer
+   -------------------------------------------------------------------------- */
+.bloom-footer,
+.bloom-footer__inner {
+  max-width: 100%;
+  overflow-x: hidden;
+}
